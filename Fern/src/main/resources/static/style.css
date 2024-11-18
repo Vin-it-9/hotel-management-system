@@ -1,0 +1,209 @@
+/* Light theme (default) */
+body {
+    /*background-color: #ffffff;*/
+    color: #333;
+    transition: background-color 0.5s ease, color 0.5s ease;
+
+}
+h1, h2, h3, h4, h5, h6, p {
+    color: inherit;
+}
+
+.dark-mode {
+    /*background-color: #000010;*/
+    transition: background-color 0.5s ease, color 0.5s ease;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("images/test3.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center center;
+    color: #eaeaea;
+
+}
+
+.dark-mode a {
+    color: #ffffff;
+}
+
+
+.dark-mode nav , .dark-mode .nav {
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    background-color: rgba(0, 0, 0, 0.25);
+
+}
+.dark-mode nav ul , .dark-mode .nav-bar-ul {
+    background-color: rgba(255, 255, 255, 0.1);
+
+}
+.dark-mode  .nav-a  {
+    background-color: rgba(255, 255, 255, 0.15);
+
+}
+.dark-mode .logout {
+    background-color: rgba(255, 0, 0, 0.33);
+}
+
+.dark-mode .button-hover:hover {
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.15);
+}
+
+
+.dark-mode p , .dark-mode h5{
+    color: #d2d2d2;
+}
+.dark-mode .username{
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: bold;
+}
+.dark-mode .comment  {
+    color: white;
+}
+.custom-scrollbar-minimal::-webkit-scrollbar {
+    width: 4px;
+}
+
+.custom-scrollbar-minimal::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-scrollbar-minimal::-webkit-scrollbar-thumb {
+    background-color: rgba(100, 100, 100, 0.5);
+    border-radius: 10px;
+}
+
+.custom-scrollbar-minimal::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(100, 100, 100, 0.8);
+}
+
+.custom-scrollbar-minimal {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(100, 100, 100, 0.5) transparent;
+}
+
+@media (max-width: 640px) {
+    .custom-scrollbar-minimal::-webkit-scrollbar {
+        width: 2px;
+    }
+
+    .custom-scrollbar-minimal {
+        scrollbar-width: thin;
+    }
+}
+
+
+
+.menu-slide {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+.menu-slide-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+.button-hover {
+    transition: all 0.3s ease-in-out;
+}
+.button-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+#navbar-menu {
+    transition: max-height 0.5s ease-in-out;
+}
+#theme-icon , #theme-icon-lg {
+    transition: opacity 0.1s ease-in-out, transform 0.2s ease-in-out;
+    opacity: 1;
+
+}
+
+.fade-out {
+    opacity: 0;
+    transform: scale(0.8) rotate(360deg);
+}
+
+
+/*from chat gpt */
+
+
+.dark-mode .posts  {
+    backdrop-filter: blur(25px) saturate(220%);
+    -webkit-backdrop-filter: blur(25px) saturate(220%);
+    background-color: rgba(26, 26, 26, 0.2);
+
+    color: #e2e8f0;
+}
+
+.dark-mode .shadow-2xl {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
+.dark-mode .text-gray-800 {
+    color: #e2e8f0;
+}
+
+.dark-mode .text-gray-500  {
+    color: #c9def8;
+    font-size: 17px;
+}
+
+.dark-mode .text-gray-900 , .dark-mode .text-black , .dark-mode .placeholder {
+    color: #f1f5f9;
+}
+
+.dark-mode button:hover {
+    color: #f87171;
+}
+
+.dark-mode .hover\:text-red-500:hover {
+    color: #f87171;
+}
+
+.dark-mode .session-msg  {
+    color: limegreen;
+}
+
+
+.dark-mode input[type="email"],
+.dark-mode input[type="password"],
+ .dark-mode input[type="number"],
+.dark-mode input[type="text"],
+.dark-mode input[type="file"],
+.dark-mode .content{
+    background-color: rgba(40, 40,40, 0.35);
+    color: #f7fafc;
+    border: 1px solid #4a5568;
+}
+.dark-mode .comments-section , .dark-mode .menu-slide {
+    background: transparent;
+}
+
+.dark-mode input[type="email"]::placeholder,
+.dark-mode input[type="password"]::placeholder ,
+.dark-mode input[type="number"]::placeholder,
+.dark-mode input[type="text"]::placeholder,
+.dark-mode input[type="file"]::placeholder,
+.dark-mode .content::placeholder
+{
+    color: #a0aec0;
+}
+
+.dark-mode label {
+    color: #f7fafc;
+}
+
+.dark-mode input[type="email"]:focus,
+.dark-mode input[type="password"]:focus,
+.dark-mode input[type="number"]:focus,
+.dark-mode input[type="text"]:focus,
+.dark-mode input[type="file"]:focus
+{
+    outline: none;
+    border-color: #63b3ed;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+}
+

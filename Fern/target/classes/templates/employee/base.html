@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content)">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link th:href="@{/style.css}" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+<body class="bg-gray-50">
+
+<nav class="bg-blue-700 p-4 shadow-lg sticky top-0 z-10">
+    <div class="container mx-auto flex justify-between items-center">
+        <a class="text-white text-xl font-bold tracking-wide hover:text-purple-400 transition duration-300" href="/employee/">
+            The Fern
+        </a>
+        <div class="md:hidden ">
+            <button id="theme-toggle-lg" class="text-white focus:outline-none mr-6 transform hover:scale-110" aria-label="Toggle Theme">
+                <img id="theme-icon-lg" class="w-8 h-8" th:src="@{/images/sun.png}" alt="Theme Icon">
+            </button>
+            <button id="navbar-toggle" aria-label="Toggle Navigation" class="text-white focus:outline-none transition duration-300 transform hover:scale-110">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+
+        </div>
+
+        <div class="hidden md:flex md:items-center md:space-x-6">
+
+            <th:block th:if="${user == null}">
+                <a class="text-white  nav-a   text-lg px-4 py-2 button-hover hover:text-gray-200 hover:bg-blue-700 transition duration-300 " href="register">Register</a>
+                <a class="text-white text-lg  nav-a  px-4 py-2 button-hover hover:text-gray-200 hover:bg-blue-700 transition duration-300 " href="signin">Login</a>
+            </th:block>
+
+            <th:block th:if="${user != null}">
+                <div class="flex items-center space-x-4">
+
+                    <a href="/employee/profile" class="flex  nav-a  items-center text-white text-lg   ">
+                        <img
+                                th:src="'data:image/jpeg;base64,' + ${session.userImage}"
+                                alt="Profile Image"
+                                class="rounded-full w-12 h-12 object-cover  shadow-lg"
+                                onerror="this.onerror=null; this.src='https://attic.sh/wyqx637oqvfbdxrf9agqwuzwznrl';"
+                        />
+                    </a>
+
+                    <a href="/employee/change-password" class=" nav-a  px-4 py-2 text-white text-lg  button-hover hover:text-gray-200 hover:bg-blue-800 transition duration-300">
+                        Change Password
+                    </a>
+
+                    <a href="/logout" class="px-4 logout py-2 text-white text-lg  button-hover hover:text-gray-200 hover:bg-blue-800 transition duration-300">
+                        Logout
+                    </a>
+
+                </div>
+            </th:block>
+
+            <button id="theme-toggle" class="text-white focus:outline-none  transform hover:scale-110" aria-label="Toggle Theme">
+                <img id="theme-icon" class="w-8 h-8" th:src="@{/images/sun.png}" alt="Theme Icon">
+            </button>
+
+        </div>
+    </div>
+
+    <!--	nav bar for smaller screen-->
+    <div id="navbar-menu" class=" navbar md:hidden hidden mt-4">
+        <ul class="bg-blue-600 nav-bar-ul  rounded-lg shadow-lg p-4 space-y-4">
+
+            <th:block th:if="${user == null}">
+                <li class="menu-slide">
+                    <a class=" nav-a text-white text-lg font-medium hover:text-blue-600 bg-blue-500 transition duration-300 block text-center py-2 button-hover"
+                       href="register">
+                        Register
+                    </a>
+                </li>
+                <li class="menu-slide">
+                    <a class="nav-a text-white text-lg font-medium hover:text-blue-600 bg-blue-500 transition duration-300 block text-center py-2 button-hover"
+                       href="signin">
+                        Login
+                    </a>
+                </li>
+            </th:block>
+
+            <th:block th:if="${user != null}">
+                <li class="menu-slide ">
+                    <a href="/employee/profile" class="flex items-center justify-center mb-2 space-y-2 text-white text-lg rounded-lg  ">
+                        <img
+                                th:src="'data:image/jpeg;base64,' + ${session.userImage}"
+                                alt="Profile Image"
+                                class="rounded-full w-14 h-14 object-cover border-1 border-white shadow-lg"
+                                onerror="this.onerror=null; this.src='https://attic.sh/wyqx637oqvfbdxrf9agqwuzwznrl';"
+                        />
+                    </a>
+                    <a href="/employee/change-password" class="px-4  nav-a  py-2 mb-2 bg-blue-400 text-white text-m  hover:bg-blue-500 transition duration-300 block text-center button-hover">
+                        Change Password
+                    </a>
+                    <a href="/logout" class="px-4 logout py-2 bg-red-600 mb-2 text-white text-m  hover:bg-red-700 transition duration-300 block text-center button-hover">
+                        Logout
+                    </a>
+
+                </li>
+
+            </th:block>
+
+
+        </ul>
+    </div>
+
+</nav>
+
+<div th:replace="${content}"></div>
+
+
+<script th:inline="javascript">
+
+    const toggleButton = document.getElementById('navbar-toggle');
+    const navbarMenu = document.getElementById('navbar-menu');
+    const menuItems = document.querySelectorAll('.menu-slide');
+
+    toggleButton.addEventListener('click', () => {
+        navbarMenu.classList.toggle('hidden');
+        navbarMenu.classList.toggle('block');
+        menuItems.forEach((item, index) => {
+            setTimeout(() => {
+                item.classList.toggle('menu-slide-active');
+            }, index * 100);
+        });
+    });
+
+    const sunImagePath = /*[[@{/images/sun.png}]]*/ '/images/sun.png';
+    const moonImagePath = /*[[@{/images/moon.png}]]*/ '/images/moon.png';
+
+    // Select both theme toggle buttons for mobile and desktop
+    const themeToggleButtonMobile = document.getElementById('theme-toggle');
+    const themeToggleButtonDesktop = document.getElementById('theme-toggle-lg');
+
+    // Select both theme icons
+    const themeIconMobile = document.getElementById('theme-icon');
+    const themeIconDesktop = document.getElementById('theme-icon-lg');
+
+    const body = document.body;
+
+    // Apply saved theme state
+    if (localStorage.getItem('theme') === 'dark') {
+        body.classList.add('dark-mode');
+        themeIconMobile.src = moonImagePath;
+        themeIconDesktop.src = moonImagePath;
+    } else {
+        themeIconMobile.src = sunImagePath;
+        themeIconDesktop.src = sunImagePath;
+    }
+
+    // Function to toggle theme
+    function toggleTheme() {
+        body.classList.toggle('dark-mode');
+        themeIconMobile.classList.add('fade-out');
+        themeIconDesktop.classList.add('fade-out');
+
+        setTimeout(() => {
+            if (body.classList.contains('dark-mode')) {
+                themeIconMobile.src = moonImagePath;
+                themeIconDesktop.src = moonImagePath;
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeIconMobile.src = sunImagePath;
+                themeIconDesktop.src = sunImagePath;
+                localStorage.setItem('theme', 'light');
+            }
+            themeIconMobile.classList.remove('fade-out');
+            themeIconDesktop.classList.remove('fade-out');
+        }, 500);
+    }
+
+    // Add event listeners to both buttons
+    themeToggleButtonMobile.addEventListener('click', toggleTheme);
+    themeToggleButtonDesktop.addEventListener('click', toggleTheme);
+</script>
+
+</body>
+</html>

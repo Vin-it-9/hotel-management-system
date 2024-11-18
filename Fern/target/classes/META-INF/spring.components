@@ -1,0 +1,16 @@
+com.Fern.Application=org.springframework.stereotype.Component,org.springframework.boot.SpringBootConfiguration
+com.Fern.config.CustomAuthSucessHandler=org.springframework.stereotype.Component
+com.Fern.config.CustomFailureHandler=org.springframework.stereotype.Component
+com.Fern.config.CustomUserDetailsService=org.springframework.stereotype.Component
+com.Fern.config.SecurityConfig=org.springframework.stereotype.Component
+com.Fern.controller.AdminController=org.springframework.stereotype.Component
+com.Fern.controller.ClientController=org.springframework.stereotype.Component
+com.Fern.controller.EmployeeController=org.springframework.stereotype.Component
+com.Fern.controller.HomeController=org.springframework.stereotype.Component
+com.Fern.controller.UserController=org.springframework.stereotype.Component
+com.Fern.entity.Image=jakarta.persistence.Entity,jakarta.persistence.Table
+com.Fern.entity.User=jakarta.persistence.Entity,jakarta.persistence.EntityListeners
+com.Fern.repository.ImageRepository=org.springframework.stereotype.Component,org.springframework.data.repository.Repository
+com.Fern.repository.UserRepo=org.springframework.data.repository.Repository
+com.Fern.service.ImageServiceImpl=org.springframework.stereotype.Component
+com.Fern.service.UserServiceImpl=org.springframework.stereotype.Component,jakarta.transaction.Transactional

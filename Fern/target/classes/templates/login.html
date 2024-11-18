@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}">
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Login</title>
+	<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+
+<section>
+	<div class="container mx-auto p-4 ">
+		<div class="flex justify-center">
+			<div class="w-full max-w-md">
+				<div class="bg-white shadow-md rounded-lg posts">
+
+					<div class="bg-blue-600 text-white nav-bar-ul text-center text-xl font-semibold rounded-t-lg p-4">Login Page</div>
+
+					<th:block th:if="${session.msg}">
+						<p class="text-center session-msg text-blue-500 text-lg p-2">[[${session.msg}]]</p>
+						<th:block th:text="${@userServiceImpl.removeSessionMessage()}"></th:block>
+					</th:block>
+
+					<th:block th:if="${param.error}">
+						<p class="text-center session-msg  text-red-500 text-lg p-2">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+					</th:block>
+					<th:block th:if="${param.logout}">
+						<p class="text-center session-msg  text-green-500 text-lg p-2">Logout Successfully</p>
+					</th:block>
+
+					<div class="p-4">
+						<form action="userLogin" method="post">
+
+							<div class="mb-4">
+								<label class="block placeholder text-gray-700" for="username">Enter Email</label>
+								<input type="email" name="username" id="username" class="mt-1 block w-full p-2 border border-gray-300 rounded" required>
+							</div>
+							<div class="mb-4">
+								<label class="block placeholder text-gray-700" for="password">Enter Password</label>
+								<input type="password" name="password" id="password" class="mt-1 block w-full p-2 border border-gray-300 rounded" required>
+							</div>
+
+
+							<button type="submit" class=" nav-a bg-blue-600 text-white font-bold py-2 px-4 w-full rounded hover:bg-blue-700">Login</button>
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</section>
+</body>
+</html>

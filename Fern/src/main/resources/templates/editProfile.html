@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}">
+<head>
+    <meta charset="ISO-8859-1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+<section>
+    <div class="container mx-auto p-4 mt-10">
+        <!-- Main Wrapper -->
+        <div class="flex flex-col md:flex-row justify-center md:space-x-12 space-y-6 md:space-y-0">
+
+            <!-- Edit Profile Form -->
+            <div class="w-full max-w-md">
+                <div class="bg-white shadow-lg rounded-xl transition transform posts duration-300">
+                    <div class="bg-blue-600 text-white text-center nav-bar-ul text-xl font-semibold rounded-t-xl p-5">Edit Profile</div>
+
+                    <!-- Session Message -->
+                    <div th:if="${session.msg}">
+                        <p class="text-center session-msg text-blue-500 text-lg p-2" th:text="${session.msg}"></p>
+                    </div>
+
+                    <!-- Edit Profile Form -->
+                    <div class="p-6 space-y-6">
+                        <form action="/updateProfile" method="post">
+                            <div class="mb-4">
+                                <label class="block text-gray-800 font-medium" for="name">Name</label>
+                                <input type="text" id="name" name="name" class="mt-2 block w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" th:value="${user.name}" required>
+                            </div>
+
+                            <div class="mb-6">
+                                <label class="block text-gray-800 font-medium" for="mobileNo">Mobile Number</label>
+                                <input type="text" id="mobileNo" name="mobileNo" class="mt-2 block w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" th:value="${user.mobileNo}" required>
+                            </div>
+
+                            <button type="submit" class="bg-blue-600 nav-a mt-2 text-white font-bold py-3 px-4 w-full rounded-lg hover:bg-gradient-to-l transition duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-blue-300">Update Profile</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Change Profile Image Form -->
+            <div class="w-full max-w-md">
+                <div class="bg-white shadow-lg rounded-xl transition transform posts duration-300">
+                    <div class="bg-blue-600 text-white text-center text-xl nav-bar-ul font-semibold p-5 rounded-t-xl">Change Profile Image</div>
+
+                    <!-- Profile Image -->
+                    <div class="flex justify-center mb-3 mt-3">
+                        <img th:src="'data:image/jpeg;base64,' + ${session.userImage}" alt="Profile Image" class="rounded-full w-36 h-36 object-cover border-4 border-gray-200 shadow-lg"
+                             onerror="this.onerror=null; this.src='https://attic.sh/wyqx637oqvfbdxrf9agqwuzwznrl';">
+                    </div>
+
+                    <!-- Change Profile Image Form -->
+                    <form action="/add" method="post" enctype="multipart/form-data" class="p-6 space-y-4">
+                        <div class="flex flex-col items-center">
+                            <label for="image" class="sr-only">Choose a profile image</label>
+                            <input type="file" id="image" name="image" class="w-full text-sm text-gray-600 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 p-3 transition" required aria-label="Upload profile image">
+                        </div>
+
+                        <div class="flex justify-center">
+                            <button type="submit" class="bg-blue-600 nav-a mt-2 text-white font-bold py-3 px-4 w-full rounded-lg hover:bg-gradient-to-l transition duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-blue-300">Update Profile Image</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+</body>
+</html>
