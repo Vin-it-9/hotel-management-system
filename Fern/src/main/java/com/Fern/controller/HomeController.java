@@ -6,15 +6,19 @@ import java.sql.SQLException;
 import com.Fern.entity.*;
 import com.Fern.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Base64;
+import java.util.UUID;
 
 import com.Fern.repository.UserRepo;
 
@@ -36,6 +40,13 @@ public class HomeController {
 
 	@Autowired
 	private ImageServiceImpl imageServiceImpl;
+
+	@Autowired
+	PasswordEncoder encoder;
+
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+
 
 	@ModelAttribute
 	public void commonUser(Principal p, Model m) {
@@ -61,8 +72,27 @@ public class HomeController {
 			}
 
 		}
+		if (userRepo.findByName("admin").isEmpty()) {
+			User admin = new User();
+			admin.setName("admin");
+			admin.setEmail("admin@gmail.com");
+			admin.setRole("ROLE_ADMIN");
+			String password = passwordEncoder.encode("admin");
+			admin.setPassword(password);
+			admin.setMobileNo("1234567890");
+			admin.setEnable(true);
+			admin.setGender("Male");
+			admin.setAccountNonLocked(true);
+			admin.setFailedAttempt(0);
+			admin.setLockTime(null);
+			admin.setDateOfBirth(LocalDate.now());
+			admin.setAddress("Amanora Park Town, Amanora, Magarpatta Rd, Hadapsar, Pune, Maharashtra");
+			System.out.println("admin created");
+			userRepo.save(admin);
+		}
 		return "index";
 	}
+
 
 
 	@GetMapping("/register")

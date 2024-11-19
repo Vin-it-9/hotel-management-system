@@ -3,9 +3,9 @@ package com.Fern.service;
 import com.Fern.entity.Image;
 import com.Fern.repository.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-import org.springframework.stereotype.Service;
 
 @Service
 public class ImageServiceImpl implements ImageService {

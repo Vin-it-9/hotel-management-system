@@ -7,12 +7,15 @@ import org.springframework.data.jpa.repository.Query;
 import com.Fern.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserRepo extends JpaRepository<User, Long> {
 
 	public User findByEmail(String emaill);
 
 	public User findByVerificationCode(String code);
+
+	Optional<User> findByName(String name);
 
 	boolean existsByEmail(String email);
 
@@ -24,8 +27,6 @@ public interface UserRepo extends JpaRepository<User, Long> {
 	User getUserByEmail(String email);
 
 	List<User> findByRole(String role);
-
-
 
 
 }

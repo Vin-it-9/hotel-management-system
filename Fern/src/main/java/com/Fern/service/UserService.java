@@ -1,6 +1,7 @@
 package com.Fern.service;
 
 import com.Fern.entity.User;
+import jakarta.annotation.PostConstruct;
 
 import java.util.List;
 
@@ -26,4 +27,7 @@ public interface UserService {
 	boolean updateUserProfile(User user,  String email  );
 
 	List<User> getAllUsersByRole(String role);
+
+
+
 }

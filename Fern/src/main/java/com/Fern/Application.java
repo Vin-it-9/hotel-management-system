@@ -1,9 +1,12 @@
 package com.Fern;
 
 
+import com.Fern.entity.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
+import java.util.UUID;
 
 @SpringBootApplication
 @EnableJpaAuditing
