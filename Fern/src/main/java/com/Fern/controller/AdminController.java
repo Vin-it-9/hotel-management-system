@@ -39,7 +39,7 @@ public class AdminController {
 
 	@GetMapping("/sevice")
 	public String service() {
-		return "admin/admin_service";
+		return "admin/admin_index";
 	}
 
 
