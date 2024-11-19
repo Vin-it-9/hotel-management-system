@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/amenities")
 public class AmenityController {
@@ -24,5 +26,11 @@ public class AmenityController {
         } catch (Exception ex) {
             return new ResponseEntity<>("An error occurred while adding the amenity", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<AmenityDTO>> getAllAmenities() {
+        List<AmenityDTO> amenities = amenityService.getAllAmenities();
+        return new ResponseEntity<>(amenities, HttpStatus.OK);
     }
 }
