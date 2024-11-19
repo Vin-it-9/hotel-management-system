@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Base64;
 import java.util.List;
 
@@ -98,6 +99,10 @@ public class EmployeeController {
     public String updateProfile(@ModelAttribute User user, Principal principal, HttpSession session) {
 
         String email = principal.getName();
+
+        if (user.getDateOfBirth() != null) {
+            user.setDateOfBirth(LocalDate.parse(user.getDateOfBirth().toString()));
+        }
 
         boolean isUpdated = userServiceImpl.updateUserProfile(user, email);
 
