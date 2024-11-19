@@ -15,6 +15,8 @@ public class Application {
 		System.out.println("started");
 		System.out.println("Application is running on: http://localhost:8080");
 
+		System.out.println("commited");
+
 	}
 
 }

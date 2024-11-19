@@ -36,4 +36,8 @@ public class AdminController {
 	public String index() {
 		return "admin/admin_index";
 	}
+
+	public String service() {
+		return "admin/admin_service";
+	}
 }
