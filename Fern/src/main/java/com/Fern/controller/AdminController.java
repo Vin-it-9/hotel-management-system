@@ -5,6 +5,7 @@ import java.security.Principal;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Base64;
+import java.util.List;
 
 import com.Fern.entity.Image;
 import com.Fern.service.ImageService;
@@ -197,6 +198,16 @@ public class AdminController {
 
 		return "redirect:/admin/editProfile";
 	}
+
+
+	@GetMapping("/user/list")
+	public String listUsers(Model model) {
+		List<User> users = userServiceImpl.getAllUsersByRole("ROLE_USER");
+		model.addAttribute("users", users);
+		return "admin/list_users";
+	}
+
+
 
 
 

@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.Fern.entity.User;
 
+import java.util.List;
+
 public interface UserRepo extends JpaRepository<User, Long> {
 
 	public User findByEmail(String emaill);
@@ -20,6 +22,8 @@ public interface UserRepo extends JpaRepository<User, Long> {
 	public void updateFailedAttempt(int attempt, String email);
 
 	User getUserByEmail(String email);
+
+	List<User> findByRole(String role);
 
 
 

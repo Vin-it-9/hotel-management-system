@@ -1,6 +1,7 @@
 package com.Fern.service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -205,5 +206,9 @@ public class UserServiceImpl implements UserService {
 		return false;
 	}
 
+	@Override
+	public List<User> getAllUsersByRole(String role) {
+		return userRepo.findByRole(role); // Fetch users with specified role
+	}
 
 }

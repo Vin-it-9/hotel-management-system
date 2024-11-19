@@ -2,6 +2,8 @@ package com.Fern.service;
 
 import com.Fern.entity.User;
 
+import java.util.List;
+
 
 public interface UserService {
 
@@ -23,5 +25,5 @@ public interface UserService {
 
 	boolean updateUserProfile(User user,  String email  );
 
-
+	List<User> getAllUsersByRole(String role);
 }
