@@ -41,7 +41,7 @@ public class AdminController {
 
 	@GetMapping("/")
 	public String index() {
-		return "admin/employee_index";
+		return "admin/admin_index";
 	}
 
 	@GetMapping("/change-password")
