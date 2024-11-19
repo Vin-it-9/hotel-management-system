@@ -19,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.sql.rowset.serial.SerialException;
 import java.io.IOException;
 import java.security.Principal;
 import java.sql.Blob;
@@ -72,6 +71,7 @@ public class EmployeeController {
             }
 
         }
+
         return "employee/employee_index";
     }
 
