@@ -51,4 +51,17 @@ public class AmenityServiceImpl implements AmenityService {
                 })
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public AmenityDTO getAmenityById(int id) {
+
+        Amenity amenity = (Amenity) amenityRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Amenity with ID " + id + " not found"));
+        AmenityDTO amenityDTO = new AmenityDTO();
+        amenityDTO.setName(amenity.getName());
+        amenityDTO.setDescription(amenity.getDescription());
+        amenityDTO.setCreatedAt(amenity.getCreatedAt());
+
+        return amenityDTO;
+    }
+
 }

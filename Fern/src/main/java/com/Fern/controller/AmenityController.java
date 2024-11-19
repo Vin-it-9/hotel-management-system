@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/amenities")
+@RequestMapping("/amenities")
 public class AmenityController {
 
     @Autowired
@@ -33,4 +33,11 @@ public class AmenityController {
         List<AmenityDTO> amenities = amenityService.getAllAmenities();
         return new ResponseEntity<>(amenities, HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AmenityDTO> getAmenityById(@PathVariable int id) {
+        AmenityDTO amenityDTO = amenityService.getAmenityById(id);
+        return new ResponseEntity<>(amenityDTO, HttpStatus.OK);
+    }
+
 }

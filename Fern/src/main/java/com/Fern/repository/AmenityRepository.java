@@ -12,5 +12,6 @@ public interface AmenityRepository extends JpaRepository<Amenity, Long> {
 
     boolean existsByName(String name);
 
+    Optional<Object> findById(int id);
 
 }

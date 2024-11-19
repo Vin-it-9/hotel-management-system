@@ -9,4 +9,6 @@ public interface AmenityService {
     void addAmenity(AmenityDTO amenityDTO);
 
     public List<AmenityDTO> getAllAmenities();
+
+    public AmenityDTO getAmenityById(int id);
 }
