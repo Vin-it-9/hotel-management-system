@@ -38,6 +38,7 @@ public class AdminController {
 	public String profile() {
 		return "admin/admin_profile";
 	}
+
 	@GetMapping("/")
 	public String index() {
 		return "admin/employee_index";
