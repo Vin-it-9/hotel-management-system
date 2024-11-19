@@ -27,6 +27,7 @@ import java.util.Base64;
 
 @Controller
 public class ClientController {
+
     @Autowired
     private ImageService imageService;
 
@@ -35,7 +36,6 @@ public class ClientController {
 
     @Autowired
     private ImageServiceImpl imageServiceImpl;
-
 
 
     @GetMapping("/setImage")
