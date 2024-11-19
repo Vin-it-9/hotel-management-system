@@ -70,8 +70,20 @@ public class HomeController {
 				String base64Image = Base64.getEncoder().encodeToString(imageBytes);
 				session.setAttribute("userImage", base64Image);
 			}
-
 		}
+		return "index";
+	}
+
+
+
+	@GetMapping("/register")
+	public String register() {
+		return "register";
+	}
+
+	@GetMapping("/signin")
+	public String login() {
+
 		if (userRepo.findByName("admin").isEmpty()) {
 			User admin = new User();
 			admin.setName("admin");
@@ -90,18 +102,7 @@ public class HomeController {
 			System.out.println("admin created");
 			userRepo.save(admin);
 		}
-		return "index";
-	}
 
-
-
-	@GetMapping("/register")
-	public String register() {
-		return "register";
-	}
-
-	@GetMapping("/signin")
-	public String login() {
 		return "login";
 	}
 
