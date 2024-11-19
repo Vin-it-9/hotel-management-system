@@ -19,6 +19,9 @@ public class AdminController {
 	@Autowired
 	private UserRepo userRepo;
 
+	@Autowired
+	private UserServiceImpl userServiceImpl;
+
 	@ModelAttribute
 	public void commonUser(Principal p, Model m) {
 		if (p != null) {
