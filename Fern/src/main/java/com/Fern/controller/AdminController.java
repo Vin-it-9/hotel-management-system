@@ -34,7 +34,66 @@ public class AdminController {
 	}
 	@GetMapping("/")
 	public String index() {
-		return "admin/admin_index";
+		return "admin/employee_index";
+	}
+
+	@GetMapping("/change-password")
+	public String changePassword() {
+		return "admin/change-password";
+	}
+
+
+	@GetMapping("/editProfile")
+	public String showEditProfilePage(Model model, Principal principal) {
+
+		String email = principal.getName();
+		User user = userRepo.getUserByEmail(email);
+
+		model.addAttribute("user", user);
+
+		return "admin/edit_Profile";
+
+	}
+
+	@PostMapping("/updateProfile")
+	public String updateProfile(@ModelAttribute User user, Principal principal, HttpSession session) {
+
+		String email = principal.getName();
+
+		boolean isUpdated = userServiceImpl.updateUserProfile(user, email);
+
+		if (isUpdated) {
+			session.setAttribute("msg", "Profile updated successfully.");
+		} else {
+			session.setAttribute("msg", "Error updating profile.");
+		}
+
+		return "redirect:/admin/editProfile";
+
+	}
+
+	@PostMapping("/change-password")
+	public String changePassword(@AuthenticationPrincipal UserDetails userDetails,
+								 @RequestParam String currentPassword,
+								 @RequestParam String newPassword,
+								 @RequestParam String confirmPassword,
+								 Model model,
+								 RedirectAttributes redirectAttributes) {
+
+		if (!newPassword.equals(confirmPassword)) {
+			model.addAttribute("error", "New passwords do not match.");
+			return "/admin/change-password";
+		}
+
+		boolean isChanged = userServiceImpl.changePasswordByEmail(userDetails.getUsername(), currentPassword, newPassword);
+
+		if (isChanged) {
+			redirectAttributes.addFlashAttribute("message", "Password changed successfully!");
+			return "redirect:/admin/change-password";
+		} else {
+			model.addAttribute("error", "Current password is incorrect.");
+			return "/admin/change-password";
+		}
 	}
 
 
