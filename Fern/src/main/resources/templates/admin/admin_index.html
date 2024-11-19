@@ -2,27 +2,143 @@
 <html class="dark" lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/base::layout(~{::section})}">
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Admin</title>
+	<title>Admin Dashboard</title>
 	<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 </head>
-<body>
-<section class="lg:ml-32 lg:mr-32 m-2">
+<body class="bg-gray-50 text-gray-800">
+<section class="lg:ml-32 lg:mr-32 m-4">
 	<div class="main m-4">
-		<th:block th:if="${message != null}">
-			<p class="text-center session-msg text-green-500 text-lg mt-4">[[${message}]]</p>
-		</th:block>
-		<th:block th:if="${error != null}">
-			<p class="text-center session-msg text-red-500 text-lg mt-4">[[${error}]]</p>
-		</th:block>
-		<h4 class="text-lg username text-gray-700 mb-2" th:if="${user != null}">
-			Welcome, [[${user.name}]]!
-		</h4>
-		<h4 class="text-lg username text-gray-700 mb-2" th:if="${user == null}">
-			Welcome, Guest!
-		</h4>
+		<!-- Welcome Message -->
+		<div class="mb-6">
+			<th:block th:if="${message != null}">
+				<p class="text-center session-msg text-green-500 text-lg mt-4">[[${message}]]</p>
+			</th:block>
+			<th:block th:if="${error != null}">
+				<p class="text-center session-msg text-red-500 text-lg mt-4">[[${error}]]</p>
+			</th:block>
+			<h4 class="text-2xl font-semibold text-gray-700 mb-2" th:if="${user != null}">
+				Welcome back, [[${user.name}]]!
+			</h4>
+			<h4 class="text-2xl font-semibold text-gray-700 mb-2" th:if="${user == null}">
+				Welcome, Guest!
+			</h4>
+		</div>
+
+		<!-- Admin Dashboard Features -->
+		<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+			<!-- Manage Customers -->
+			<div class="bg-white shadow-lg rounded-xl p-6 hover:shadow-xl hover:scale-105 transform transition-all duration-200 cursor-pointer">
+				<div class="flex items-center space-x-3 mb-3">
+					<div class="bg-blue-500 text-white p-2 rounded-full">
+						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M5 12l5 5L20 7" />
+						</svg>
+					</div>
+					<h3 class="text-lg font-semibold text-gray-700">Manage Customers</h3>
+				</div>
+				<ul class="list-disc ml-4 text-gray-600 space-y-2">
+					<li><a href="/admin/customers/add" class="hover:text-blue-500">Add New Customer</a></li>
+					<li><a href="/admin/customers/list" class="hover:text-blue-500">View Customers</a></li>
+				</ul>
+			</div>
+
+			<!-- Manage Rooms -->
+			<div class="bg-white shadow-lg rounded-xl p-6 hover:shadow-xl hover:scale-105 transform transition-all duration-200 cursor-pointer">
+				<div class="flex items-center space-x-3 mb-3">
+					<div class="bg-green-500 text-white p-2 rounded-full">
+						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M5 12l5 5L20 7" />
+						</svg>
+					</div>
+					<h3 class="text-lg font-semibold text-gray-700">Manage Rooms</h3>
+				</div>
+				<ul class="list-disc ml-4 text-gray-600 space-y-2">
+					<li><a href="/admin/rooms/add" class="hover:text-blue-500">Add New Room</a></li>
+					<li><a href="/admin/rooms/list" class="hover:text-blue-500">View Rooms</a></li>
+				</ul>
+			</div>
+
+			<!-- Manage Room Types -->
+			<div class="bg-white shadow-lg rounded-xl p-6 hover:shadow-xl hover:scale-105 transform transition-all duration-200 cursor-pointer">
+				<div class="flex items-center space-x-3 mb-3">
+					<div class="bg-purple-500 text-white p-2 rounded-full">
+						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M5 12l5 5L20 7" />
+						</svg>
+					</div>
+					<h3 class="text-lg font-semibold text-gray-700">Manage Room Types</h3>
+				</div>
+				<ul class="list-disc ml-4 text-gray-600 space-y-2">
+					<li><a href="/admin/room-types/add" class="hover:text-blue-500">Add New Room Type</a></li>
+					<li><a href="/admin/room-types/list" class="hover:text-blue-500">View Room Types</a></li>
+				</ul>
+			</div>
+
+			<!-- Manage Bookings -->
+			<div class="bg-white shadow-lg rounded-xl p-6 hover:shadow-xl hover:scale-105 transform transition-all duration-200 cursor-pointer">
+				<div class="flex items-center space-x-3 mb-3">
+					<div class="bg-yellow-500 text-white p-2 rounded-full">
+						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M5 12l5 5L20 7" />
+						</svg>
+					</div>
+					<h3 class="text-lg font-semibold text-gray-700">Manage Bookings</h3>
+				</div>
+				<ul class="list-disc ml-4 text-gray-600 space-y-2">
+					<li><a href="/admin/bookings/add" class="hover:text-blue-500">Add New Booking</a></li>
+					<li><a href="/admin/bookings/list" class="hover:text-blue-500">View Bookings</a></li>
+				</ul>
+			</div>
+
+			<!-- Manage Employees -->
+			<div class="bg-white shadow-lg rounded-xl p-6 hover:shadow-xl hover:scale-105 transform transition-all duration-200 cursor-pointer">
+				<div class="flex items-center space-x-3 mb-3">
+					<div class="bg-red-500 text-white p-2 rounded-full">
+						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M5 12l5 5L20 7" />
+						</svg>
+					</div>
+					<h3 class="text-lg font-semibold text-gray-700">Manage Employees</h3>
+				</div>
+				<ul class="list-disc ml-4 text-gray-600 space-y-2">
+					<li><a href="/admin/employees/add" class="hover:text-blue-500">Add Employee</a></li>
+					<li><a href="/admin/employees/list" class="hover:text-blue-500">View Employees</a></li>
+				</ul>
+			</div>
+
+			<!-- Manage Billing -->
+			<div class="bg-white shadow-lg rounded-xl p-6 hover:shadow-xl hover:scale-105 transform transition-all duration-200 cursor-pointer">
+				<div class="flex items-center space-x-3 mb-3">
+					<div class="bg-yellow-500 text-white p-2 rounded-full">
+						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M5 12l5 5L20 7" />
+						</svg>
+					</div>
+					<h3 class="text-lg font-semibold text-gray-700">Manage Billing</h3>
+				</div>
+				<ul class="list-disc ml-4 text-gray-600 space-y-2">
+					<li><a href="/admin/bills/add" class="hover:text-blue-500">Add Bill</a></li>
+					<li><a href="/admin/bills/list" class="hover:text-blue-500">View Bills</a></li>
+				</ul>
+			</div>
+
+			<!-- Reports -->
+			<div class="bg-white shadow-lg rounded-xl p-6 hover:shadow-xl hover:scale-105 transform transition-all duration-200 cursor-pointer">
+				<div class="flex items-center space-x-3 mb-3">
+					<div class="bg-indigo-500 text-white p-2 rounded-full">
+						<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+							<path stroke-linecap="round" stroke-linejoin="round" d="M5 12l5 5L20 7" />
+						</svg>
+					</div>
+					<h3 class="text-lg font-semibold text-gray-700">Reports</h3>
+				</div>
+				<ul class="list-disc ml-4 text-gray-600 space-y-2">
+					<li><a href="/admin/reports/customers" class="hover:text-blue-500">Customer Reports</a></li>
+					<li><a href="/admin/reports/bookings" class="hover:text-blue-500">Booking Reports</a></li>
+				</ul>
+			</div>
+		</div>
 	</div>
 </section>
 </body>
