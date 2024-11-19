@@ -59,7 +59,7 @@ public class AdminController {
 	}
 
 	@GetMapping("/")
-	public String index(Principal principal, HttpSession session, Model model) throws IOException, SQLException {
+	public String index(Principal principal, HttpSession session, Model model) throws  SQLException {
 
 		if (principal != null && session.getAttribute("userImage") == null) {
 
@@ -138,7 +138,7 @@ public class AdminController {
 
 
 	@GetMapping("/setImage")
-	public String setImageInSession(Principal principal, HttpSession session) throws IOException, SQLException {
+	public String setImageInSession(Principal principal, HttpSession session) throws  SQLException {
 		if (principal != null) {
 
 			String email = principal.getName();
@@ -155,7 +155,7 @@ public class AdminController {
 
 
 	@GetMapping("/display")
-	public ResponseEntity<byte[]> displayImageFromSession(HttpSession session) throws IOException, SQLException {
+	public ResponseEntity<byte[]> displayImageFromSession(HttpSession session) {
 
 		String base64Image = (String) session.getAttribute("userImage");
 
@@ -172,7 +172,7 @@ public class AdminController {
 	}
 
 	@PostMapping("/add")
-	public String addImagePost(@RequestParam("image") MultipartFile file, Principal principal, HttpSession session) throws IOException, SerialException, SQLException {
+	public String addImagePost(@RequestParam("image") MultipartFile file, Principal principal, HttpSession session) throws IOException,  SQLException {
 		String email = principal.getName();
 
 		User user = userRepo.getUserByEmail(email);

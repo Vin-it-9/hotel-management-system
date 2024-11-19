@@ -47,7 +47,7 @@ public class HomeController {
 	}
 
 	@GetMapping("/")
-	public String index(Principal principal, HttpSession session, Model model) throws IOException, SQLException {
+	public String index(Principal principal, HttpSession session, Model model) throws  SQLException {
 
 		if (principal != null && session.getAttribute("userImage") == null) {
 
@@ -76,7 +76,7 @@ public class HomeController {
 	}
 
 	@PostMapping("/saveUser")
-	public String saveUser(@ModelAttribute User user, HttpSession session, Model m, HttpServletRequest request) {
+	public String saveUser(@ModelAttribute User user, HttpSession session, HttpServletRequest request) {
 
 		String url = request.getRequestURL().toString();
 
