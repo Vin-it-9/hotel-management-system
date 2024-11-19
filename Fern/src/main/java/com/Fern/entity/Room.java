@@ -3,12 +3,14 @@ package com.Fern.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.sql.Blob;
 import java.util.HashSet;
 import java.util.Set;
 
 @Data
 @Entity
 public class Room {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,7 +19,12 @@ public class Room {
     private String roomNumber;
 
     private int floorNumber;
+
     private double size; // e.g., square feet
+
+    @Lob
+    private Blob image;
+
     private double pricePerNight;
 
     @ManyToOne
@@ -34,5 +41,6 @@ public class Room {
             inverseJoinColumns = @JoinColumn(name = "amenity_id")
     )
     private Set<Amenity> amenities = new HashSet<>();
+
 
 }

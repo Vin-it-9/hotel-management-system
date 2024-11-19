@@ -1,11 +1,14 @@
 package com.Fern.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+
 import java.sql.Blob;
 import java.util.Date;
 
 @Entity
 @Table(name = "image_table")
+@Data
 public class Image {
 
     @Id
@@ -25,32 +28,5 @@ public class Image {
     @JoinColumn(name = "user_email", referencedColumnName = "email", nullable = false, unique = true)
     private User user;
 
-    public User getUser() {
-        return user;
-    }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Blob getImage() {
-        return image;
-    }
-
-    public void setImage(Blob image) {
-        this.image = image;
-    }
-
-    public Date getDate() {
-        return date;
-    }
 }
