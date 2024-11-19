@@ -1,6 +1,5 @@
 package com.Fern.controller;
 
-import java.io.IOException;
 import java.security.Principal;
 import java.sql.SQLException;
 
@@ -80,9 +79,9 @@ public class HomeController {
 	public String saveUser(@ModelAttribute User user, HttpSession session, HttpServletRequest request) {
 
 		String url = request.getRequestURL().toString();
-
 		url = url.replace(request.getServletPath(), "");
 
+		user.setRole("ROLE_USER");
 		User savedUser = userService.saveUser(user, url);
 
 		if (savedUser == null) {
@@ -92,7 +91,6 @@ public class HomeController {
 		session.setAttribute("msg", "Registered successfully! Please check your email to verify your account.");
 		return "redirect:/signin";
 	}
-
 
 	@GetMapping("/verify")
 	public String verifyAccount(@Param("code") String code, Model m) {
@@ -167,6 +165,8 @@ public class HomeController {
 			return "change-password";
 		}
 	}
+
+
 
 
 }

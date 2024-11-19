@@ -36,31 +36,28 @@ public class UserServiceImpl implements UserService {
     private UserService userService;
 
 
+
 	@Override
 	public User saveUser(User user, String url) {
-
 		if (userRepo.existsByEmail(user.getEmail())) {
 			return null;
 		}
 
 		String password = passwordEncoder.encode(user.getPassword());
-
 		user.setPassword(password);
-		user.setRole("ROLE_USER");
 
 		user.setEnable(false);
 		user.setVerificationCode(UUID.randomUUID().toString());
-
 		user.setAccountNonLocked(true);
 		user.setFailedAttempt(0);
 		user.setLockTime(null);
 
-		User newuser = userRepo.save(user);
+		User newUser = userRepo.save(user);
 
-		if (newuser != null) {
-			sendEmail(newuser, url);
+		if (newUser != null) {
+			sendEmail(newUser, url);
 		}
-		return newuser;
+		return newUser;
 	}
 
 
@@ -74,6 +71,7 @@ public class UserServiceImpl implements UserService {
 			return true;
 		}
 		return false;
+
 	}
 
 	@Override
@@ -213,5 +211,7 @@ public class UserServiceImpl implements UserService {
 	public List<User> getAllUsersByRole(String role) {
 		return userRepo.findByRole(role);
 	}
+
+
 
 }

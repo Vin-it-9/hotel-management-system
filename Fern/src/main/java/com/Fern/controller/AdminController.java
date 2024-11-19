@@ -5,19 +5,25 @@ import java.security.Principal;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
+import java.util.UUID;
 
 import com.Fern.entity.Image;
 import com.Fern.service.ImageService;
 import com.Fern.service.ImageServiceImpl;
+import com.Fern.service.UserService;
 import com.Fern.service.UserServiceImpl;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +33,7 @@ import com.Fern.repository.UserRepo;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 
 @Controller
@@ -41,6 +48,12 @@ public class AdminController {
 
 	@Autowired
 	private ImageService imageService;
+
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+
+	@Autowired
+	private UserService userService;
 
 	@Autowired
 	private ImageServiceImpl imageServiceImpl;
@@ -203,12 +216,13 @@ public class AdminController {
 		return "redirect:/admin/editProfile";
 	}
 
-
 	@GetMapping("/user/list")
 	public String listUsers(Model model) {
 		List<User> users = userServiceImpl.getAllUsersByRole("ROLE_USER");
 		model.addAttribute("users", users);
 		return "admin/list_users";
 	}
+
+
 
 }
