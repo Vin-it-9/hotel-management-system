@@ -85,6 +85,9 @@ public class UserServiceImpl implements UserService {
 
 			existingUser.setName(updatedUser.getName());
 			existingUser.setMobileNo(updatedUser.getMobileNo());
+			existingUser.setGender(updatedUser.getGender());
+			existingUser.setAddress(updatedUser.getAddress());
+			existingUser.setDateOfBirth(updatedUser.getDateOfBirth());
 
 			userRepo.save(existingUser);
 			return true;
@@ -208,7 +211,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<User> getAllUsersByRole(String role) {
-		return userRepo.findByRole(role); // Fetch users with specified role
+		return userRepo.findByRole(role);
 	}
 
 }

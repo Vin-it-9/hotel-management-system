@@ -34,7 +34,7 @@
           <td class="border border-gray-300 px-4 py-2 text-gray-700" th:text="${user.mobileNo}"></td>
           <td class="border border-gray-300 px-4 py-2 text-gray-700" th:text="${user.gender}"></td>
           <td class="border border-gray-300 px-4 py-2 text-gray-700"
-              th:text="${user.dateOfBirth != null ? #temporals.format(user.dateOfBirth, 'dd-MM-yyyy') : 'N/A'}">
+              th:text="${user.dateOfBirth != null ? #dates.format(user.dateOfBirth, 'dd-MM-yyyy') : 'N/A'}">
           </td>
           <td class="border border-gray-300 px-4 py-2 text-gray-700" th:text="${#dates.format(user.accountCreationDate, 'dd-MM-yyyy HH:mm')}"></td>
           <td class="border border-gray-300 px-4 py-2">

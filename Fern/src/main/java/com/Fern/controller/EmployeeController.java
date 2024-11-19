@@ -24,6 +24,7 @@ import java.security.Principal;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Base64;
+import java.util.List;
 
 
 @Controller
@@ -197,6 +198,12 @@ public class EmployeeController {
         return "redirect:/employee/editProfile";
     }
 
+    @GetMapping("/user/list")
+    public String listUsers(Model model) {
+        List<User> users = userServiceImpl.getAllUsersByRole("ROLE_USER");
+        model.addAttribute("users", users);
+        return "employee/list_users";
+    }
 
 
 }

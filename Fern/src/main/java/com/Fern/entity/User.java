@@ -1,5 +1,6 @@
 package com.Fern.entity;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import jakarta.persistence.*;
@@ -39,7 +40,7 @@ public class User {
 	private String address;
 
 	@Column(nullable = true)
-	private Date dateOfBirth;
+	private LocalDate dateOfBirth;
 
 	private String role;
 
@@ -165,17 +166,19 @@ public class User {
 		this.address = address;
 	}
 
-	public Date getDateOfBirth() {
-		return dateOfBirth;
-	}
-
-	public void setDateOfBirth(Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
 
 	public Date getAccountCreationDate() {
 		return accountCreationDate;
 	}
+
+	public LocalDate getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(LocalDate dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
 
 	public void setAccountCreationDate(Date accountCreationDate) {
 		this.accountCreationDate = accountCreationDate;

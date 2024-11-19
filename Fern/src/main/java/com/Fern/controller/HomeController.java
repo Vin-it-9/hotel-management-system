@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Base64;
 
 import com.Fern.repository.UserRepo;
@@ -116,13 +117,16 @@ public class HomeController {
 		model.addAttribute("user", user);
 
 		return "editProfile";
-
 	}
 
 	@PostMapping("/updateProfile")
 	public String updateProfile(@ModelAttribute User user, Principal principal, HttpSession session) {
 
 		String email = principal.getName();
+
+		if (user.getDateOfBirth() != null) {
+			user.setDateOfBirth(LocalDate.parse(user.getDateOfBirth().toString()));
+		}
 
 		boolean isUpdated = userServiceImpl.updateUserProfile(user, email);
 
