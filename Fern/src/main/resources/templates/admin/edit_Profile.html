@@ -25,7 +25,7 @@
 
                     <!-- Edit Profile Form -->
                     <div class="p-6 space-y-6">
-                        <form action="/updateProfile" method="post">
+                        <form action="/admin/updateProfile" method="post">
                             <div class="mb-4">
                                 <label class="block text-gray-800 font-medium" for="name">Name</label>
                                 <input type="text" id="name" name="name" class="mt-2 block w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" th:value="${user.name}" required>
@@ -52,8 +52,6 @@
                         <img th:src="'data:image/jpeg;base64,' + ${session.userImage}" alt="Profile Image" class="rounded-full w-36 h-36 object-cover border-4 border-gray-200 shadow-lg"
                              onerror="this.onerror=null; this.src='https://attic.sh/wyqx637oqvfbdxrf9agqwuzwznrl';">
                     </div>
-
-                    <!-- Change Profile Image Form -->
                     <form action="/add" method="post" enctype="multipart/form-data" class="p-6 space-y-4">
                         <div class="flex flex-col items-center">
                             <label for="image" class="sr-only">Choose a profile image</label>

@@ -46,6 +46,37 @@ public class EmployeeController {
     public String changePassword() {
         return "employee/change-password";
     }
+
+
+    @GetMapping("/editProfile")
+    public String showEditProfilePage(Model model, Principal principal) {
+
+        String email = principal.getName();
+        User user = userRepo.getUserByEmail(email);
+
+        model.addAttribute("user", user);
+
+        return "employee/edit_Profile";
+
+    }
+
+    @PostMapping("/updateProfile")
+    public String updateProfile(@ModelAttribute User user, Principal principal, HttpSession session) {
+
+        String email = principal.getName();
+
+        boolean isUpdated = userServiceImpl.updateUserProfile(user, email);
+
+        if (isUpdated) {
+            session.setAttribute("msg", "Profile updated successfully.");
+        } else {
+            session.setAttribute("msg", "Error updating profile.");
+        }
+
+        return "redirect:/employee/editProfile";
+
+    }
+
     @PostMapping("/change-password")
     public String changePassword(@AuthenticationPrincipal UserDetails userDetails,
                                  @RequestParam String currentPassword,
@@ -66,7 +97,7 @@ public class EmployeeController {
             return "redirect:/employee/change-password";
         } else {
             model.addAttribute("error", "Current password is incorrect.");
-            return "change-password";
+            return "/employee/change-password";
         }
     }
 
