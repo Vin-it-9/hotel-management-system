@@ -48,12 +48,6 @@ public class AdminController {
 	private AmenityService amenityService;
 
 	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
-
-	@Autowired
-	private UserService userService;
-
-	@Autowired
 	private ImageServiceImpl imageServiceImpl;
 
 	@ModelAttribute
@@ -255,10 +249,5 @@ public class AdminController {
 		amenityService.deleteAmenityById(id);
 		return new ResponseEntity<>("Amenity deleted successfully.", HttpStatus.OK);
 	}
-
-
-
-
-
 
 }
