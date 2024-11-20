@@ -248,9 +248,8 @@ public class AdminController {
 
 		return "redirect:/admin/amenities/list";
 	}
-	public void test(){
-		System.out.println("test");
-	}
+
+
 
 
 }
