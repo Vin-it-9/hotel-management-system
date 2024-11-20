@@ -22,17 +22,6 @@ public class AmenityController {
         this.amenityService = amenityService;
     }
 
-//    @PostMapping("/admin/amenities/add")
-//    public ResponseEntity<String> addAmenity(@RequestBody AmenityDTO amenityDTO) {
-//        try {
-//            amenityService.addAmenity(amenityDTO);
-//            return new ResponseEntity<>("Amenity added successfully", HttpStatus.CREATED);
-//        } catch (IllegalArgumentException ex) {
-//            return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
-//        } catch (Exception ex) {
-//            return new ResponseEntity<>("An error occurred while adding the amenity", HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
 
     @GetMapping("/list")
         public String getAllAmenities(Model model) {
@@ -46,12 +35,6 @@ public class AmenityController {
     public ResponseEntity<AmenityDTO> getAmenityById(@PathVariable int id) {
         AmenityDTO amenityDTO = amenityService.getAmenityById(id);
         return new ResponseEntity<>(amenityDTO, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/admin/{id}")
-    public ResponseEntity<String> deleteAmenityById(@PathVariable int id) {
-        amenityService.deleteAmenityById(id);
-        return new ResponseEntity<>("Amenity deleted successfully.", HttpStatus.OK);
     }
 
 }

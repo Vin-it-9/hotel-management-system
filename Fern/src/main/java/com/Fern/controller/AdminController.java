@@ -13,6 +13,7 @@ import com.Fern.entity.Image;
 import com.Fern.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -248,6 +249,14 @@ public class AdminController {
 
 		return "redirect:/admin/amenities/list";
 	}
+
+	@PostMapping("/amenities/delete/{id}")
+	public ResponseEntity<String> deleteAmenityById(@PathVariable int id) {
+		amenityService.deleteAmenityById(id);
+		return new ResponseEntity<>("Amenity deleted successfully.", HttpStatus.OK);
+	}
+
+
 
 
 
