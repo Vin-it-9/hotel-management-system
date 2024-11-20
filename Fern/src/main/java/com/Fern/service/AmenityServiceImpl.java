@@ -3,6 +3,7 @@ package com.Fern.service;
 import com.Fern.dto.AmenityDTO;
 import com.Fern.entity.Amenity;
 import com.Fern.repository.AmenityRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class AmenityServiceImpl implements AmenityService {
 
     @Autowired
@@ -18,6 +20,7 @@ public class AmenityServiceImpl implements AmenityService {
 
     @Override
     public void addAmenity(AmenityDTO amenityDTO) {
+
         if (StringUtils.isEmpty(amenityDTO.getName())) {
             throw new IllegalArgumentException("Amenity name cannot be empty");
         }
@@ -30,8 +33,8 @@ public class AmenityServiceImpl implements AmenityService {
         amenity.setName(amenityDTO.getName());
         amenity.setDescription(amenityDTO.getDescription());
         amenity.setCreatedAt(amenityDTO.getCreatedAt());
-
         amenityRepository.save(amenity);
+
     }
 
     @Override

@@ -5,22 +5,16 @@ import java.security.Principal;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
-import java.util.UUID;
 
+import com.Fern.dto.AmenityDTO;
 import com.Fern.entity.Image;
-import com.Fern.service.ImageService;
-import com.Fern.service.ImageServiceImpl;
-import com.Fern.service.UserService;
-import com.Fern.service.UserServiceImpl;
-import jakarta.servlet.http.HttpServletRequest;
+import com.Fern.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -48,6 +42,9 @@ public class AdminController {
 
 	@Autowired
 	private ImageService imageService;
+
+	@Autowired
+	private AmenityService amenityService;
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -223,6 +220,34 @@ public class AdminController {
 		return "admin/list_users";
 	}
 
+	@GetMapping("/amenities/list")
+	public String getAllAmenities(Model model) {
+		List<AmenityDTO> amenities = amenityService.getAllAmenities();
+		model.addAttribute("amenities", amenities);
+		return "admin/list_amenity";
+	}
+
+	@GetMapping("amenities/add")
+	public String addAmenity(Model model) {
+		model.addAttribute("amenities", new AmenityDTO());
+		return "/admin/add_amenity";
+	}
+
+	@PostMapping("/amenities/add")
+	public String addAmenity(@RequestParam String name, @RequestParam String description, Model model) {
+		AmenityDTO amenityDTO = new AmenityDTO();
+		amenityDTO.setName(name);
+		amenityDTO.setDescription(description);
+
+		try {
+			amenityService.addAmenity(amenityDTO);
+			model.addAttribute("successMessage", "Amenity added successfully!");
+		} catch (Exception ex) {
+			model.addAttribute("errorMessage", "Failed to add amenity: " + ex.getMessage());
+		}
+
+		return "redirect:/admin/amenities/list";
+	}
 
 
 }

@@ -1,7 +1,10 @@
 package com.Fern.controller;
 
 import java.security.Principal;
+import java.util.List;
 
+import com.Fern.dto.AmenityDTO;
+import com.Fern.service.AmenityService;
 import com.Fern.service.UserServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,7 @@ public class UserController {
 
 	@Autowired
 	private UserRepo userRepo;
+
 
     @Autowired
     private UserServiceImpl userServiceImpl;
@@ -38,6 +42,8 @@ public class UserController {
 		String email = principal.getName();
 		return "profile";
 	}
+
+
 
 
 

@@ -66,7 +66,6 @@ public class SecurityConfig {
 				.authorizeHttpRequests((requests) -> requests
 						.requestMatchers("/user/**").hasRole("USER")
 						.requestMatchers("/admin/**").hasRole("ADMIN")
-						.requestMatchers("/employee/**").hasRole("EMPLOYEE")
 						.requestMatchers("/**").permitAll()
 				)
 				.formLogin((form) -> form

@@ -3,6 +3,7 @@ package com.Fern.controller;
 import java.security.Principal;
 import java.sql.SQLException;
 
+import com.Fern.dto.AmenityDTO;
 import com.Fern.entity.*;
 import com.Fern.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Base64;
+import java.util.List;
 import java.util.UUID;
 
 import com.Fern.repository.UserRepo;
@@ -196,8 +198,5 @@ public class HomeController {
 			return "change-password";
 		}
 	}
-
-
-
 
 }

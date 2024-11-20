@@ -1,16 +1,27 @@
 package com.Fern.dto;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 
 @Data
+@EntityListeners(AuditingEntityListener.class)
 public class AmenityDTO {
 
     private int id;
     private String name;
     private String description;
+
+    @CreatedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(updatable = false, nullable = false)
     private LocalDateTime createdAt;
 
     public int getId() {

@@ -2,23 +2,29 @@ package com.Fern.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @Data
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Amenity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(nullable = false, unique = true)
-    private String name; // E.g., WiFi, AC, Mini Bar
+    private String name;
 
     @Column(length = 500)
     private String description;
 
-    private LocalDateTime createdAt; // If you need to track creation time or other fields
+    @CreatedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(updatable = false, nullable = false)
+    private LocalDateTime createdAt;
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
