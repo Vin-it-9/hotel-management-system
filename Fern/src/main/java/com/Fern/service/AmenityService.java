@@ -11,4 +11,6 @@ public interface AmenityService {
     public List<AmenityDTO> getAllAmenities();
 
     public AmenityDTO getAmenityById(int id);
+
+    void deleteAmenityById(int id);
 }

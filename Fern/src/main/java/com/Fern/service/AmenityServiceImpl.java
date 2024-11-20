@@ -4,11 +4,8 @@ import com.Fern.dto.AmenityDTO;
 import com.Fern.entity.Amenity;
 import com.Fern.repository.AmenityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,6 +41,7 @@ public class AmenityServiceImpl implements AmenityService {
         return amenities.stream()
                 .map(amenity -> {
                     AmenityDTO amenityDTO = new AmenityDTO();
+                    amenityDTO.setId(amenity.getId());
                     amenityDTO.setName(amenity.getName());
                     amenityDTO.setDescription(amenity.getDescription());
                     amenityDTO.setCreatedAt(amenity.getCreatedAt());
@@ -57,11 +55,18 @@ public class AmenityServiceImpl implements AmenityService {
 
         Amenity amenity = (Amenity) amenityRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Amenity with ID " + id + " not found"));
         AmenityDTO amenityDTO = new AmenityDTO();
+        amenityDTO.setId(amenity.getId());
         amenityDTO.setName(amenity.getName());
         amenityDTO.setDescription(amenity.getDescription());
         amenityDTO.setCreatedAt(amenity.getCreatedAt());
 
         return amenityDTO;
+    }
+
+    @Override
+    public void deleteAmenityById(int id) {
+        Amenity amenity = (Amenity) amenityRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Amenity with ID " + id + " not found"));
+        amenityRepository.delete(amenity);
     }
 
 }

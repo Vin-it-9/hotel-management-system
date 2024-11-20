@@ -40,4 +40,10 @@ public class AmenityController {
         return new ResponseEntity<>(amenityDTO, HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteAmenityById(@PathVariable int id) {
+        amenityService.deleteAmenityById(id);
+        return new ResponseEntity<>("Amenity deleted successfully.", HttpStatus.OK);
+    }
+
 }

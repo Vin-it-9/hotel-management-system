@@ -8,9 +8,18 @@ import java.time.LocalDateTime;
 @Data
 public class AmenityDTO {
 
+    private int id;
     private String name;
-    private String description; // Optional field for a description of the amenity
-    private LocalDateTime createdAt; // If you need to track creation time or other fields
+    private String description;
+    private LocalDateTime createdAt;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
