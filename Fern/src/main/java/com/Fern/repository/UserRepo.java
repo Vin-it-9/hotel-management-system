@@ -5,16 +5,18 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import com.Fern.entity.User;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface UserRepo extends JpaRepository<User, Long> {
 
 	public User findByEmail(String emaill);
 
 	public User findByVerificationCode(String code);
-	
+
 	boolean existsByEmail(String email);
 
 	@Query("update User u set u.failedAttempt=?1 where email=?2 ")
