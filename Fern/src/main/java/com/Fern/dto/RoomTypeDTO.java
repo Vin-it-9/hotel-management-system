@@ -1,23 +1,20 @@
-package com.Fern.entity;
+package com.Fern.dto;
 
-import jakarta.persistence.*;
+
+import jakarta.persistence.EntityListeners;
 import lombok.Data;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Data
-@Entity
-public class RoomType {
+@EntityListeners(AuditingEntityListener.class)
+public class RoomTypeDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
     private String typeName;
 
-    @Column(length = 500)
     private String description;
 
-    @Column(nullable = false)
     private String purpose;
 
     public Long getId() {
@@ -52,3 +49,4 @@ public class RoomType {
         this.purpose = purpose;
     }
 }
+

@@ -7,11 +7,12 @@ import java.util.Optional;
 
 public interface RoomTypeRepository extends JpaRepository<RoomType, Long> {
 
-    // Find a room type by its name
     Optional<RoomType> findByTypeName(String typeName);
 
-    // Check if a room type exists by its name
+    public RoomType findById(long id);
+
     boolean existsByTypeName(String typeName);
+
 
 
 }

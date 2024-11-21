@@ -10,7 +10,6 @@
 <body class="bg-gray-50 text-gray-800">
 <section class="lg:ml-32 lg:mr-32 m-4">
 	<div class="main m-4">
-		<!-- Welcome Message -->
 		<div class="mb-6">
 			<th:block th:if="${message != null}">
 				<p class="text-center session-msg text-green-500 text-lg mt-4">[[${message}]]</p>
@@ -26,9 +25,7 @@
 			</h4>
 		</div>
 
-		<!-- Admin Dashboard Features -->
 		<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-			<!-- Manage Customers -->
 			<div class="bg-white shadow-lg rounded-xl p-6 hover:shadow-xl hover:scale-105 transform transition-all duration-200 cursor-pointer">
 				<div class="flex items-center space-x-3 mb-3">
 					<div class="bg-blue-500 text-white p-2 rounded-full">
@@ -44,7 +41,6 @@
 				</ul>
 			</div>
 
-			<!-- Manage Rooms -->
 			<div class="bg-white shadow-lg rounded-xl p-6 hover:shadow-xl hover:scale-105 transform transition-all duration-200 cursor-pointer">
 				<div class="flex items-center space-x-3 mb-3">
 					<div class="bg-green-500 text-white p-2 rounded-full">
@@ -60,7 +56,6 @@
 				</ul>
 			</div>
 
-			<!-- Manage Room Types -->
 			<div class="bg-white shadow-lg rounded-xl p-6 hover:shadow-xl hover:scale-105 transform transition-all duration-200 cursor-pointer">
 				<div class="flex items-center space-x-3 mb-3">
 					<div class="bg-purple-500 text-white p-2 rounded-full">
@@ -76,7 +71,6 @@
 				</ul>
 			</div>
 
-			<!-- Manage Bookings -->
 			<div class="bg-white shadow-lg rounded-xl p-6 hover:shadow-xl hover:scale-105 transform transition-all duration-200 cursor-pointer">
 				<div class="flex items-center space-x-3 mb-3">
 					<div class="bg-yellow-500 text-white p-2 rounded-full">
@@ -91,7 +85,6 @@
 					<li><a href="/admin/bookings/list" class="hover:text-blue-500">View Bookings</a></li>
 				</ul>
 			</div>
-			<!-- Manage Billing -->
 			<div class="bg-white shadow-lg rounded-xl p-6 hover:shadow-xl hover:scale-105 transform transition-all duration-200 cursor-pointer">
 				<div class="flex items-center space-x-3 mb-3">
 					<div class="bg-yellow-500 text-white p-2 rounded-full">
@@ -106,8 +99,6 @@
 					<li><a href="/admin/bills/list" class="hover:text-blue-500">View Bills</a></li>
 				</ul>
 			</div>
-
-			<!-- Reports -->
 			<div class="bg-white shadow-lg rounded-xl p-6 hover:shadow-xl hover:scale-105 transform transition-all duration-200 cursor-pointer">
 				<div class="flex items-center space-x-3 mb-3">
 					<div class="bg-indigo-500 text-white p-2 rounded-full">
@@ -123,8 +114,6 @@
 				</ul>
 			</div>
 
-
-			<!-- Amenity -->
 			<div class="bg-white shadow-lg rounded-xl p-6 hover:shadow-xl hover:scale-105 transform transition-all duration-200 cursor-pointer">
 				<div class="flex items-center space-x-3 mb-3">
 					<div class="bg-indigo-500 text-white p-2 rounded-full">
