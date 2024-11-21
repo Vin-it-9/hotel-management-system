@@ -9,6 +9,7 @@ import java.util.Base64;
 import java.util.List;
 
 import com.Fern.dto.AmenityDTO;
+import com.Fern.dto.RoomTypeDTO;
 import com.Fern.entity.Image;
 import com.Fern.service.*;
 import jakarta.servlet.http.HttpSession;
@@ -47,6 +48,9 @@ public class AdminController {
 
 	@Autowired
 	private ImageServiceImpl imageServiceImpl;
+
+	@Autowired
+	private RoomTypeService roomTypeService;
 
 	@ModelAttribute
 	public void commonUser(Principal p, Model m) {
@@ -247,5 +251,43 @@ public class AdminController {
 		amenityService.deleteAmenityById(id);
 		return new ResponseEntity<>("Amenity deleted successfully.", HttpStatus.OK);
 	}
+
+	@GetMapping("/roomtype/add")
+	public String addRoomType(Model model) {
+		model.addAttribute("roomtype", new RoomTypeDTO());
+		return "/admin/add_roomtype";
+	}
+
+	@PostMapping("/roomtype/add")
+	public String addRoomType(@RequestParam String typeName, @RequestParam String description, @RequestParam String purpose, Model model) {
+
+		RoomTypeDTO roomTypeDTO = new RoomTypeDTO();
+		roomTypeDTO.setTypeName(typeName);
+		roomTypeDTO.setDescription(description);
+		roomTypeDTO.setPurpose(purpose);
+
+		try {
+			roomTypeService.addRoomType(roomTypeDTO);
+			model.addAttribute("successMessage", "roomtype added successfully!");
+		} catch (Exception ex) {
+			model.addAttribute("errorMessage", "Failed to add roomtype: " + ex.getMessage());
+		}
+
+		return "redirect:/amenities/list";
+	}
+
+	@GetMapping("/roomtype/list")
+	public String getAllRoomTypes(Model model) {
+		List<RoomTypeDTO> amenities = roomTypeService.getAllRoomTypes();
+		model.addAttribute("roomtype", amenities);
+		return "admin/list_roomtype";
+	}
+
+	@PostMapping("/roomtype/delete/{id}")
+	public ResponseEntity<String> deleteRoomTypeById(@PathVariable int id) {
+		roomTypeService.deleteRoomTypeById(id);
+		return new ResponseEntity<>("RoomType deleted successfully.", HttpStatus.OK);
+	}
+
 
 }

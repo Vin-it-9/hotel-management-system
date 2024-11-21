@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html class="dark" lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/base::layout(~{::section})}">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Available Amenities</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-200">
+
+<section class="flex justify-center items-center p-4">
+    <div class="main m-4 w-full">
+        <div class="container mx-auto mt-8">
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">All RoomTypes</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                    <div th:each="amenity : ${roomtype}" class="bg-gray-100 p-4 rounded-lg shadow hover:shadow-lg transition">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="text-lg font-bold text-gray-700" th:text="${amenity.typeName}">RoomType</h3>
+                            <form th:action="@{'/admin/roomtype/delete/' + ${amenity.id}}" method="post">
+                                <button type="submit" class="text-red-500 hover:text-red-700">
+                                    <img src="https://img.icons8.com/ios-glyphs/30/fa314a/trash.png" alt="Delete" class="w-5 h-5">
+                                </button>
+                            </form>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4" th:text="${amenity.description}">Amenity Description</p>
+                        <p class="text-gray-600 text-sm mb-4" th:text="${amenity.purpose}">Amenity Purpose</p>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

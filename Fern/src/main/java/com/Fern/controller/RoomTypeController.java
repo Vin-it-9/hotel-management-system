@@ -24,45 +24,20 @@ public class RoomTypeController {
         this.roomTypeService = roomTypeService;
     }
 
-    @GetMapping("/add")
-    public String addRoomType(Model model) {
-        model.addAttribute("roomtype", new RoomTypeDTO());
-        return "/admin/add_roomtype";
-    }
-
-
-    @PostMapping("/add")
-    public String addRoomType(@RequestParam String typeName, @RequestParam String description, @RequestParam String purpose, Model model) {
-
-        RoomTypeDTO roomTypeDTO = new RoomTypeDTO();
-        roomTypeDTO.setTypeName(typeName);
-        roomTypeDTO.setDescription(description);
-        roomTypeDTO.setPurpose(purpose);
-
-        try {
-            roomTypeService.addRoomType(roomTypeDTO);
-            model.addAttribute("successMessage", "roomtype added successfully!");
-        } catch (Exception ex) {
-            model.addAttribute("errorMessage", "Failed to add roomtype: " + ex.getMessage());
-        }
-
-        return "redirect:/amenities/list";
+    @GetMapping("/list")
+    public String getAllRoomTypes(Model model) {
+        List<RoomTypeDTO> amenities = roomTypeService.getAllRoomTypes();
+        model.addAttribute("roomtype", amenities);
+        return "list_amenity";
     }
 
 
 //    @GetMapping("/list")
-//    public String getAllRoomTypes(Model model) {
-//        List<RoomTypeDTO> amenities = roomTypeService.getAllRoomTypes();
-//        model.addAttribute("roomtype", amenities);
-//        return "list_amenity";
+//    @ResponseBody
+//    public List<RoomTypeDTO> getAllRoomTypes() {
+//        List<RoomTypeDTO> roomTypes = roomTypeService.getAllRoomTypes();
+//        return roomTypes;
 //    }
-
-    @GetMapping("/list")
-    @ResponseBody
-    public List<RoomTypeDTO> getAllRoomTypes() {
-        List<RoomTypeDTO> roomTypes = roomTypeService.getAllRoomTypes();
-        return roomTypes;
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<RoomTypeDTO> getRoomTypeById(@PathVariable int id) {
