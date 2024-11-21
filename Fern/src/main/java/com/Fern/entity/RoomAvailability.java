@@ -23,4 +23,5 @@ public class RoomAvailability {
     @OneToOne
     @JoinColumn(name = "room_id", nullable = false)
     private Room room;
+
 }

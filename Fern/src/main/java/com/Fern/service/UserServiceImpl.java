@@ -239,7 +239,6 @@ public class UserServiceImpl implements UserService {
 		user.setDateOfBirth(dateOfBirth);
 
 		userRepo.save(user);
-
 	}
 
 }
