@@ -1,6 +1,8 @@
 package com.Fern.controller;
 
+import com.Fern.dto.AmenityDTO;
 import com.Fern.dto.RoomTypeDTO;
+import com.Fern.entity.RoomType;
 import com.Fern.service.RoomTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -68,7 +70,10 @@ public class RoomTypeController {
         return new ResponseEntity<>(roomTypeDTO, HttpStatus.OK);
     }
 
-
-
+    @PostMapping("/{id}")
+    public ResponseEntity<String> deleteRoomTypeById(@PathVariable int id) {
+        roomTypeService.deleteRoomTypeById(id);
+        return new ResponseEntity<>("Amenity deleted successfully.", HttpStatus.OK);
+    }
 
 }

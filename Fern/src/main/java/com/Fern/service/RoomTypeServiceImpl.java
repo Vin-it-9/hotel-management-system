@@ -76,6 +76,7 @@ public class RoomTypeServiceImpl implements RoomTypeService {
 
     @Override
     public void deleteRoomTypeById(int id) {
-
+        RoomType roomType = (RoomType) roomTypeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Amenity with ID " + id + " not found"));
+        roomTypeRepository.delete(roomType);
     }
 }
