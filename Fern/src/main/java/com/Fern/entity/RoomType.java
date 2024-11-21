@@ -52,6 +52,4 @@ public class RoomType {
     public void setPurpose(String purpose) {
         this.purpose = purpose;
     }
-
-
 }

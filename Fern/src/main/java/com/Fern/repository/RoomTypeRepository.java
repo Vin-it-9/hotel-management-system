@@ -9,7 +9,7 @@ public interface RoomTypeRepository extends JpaRepository<RoomType, Long> {
 
     Optional<RoomType> findByTypeName(String typeName);
 
-    public RoomType findById(long id);
+    Optional<Object> findById(int id);
 
     boolean existsByTypeName(String typeName);
 
