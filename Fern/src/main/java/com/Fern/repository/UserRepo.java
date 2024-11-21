@@ -14,9 +14,7 @@ public interface UserRepo extends JpaRepository<User, Long> {
 	public User findByEmail(String emaill);
 
 	public User findByVerificationCode(String code);
-
-	Optional<User> findByName(String name);
-
+	
 	boolean existsByEmail(String email);
 
 	@Query("update User u set u.failedAttempt=?1 where email=?2 ")

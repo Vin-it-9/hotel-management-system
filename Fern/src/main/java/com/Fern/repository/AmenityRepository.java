@@ -8,8 +8,6 @@ public interface AmenityRepository extends JpaRepository<Amenity, Long> {
 
     Optional<Amenity> findByName(String name);
 
-    List<Amenity> findAllByName(String name);
-
     boolean existsByName(String name);
 
     Optional<Object> findById(int id);
