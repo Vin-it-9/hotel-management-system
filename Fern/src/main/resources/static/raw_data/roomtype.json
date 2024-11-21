@@ -1,0 +1,82 @@
+
+//add multiple roomtypes
+// method = POST
+//http://localhost:8080/roomtype/addroomtype
+
+[
+  {
+    "typeName": "Single Room",
+    "description": "A small room with one single bed, ideal for solo travelers.",
+    "purpose": "Solo stay"
+  },
+  {
+    "typeName": "Double Room",
+    "description": "A comfortable room with a double bed for two people.",
+    "purpose": "Couple"
+  },
+  {
+    "typeName": "Twin Room",
+    "description": "A room with two single beds for two guests.",
+    "purpose": "Friends"
+  },
+  {
+    "typeName": "Suite",
+    "description": "A luxurious suite with separate living and bedroom areas.",
+    "purpose": "Luxury"
+  },
+  {
+    "typeName": "Family Room",
+    "description": "A large room designed for families with multiple beds.",
+    "purpose": "Family"
+  },
+  {
+    "typeName": "Deluxe Room",
+    "description": "A deluxe room with upscale amenities and a beautiful view.",
+    "purpose": "Comfort"
+  },
+  {
+    "typeName": "Studio Room",
+    "description": "A studio-style room with a kitchenette and open layout.",
+    "purpose": "Extended stay"
+  },
+  {
+    "typeName": "King Room",
+    "description": "A spacious room with a king-size bed for extra comfort.",
+    "purpose": "Spacious"
+  },
+  {
+    "typeName": "Accessible Room",
+    "description": "A room with accessibility features for guests with disabilities.",
+    "purpose": "Accessibility"
+  },
+  {
+    "typeName": "Economy Room",
+    "description": "A budget-friendly room with basic amenities.",
+    "purpose": "Budget"
+  },
+  {
+    "typeName": "Penthouse Suite",
+    "description": "An extravagant suite on the top floor with premium amenities.",
+    "purpose": "Luxury"
+  },
+  {
+    "typeName": "Presidential Suite",
+    "description": "The most luxurious room offering exclusive features and services.",
+    "purpose": "Prestige"
+  },
+  {
+    "typeName": "Bungalow",
+    "description": "A private bungalow with garden views and unique décor.",
+    "purpose": "Privacy"
+  },
+  {
+    "typeName": "Cabana",
+    "description": "A poolside room with direct pool access and open-air features.",
+    "purpose": "Recreation"
+  },
+  {
+    "typeName": "Conference Suite",
+    "description": "A suite equipped for small business meetings.",
+    "purpose": "Business"
+  }
+]

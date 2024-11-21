@@ -43,6 +43,8 @@ public class RoomTypeServiceImpl implements RoomTypeService {
 
         roomTypeRepository.save(roomType);
     }
+
+
     @Override
     public List<RoomTypeDTO> getAllRoomTypes() {
         List<RoomType> roomTypes = roomTypeRepository.findAll();
@@ -79,4 +81,30 @@ public class RoomTypeServiceImpl implements RoomTypeService {
         RoomType roomType = (RoomType) roomTypeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Amenity with ID " + id + " not found"));
         roomTypeRepository.delete(roomType);
     }
+
+    @Override
+    public void addMultipleRoomTypes(List<RoomTypeDTO> roomTypeDTOList) {
+
+        if (roomTypeDTOList == null || roomTypeDTOList.isEmpty()) {
+            throw new IllegalArgumentException("RoomType list cannot be null or empty");
+        }
+
+        for (RoomTypeDTO roomTypeDTO : roomTypeDTOList) {
+            if (StringUtils.isEmpty(roomTypeDTO.getTypeName())) {
+                throw new IllegalArgumentException("TypeName cannot be empty for one of the RoomTypes");
+            }
+
+            if (roomTypeRepository.existsByTypeName(roomTypeDTO.getTypeName())) {
+                throw new IllegalArgumentException("RoomType with name " + roomTypeDTO.getTypeName() + " already exists");
+            }
+
+            RoomType roomType = new RoomType();
+            roomType.setTypeName(roomTypeDTO.getTypeName());
+            roomType.setDescription(roomTypeDTO.getDescription());
+            roomType.setPurpose(roomTypeDTO.getPurpose());
+
+            roomTypeRepository.save(roomType);
+        }
+    }
+
 }

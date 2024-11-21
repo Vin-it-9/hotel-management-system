@@ -3,14 +3,10 @@ package com.Fern.controller;
 import java.security.Principal;
 import java.sql.SQLException;
 
-import com.Fern.dto.AmenityDTO;
 import com.Fern.entity.*;
 import com.Fern.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Base64;
-import java.util.List;
-import java.util.UUID;
 
 import com.Fern.repository.UserRepo;
 
@@ -78,8 +72,6 @@ public class HomeController {
 		return "index";
 	}
 
-
-
 	@GetMapping("/register")
 	public String register() {
 		return "register";
@@ -88,7 +80,7 @@ public class HomeController {
 	@GetMapping("/signin")
 	public String login() {
 
-		if (userRepo.findByName("admin").isEmpty()) {
+		if (!userRepo.existsByEmail("admin@gmail.com")){
 			User admin = new User();
 			admin.setName("admin");
 			admin.setEmail("admin@gmail.com");
@@ -105,6 +97,25 @@ public class HomeController {
 			admin.setAddress("Amanora Park Town, Amanora, Magarpatta Rd, Hadapsar, Pune, Maharashtra");
 			System.out.println("admin created");
 			userRepo.save(admin);
+		}
+
+		if (!userRepo.existsByEmail("user@gmail.com")) {
+			User user = new User();
+			user.setName("user");
+			user.setEmail("user@gmail.com");
+			user.setRole("ROLE_USER");
+			String password = passwordEncoder.encode("user");
+			user.setPassword(password);
+			user.setMobileNo("1234567890");
+			user.setEnable(true);
+			user.setGender("Male");
+			user.setAccountNonLocked(true);
+			user.setFailedAttempt(0);
+			user.setLockTime(null);
+			user.setDateOfBirth(LocalDate.now());
+			user.setAddress("user address");
+			System.out.println("user created");
+			userRepo.save(user);
 		}
 
 		return "login";
@@ -194,7 +205,7 @@ public class HomeController {
 
 		if (isChanged) {
 			redirectAttributes.addFlashAttribute("message", "Password changed successfully!");
-			return "redirect:/user/change-password";
+			return "redirect:/change-password";
 		} else {
 			model.addAttribute("error", "Current password is incorrect.");
 			return "change-password";

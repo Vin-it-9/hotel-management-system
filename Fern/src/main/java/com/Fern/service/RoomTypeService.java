@@ -17,5 +17,6 @@ public interface RoomTypeService {
 
     void deleteRoomTypeById(int id);
 
+    void addMultipleRoomTypes(List<RoomTypeDTO> roomTypeDTOList);
 
 }

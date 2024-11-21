@@ -38,6 +38,27 @@ public class AmenityServiceImpl implements AmenityService {
     }
 
     @Override
+    public void addMultipleAmenity(List<AmenityDTO> amenityDTOList) {
+        for (AmenityDTO amenityDTO : amenityDTOList) {
+            if (StringUtils.isEmpty(amenityDTO.getName())) {
+                throw new IllegalArgumentException("Amenity name cannot be empty");
+            }
+
+            if (amenityRepository.existsByName(amenityDTO.getName())) {
+                throw new IllegalArgumentException("Amenity with name '" + amenityDTO.getName() + "' already exists");
+            }
+
+            Amenity amenity = new Amenity();
+            amenity.setName(amenityDTO.getName());
+            amenity.setDescription(amenityDTO.getDescription());
+            amenity.setCreatedAt(amenityDTO.getCreatedAt());
+            amenityRepository.save(amenity);
+        }
+    }
+
+
+
+    @Override
     public List<AmenityDTO> getAllAmenities() {
 
         List<Amenity> amenities = amenityRepository.findAll();

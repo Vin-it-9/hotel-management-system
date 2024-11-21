@@ -14,5 +14,7 @@ public interface AmenityService {
 
     void deleteAmenityById(int id);
 
+    void addMultipleAmenity(List<AmenityDTO> amenityDTOList);
+
 
 }

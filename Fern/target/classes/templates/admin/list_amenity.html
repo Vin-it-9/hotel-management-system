@@ -24,10 +24,6 @@
                             </form>
                         </div>
                         <p class="text-gray-600 text-sm mb-4" th:text="${amenity.description}">Amenity Description</p>
-                        <p class="text-gray-500 text-xs"
-                           th:text="'Added on: ' + (${amenity.createdAt != null} ? ${#temporals.format(amenity.createdAt, 'yyyy-MM-dd')} : 'N/A')">
-                            Added on: N/A
-                        </p>
                     </div>
                 </div>
 

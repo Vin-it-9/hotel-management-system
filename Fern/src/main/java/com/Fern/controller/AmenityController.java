@@ -1,6 +1,7 @@
 package com.Fern.controller;
 
 import com.Fern.dto.AmenityDTO;
+import com.Fern.dto.RoomTypeDTO;
 import com.Fern.service.AmenityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,5 +37,17 @@ public class AmenityController {
         AmenityDTO amenityDTO = amenityService.getAmenityById(id);
         return new ResponseEntity<>(amenityDTO, HttpStatus.OK);
     }
+
+    @PostMapping("/add")
+    public ResponseEntity<String> addAmenities(@RequestBody List<AmenityDTO> amenityDTOList) {
+        try {
+            amenityService.addMultipleAmenity(amenityDTOList);
+            return ResponseEntity.ok("Amenities added successfully!");
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to add amenities: " + ex.getMessage());
+        }
+    }
+
+
 
 }

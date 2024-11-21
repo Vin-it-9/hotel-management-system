@@ -62,6 +62,7 @@ public class UserServiceImpl implements UserService {
 			sendEmail(newUser, url);
 		}
 		return newUser;
+
 	}
 
 
@@ -78,24 +79,50 @@ public class UserServiceImpl implements UserService {
 
 	}
 
-	@Override
-	public boolean updateUserProfile(User updatedUser, String email) {
+//	@Override
+//	public boolean updateUserProfile(User updatedUser, String email) {
+//
+//		User existingUser = userRepo.findByEmail(email);
+//
+//		if (existingUser != null) {
+//
+//			existingUser.setName(updatedUser.getName());
+//			existingUser.setMobileNo(updatedUser.getMobileNo());
+//			existingUser.setGender(updatedUser.getGender());
+//			existingUser.setAddress(updatedUser.getAddress());
+//			existingUser.setDateOfBirth(updatedUser.getDateOfBirth());
+//
+//			userRepo.save(existingUser);
+//			return true;
+//		}
+//		return false;
+//	}
 
-		User existingUser = userRepo.findByEmail(email);
+@Override
+public boolean updateUserProfile(User updatedUser, String currentEmail) {
 
-		if (existingUser != null) {
+	User existingUser = userRepo.findByEmail(currentEmail);
 
-			existingUser.setName(updatedUser.getName());
-			existingUser.setMobileNo(updatedUser.getMobileNo());
-			existingUser.setGender(updatedUser.getGender());
-			existingUser.setAddress(updatedUser.getAddress());
-			existingUser.setDateOfBirth(updatedUser.getDateOfBirth());
+	if (existingUser != null) {
 
-			userRepo.save(existingUser);
-			return true;
+		existingUser.setName(updatedUser.getName());
+		existingUser.setMobileNo(updatedUser.getMobileNo());
+		existingUser.setGender(updatedUser.getGender());
+		existingUser.setAddress(updatedUser.getAddress());
+		existingUser.setDateOfBirth(updatedUser.getDateOfBirth());
+
+		if ("ROLE_ADMIN".equals(existingUser.getRole()) &&
+				updatedUser.getEmail() != null &&
+				!updatedUser.getEmail().equals(existingUser.getEmail())) {
+			existingUser.setEmail(updatedUser.getEmail());
 		}
-		return false;
+
+		userRepo.save(existingUser);
+		return true;
 	}
+	return false;
+}
+
 
 	public User getUserByEmail(String email) {
 		return userRepo.findByEmail(email);

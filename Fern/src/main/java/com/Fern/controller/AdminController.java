@@ -311,7 +311,8 @@ public class AdminController {
 			model.addAttribute("errorMessage", "Failed to add roomtype: " + ex.getMessage());
 		}
 
-		return "redirect:/amenities/list";
+		return "redirect:/admin/roomtype/add";
+
 	}
 
 	@GetMapping("/roomtype/list")

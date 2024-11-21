@@ -1,8 +1,6 @@
 package com.Fern.controller;
 
-import com.Fern.dto.AmenityDTO;
 import com.Fern.dto.RoomTypeDTO;
-import com.Fern.entity.RoomType;
 import com.Fern.service.RoomTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,14 +29,6 @@ public class RoomTypeController {
         return "list_amenity";
     }
 
-
-//    @GetMapping("/list")
-//    @ResponseBody
-//    public List<RoomTypeDTO> getAllRoomTypes() {
-//        List<RoomTypeDTO> roomTypes = roomTypeService.getAllRoomTypes();
-//        return roomTypes;
-//    }
-
     @GetMapping("/{id}")
     public ResponseEntity<RoomTypeDTO> getRoomTypeById(@PathVariable int id) {
         RoomTypeDTO roomTypeDTO = roomTypeService.getRoomTypeById(id);
@@ -49,6 +39,16 @@ public class RoomTypeController {
     public ResponseEntity<String> deleteRoomTypeById(@PathVariable int id) {
         roomTypeService.deleteRoomTypeById(id);
         return new ResponseEntity<>("Amenity deleted successfully.", HttpStatus.OK);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<String> addMultipleRoomTypes(@RequestBody List<RoomTypeDTO> roomTypeDTOList) {
+        try {
+            roomTypeService.addMultipleRoomTypes(roomTypeDTOList);
+            return ResponseEntity.ok("Room types added successfully!");
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to add room types: " + ex.getMessage());
+        }
     }
 
 }
