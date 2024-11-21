@@ -7,6 +7,7 @@ import lombok.Data;
 @Entity
 public class RoomType {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -51,4 +52,6 @@ public class RoomType {
     public void setPurpose(String purpose) {
         this.purpose = purpose;
     }
+
+
 }
