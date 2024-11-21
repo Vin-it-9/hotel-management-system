@@ -46,7 +46,9 @@ public class User {
 
 	private String role;
 
+	@Column(nullable = false, columnDefinition = "BIT(1)")
 	private boolean enable;
+
 
 	private String verificationCode;
 

@@ -3,6 +3,7 @@ package com.Fern.service;
 import com.Fern.entity.User;
 import jakarta.annotation.PostConstruct;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -28,6 +29,11 @@ public interface UserService {
 
 	List<User> getAllUsersByRole(String role);
 
+	void deleteUserById(int userId);
+
+	User getUserById(int userId);
+
+	void updateUser(int userId, String name, String mobileNo, String gender, String address, LocalDate dateOfBirth);
 
 
 }

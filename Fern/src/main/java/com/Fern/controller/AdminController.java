@@ -51,6 +51,8 @@ public class AdminController {
 
 	@Autowired
 	private RoomTypeService roomTypeService;
+    @Autowired
+    private UserService userService;
 
 	@ModelAttribute
 	public void commonUser(Principal p, Model m) {
@@ -217,6 +219,42 @@ public class AdminController {
 		return "admin/list_users";
 	}
 
+	@PostMapping("/user/delete/{id}")
+	public String deleteUser(@PathVariable("id") int userId, RedirectAttributes redirectAttributes) {
+		try {
+			userServiceImpl.deleteUserById(userId);
+			redirectAttributes.addFlashAttribute("successMessage", "User deleted successfully!");
+		} catch (IllegalArgumentException e) {
+			redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+		}
+		return "redirect:/admin/user/list";
+	}
+
+	@GetMapping("/user/edit/{id}")
+	public String editUser(@PathVariable("id") int userId, Model model) {
+		User user = userServiceImpl.getUserById(userId);
+		model.addAttribute("user", user);  // Make sure this is passed correctly
+		return "admin/edit_user";  // Thymeleaf template for editing the user
+	}
+
+	@PostMapping("/user/update/{id}")
+	public String updateUser(@PathVariable("id") int userId,
+							 @RequestParam String name,
+							 @RequestParam String mobileNo,
+							 @RequestParam String gender,
+							 @RequestParam String address,
+							 @RequestParam LocalDate dateOfBirth,
+							 Model model) {
+
+		try {
+			userServiceImpl.updateUser(userId, name, mobileNo, gender, address, dateOfBirth );
+			model.addAttribute("successMessage", "User updated successfully!");
+		} catch (Exception e) {
+			model.addAttribute("errorMessage", "Error updating user: " + e.getMessage());
+		}
+		return "redirect:/admin/user/list";
+	}
+
 	@GetMapping("/amenities/list")
 	public String getAllAmenities(Model model) {
 		List<AmenityDTO> amenities = amenityService.getAllAmenities();
@@ -288,6 +326,8 @@ public class AdminController {
 		roomTypeService.deleteRoomTypeById(id);
 		return new ResponseEntity<>("RoomType deleted successfully.", HttpStatus.OK);
 	}
+
+
 
 
 }

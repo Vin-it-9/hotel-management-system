@@ -1,5 +1,6 @@
 package com.Fern.service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -35,7 +36,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserService userService;
 
-
+	public UserServiceImpl(UserRepo userRepository) {
+		this.userRepo = userRepository;
+	}
 
 	@Override
 	public User saveUser(User user, String url) {
@@ -213,5 +216,30 @@ public class UserServiceImpl implements UserService {
 		return userRepo.findByRole(role);
 	}
 
+	@Override
+	public void deleteUserById(int userId) {
+		User user = userRepo.findById((long) userId)
+				.orElseThrow(() -> new IllegalArgumentException("User with ID " + userId + " not found"));
+		userRepo.delete(user);
+	}
+
+	@Override
+	public User getUserById(int userId) {
+		return userRepo.findById(userId).orElse(null);
+	}
+
+	@Override
+	public void updateUser(int userId, String name, String mobileNo, String gender, String address, LocalDate dateOfBirth) {
+
+		User user = getUserById(userId);
+		user.setName(name);
+		user.setMobileNo(mobileNo);
+		user.setGender(gender);
+		user.setAddress(address);
+		user.setDateOfBirth(dateOfBirth);
+
+		userRepo.save(user);
+
+	}
 
 }

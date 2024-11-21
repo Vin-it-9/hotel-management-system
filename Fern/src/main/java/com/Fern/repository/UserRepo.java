@@ -20,7 +20,6 @@ public interface UserRepo extends JpaRepository<User, Long> {
 	boolean existsByEmail(String email);
 
 	@Query("update User u set u.failedAttempt=?1 where email=?2 ")
-
 	@Modifying
 	public void updateFailedAttempt(int attempt, String email);
 
@@ -28,5 +27,6 @@ public interface UserRepo extends JpaRepository<User, Long> {
 
 	List<User> findByRole(String role);
 
+	Optional<User> findById(int id);
 
 }

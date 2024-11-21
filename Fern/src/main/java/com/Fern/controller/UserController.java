@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.Fern.dto.AmenityDTO;
 import com.Fern.service.AmenityService;
+import com.Fern.service.UserService;
 import com.Fern.service.UserServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,10 @@ import com.Fern.repository.UserRepo;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+
+	public UserController(UserServiceImpl userService) {
+		this.userServiceImpl = userService;
+	}
 
 	@Autowired
 	private UserRepo userRepo;
