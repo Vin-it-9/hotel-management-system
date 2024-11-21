@@ -29,7 +29,7 @@ public class AmenityController {
             model.addAttribute("amenities", amenities);
               return "list_amenity";
 
-       }
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<AmenityDTO> getAmenityById(@PathVariable int id) {

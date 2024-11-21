@@ -2,8 +2,10 @@ package com.Fern.service;
 
 import com.Fern.dto.AmenityDTO;
 import com.Fern.dto.RoomTypeDTO;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 
 public interface RoomTypeService {
 
@@ -14,5 +16,6 @@ public interface RoomTypeService {
     public RoomTypeDTO getRoomTypeById(int id);
 
     void deleteRoomTypeById(int id);
+
 
 }
