@@ -13,4 +13,6 @@ public interface AmenityService {
     public AmenityDTO getAmenityById(int id);
 
     void deleteAmenityById(int id);
+
+
 }

@@ -72,4 +72,6 @@ public class AmenityServiceImpl implements AmenityService {
         amenityRepository.delete(amenity);
     }
 
+
+
 }
