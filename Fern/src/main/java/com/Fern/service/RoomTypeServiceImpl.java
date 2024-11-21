@@ -5,7 +5,7 @@ import com.Fern.dto.RoomTypeDTO;
 import com.Fern.entity.Amenity;
 import com.Fern.entity.RoomType;
 import com.Fern.repository.RoomTypeRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
