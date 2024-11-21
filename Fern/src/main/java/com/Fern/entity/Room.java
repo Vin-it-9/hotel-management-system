@@ -20,9 +20,12 @@ public class Room {
 
     private int floorNumber;
 
-    private double size; // e.g., square feet
+    private double size;
+
+    private  String description;
 
     @Lob
+    @Column(nullable = true)
     private Blob image;
 
     private double pricePerNight;
@@ -73,6 +76,14 @@ public class Room {
 
     public void setSize(double size) {
         this.size = size;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Blob getImage() {

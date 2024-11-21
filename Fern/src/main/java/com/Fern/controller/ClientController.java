@@ -74,7 +74,9 @@ public class ClientController {
 
     @PostMapping("/add")
     public String addImagePost(@RequestParam("image") MultipartFile file, Principal principal, HttpSession session) throws IOException, SerialException, SQLException {
+
         String email = principal.getName();
+
         User user = userRepo.getUserByEmail(email);
         byte[] bytes = file.getBytes();
         Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);

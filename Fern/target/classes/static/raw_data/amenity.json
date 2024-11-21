@@ -1,0 +1,68 @@
+
+//add multiple amenities
+// method = POST
+//http://localhost:8080/amenities/add
+
+
+[
+  {
+    "name": "King Size Bed",
+    "description": "A large bed designed for comfort with premium mattress and linens."
+  },
+  {
+    "name": "Wi-Fi Access",
+    "description": "High-speed internet access available throughout the room."
+  },
+  {
+    "name": "Air Conditioning",
+    "description": "Room is equipped with air conditioning to maintain optimal temperature."
+  },
+  {
+    "name": "Flat Screen TV",
+    "description": "A large flat-screen TV with access to premium cable channels."
+  },
+  {
+    "name": "Mini Bar",
+    "description": "A stocked mini bar with snacks, drinks, and alcoholic beverages."
+  },
+  {
+    "name": "Work Desk",
+    "description": "A spacious desk with a comfortable chair for business needs."
+  },
+  {
+    "name": "Room Service",
+    "description": "24/7 room service for meals, drinks, and other services."
+  },
+  {
+    "name": "Gym Access",
+    "description": "Access to a fully equipped fitness center for guests."
+  },
+  {
+    "name": "Swimming Pool",
+    "description": "An outdoor swimming pool with sunbeds for relaxation."
+  },
+  {
+    "name": "Hot Tub",
+    "description": "A private hot tub available in the room or on the balcony."
+  },
+  {
+    "name": "Concierge Service",
+    "description": "Personalized concierge services to assist with bookings, activities, and reservations."
+  },
+  {
+    "name": "Shuttle Service",
+    "description": "Free shuttle service to local attractions or airport."
+  },
+  {
+    "name": "Spa",
+    "description": "Access to a full-service spa offering massages and beauty treatments."
+  },
+  {
+    "name": "Parking",
+    "description": "On-site parking available for guests with vehicles."
+  },
+  {
+    "name": "Pet-Friendly",
+    "description": "Hotel rooms are pet-friendly with accommodations for your pets."
+  }
+]

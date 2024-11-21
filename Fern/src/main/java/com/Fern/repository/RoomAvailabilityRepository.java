@@ -12,6 +12,8 @@ public interface RoomAvailabilityRepository extends JpaRepository<RoomAvailabili
 
     Optional<RoomAvailability> findByRoomId(Long roomId);
 
+    Optional<RoomAvailability> findById(Long id);
+
     List<RoomAvailability> findByStatus(String status);
 
 

@@ -1,25 +1,16 @@
-package com.Fern.entity;
-import com.Fern.dto.RoomAvailabilityDTO;
-import jakarta.persistence.*;
-import lombok.Data;
+package com.Fern.dto;
+
+import com.Fern.entity.Room;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 
 import java.util.Date;
 
-@Data
-@Entity
-public class RoomAvailability {
+public class RoomAvailabilityDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
-    private String status; // E.g., Available, Booked, Under Maintenance
-
-    @Temporal(TemporalType.DATE)
+    private String status;
     private Date bookingStartDate;
-
-    @Temporal(TemporalType.DATE)
     private Date bookingEndDate;
 
     @OneToOne
@@ -57,13 +48,5 @@ public class RoomAvailability {
 
     public void setBookingEndDate(Date bookingEndDate) {
         this.bookingEndDate = bookingEndDate;
-    }
-
-    public Room getRoom() {
-        return room;
-    }
-
-    public void setRoom(Room room) {
-        this.room = room;
     }
 }

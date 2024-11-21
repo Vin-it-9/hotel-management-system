@@ -1,9 +1,11 @@
 package com.Fern.dto;
 
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.Lob;
 import lombok.Data;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.sql.Blob;
 import java.util.Set;
 
 
@@ -16,11 +18,13 @@ public class RoomDTO {
     private int floorNumber;
     private double size;
     private double pricePerNight;
+    @Lob
+    private Blob image;
     private Long roomTypeId;
     private Set<Long> amenityIds;
-    private boolean isAvailable;
+    private  String description;
+    private RoomAvailabilityDTO roomAvailability;
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -31,6 +35,14 @@ public class RoomDTO {
 
     public String getRoomNumber() {
         return roomNumber;
+    }
+
+    public Blob getImage() {
+        return image;
+    }
+
+    public void setImage(Blob image) {
+        this.image = image;
     }
 
     public void setRoomNumber(String roomNumber) {
@@ -77,11 +89,19 @@ public class RoomDTO {
         this.amenityIds = amenityIds;
     }
 
-    public boolean isAvailable() {
-        return isAvailable;
+    public String getDescription() {
+        return description;
     }
 
-    public void setAvailable(boolean available) {
-        isAvailable = available;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public RoomAvailabilityDTO getRoomAvailability() {
+        return roomAvailability;
+    }
+
+    public void setRoomAvailability(RoomAvailabilityDTO roomAvailability) {
+        this.roomAvailability = roomAvailability;
     }
 }
