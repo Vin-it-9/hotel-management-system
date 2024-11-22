@@ -1,5 +1,6 @@
 package com.Fern.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -35,6 +36,7 @@ public class Room {
     private RoomType roomType;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "room")
+    @JsonManagedReference
     private RoomAvailability roomAvailability;
 
     @ManyToMany

@@ -105,67 +105,110 @@ public class RoomServiceImpl implements RoomService {
 //
 //        return savedRoomDTO;
 //    }
+//
+//    @Override
+//    public RoomDTO addRoom(RoomDTO roomDTO) {
+//        if (roomDTO.getRoomNumber() == null || roomDTO.getRoomNumber().isEmpty()) {
+//            throw new IllegalArgumentException("Room number is required");
+//        }
+//        if (roomDTO.getRoomTypeId() == null) {
+//            throw new IllegalArgumentException("Room type is required");
+//        }
+//
+//        Room room = new Room();
+//        room.setRoomNumber(roomDTO.getRoomNumber());
+//        room.setFloorNumber(roomDTO.getFloorNumber());
+//        room.setSize(roomDTO.getSize());
+//        room.setPricePerNight(roomDTO.getPricePerNight());
+//        room.setDescription(roomDTO.getDescription());
+//
+//        RoomType roomType = roomTypeRepository.findById(roomDTO.getRoomTypeId())
+//                .orElseThrow(() -> new IllegalArgumentException("Room type not found"));
+//        room.setRoomType(roomType);
+//
+//        Set<Amenity> amenities = new HashSet<>();
+//        for (Long amenityId : roomDTO.getAmenityIds()) {
+//            Amenity amenity = amenityRepository.findById(amenityId)
+//                    .orElseThrow(() -> new IllegalArgumentException("Amenity not found"));
+//            amenities.add(amenity);
+//        }
+//        room.setAmenities(amenities);
+//
+//        RoomAvailability roomAvailability = new RoomAvailability();
+//        roomAvailability.setStatus("Available");
+//        roomAvailability.setRoom(room);
+//        room.setRoomAvailability(roomAvailability);
+//
+//
+//        Room savedRoom = roomRepository.save(room);
+//
+//        RoomDTO savedRoomDTO = new RoomDTO();
+//        savedRoomDTO.setId(savedRoom.getId());
+//        savedRoomDTO.setRoomNumber(savedRoom.getRoomNumber());
+//        savedRoomDTO.setFloorNumber(savedRoom.getFloorNumber());
+//        savedRoomDTO.setSize(savedRoom.getSize());
+//        savedRoomDTO.setPricePerNight(savedRoom.getPricePerNight());
+//        savedRoomDTO.setDescription(savedRoom.getDescription());
+//        savedRoomDTO.setRoomTypeId(savedRoom.getRoomType().getId());
+//
+//        Set<Long> amenityIds = new HashSet<>();
+//        for (Amenity amenity : savedRoom.getAmenities()) {
+//            amenityIds.add(Long.valueOf(amenity.getId()));
+//        }
+//        savedRoomDTO.setAmenityIds(amenityIds);
+//
+//        RoomAvailability roomAvailabilitySaved = savedRoom.getRoomAvailability();
+//        RoomAvailabilityDTO roomAvailabilityDTO = new RoomAvailabilityDTO();
+//        roomAvailabilityDTO.setId(roomAvailabilitySaved.getId());
+//        roomAvailabilityDTO.setStatus(roomAvailabilitySaved.getStatus());
+//        roomAvailabilityDTO.setBookingStartDate(roomAvailabilitySaved.getBookingStartDate());
+//        roomAvailabilityDTO.setBookingEndDate(roomAvailabilitySaved.getBookingEndDate());
+//        savedRoomDTO.setRoomAvailability(roomAvailabilityDTO);
+//
+//        return savedRoomDTO;
+//    }
 
     @Override
-    public RoomDTO addRoom(RoomDTO roomDTO) {
-        if (roomDTO.getRoomNumber() == null || roomDTO.getRoomNumber().isEmpty()) {
+    public Room addRoom(String roomNumber, int floorNumber, double size, String description,
+                        byte[] imageBytes, double pricePerNight, RoomType roomType,
+                        RoomAvailability roomAvailability, Set<Amenity> amenities) throws SQLException {
+
+        // Validate inputs
+        if (roomNumber == null || roomNumber.isEmpty()) {
             throw new IllegalArgumentException("Room number is required");
         }
-        if (roomDTO.getRoomTypeId() == null) {
+        if (roomType == null) {
             throw new IllegalArgumentException("Room type is required");
         }
 
         Room room = new Room();
-        room.setRoomNumber(roomDTO.getRoomNumber());
-        room.setFloorNumber(roomDTO.getFloorNumber());
-        room.setSize(roomDTO.getSize());
-        room.setPricePerNight(roomDTO.getPricePerNight());
-        room.setDescription(roomDTO.getDescription());
-
-        RoomType roomType = roomTypeRepository.findById(roomDTO.getRoomTypeId())
-                .orElseThrow(() -> new IllegalArgumentException("Room type not found"));
+        room.setRoomNumber(roomNumber);
+        room.setFloorNumber(floorNumber);
+        room.setSize(size);
+        room.setDescription(description);
+        room.setPricePerNight(pricePerNight);
         room.setRoomType(roomType);
 
-        Set<Amenity> amenities = new HashSet<>();
-        for (Long amenityId : roomDTO.getAmenityIds()) {
-            Amenity amenity = amenityRepository.findById(amenityId)
-                    .orElseThrow(() -> new IllegalArgumentException("Amenity not found"));
-            amenities.add(amenity);
+        // Handle image if provided
+        if (imageBytes != null) {
+            Blob roomImage = new SerialBlob(imageBytes);
+            room.setImage(roomImage);
+        } else {
+            room.setImage(null); // Handle null images gracefully
         }
-        room.setAmenities(amenities);
 
-        RoomAvailability roomAvailability = new RoomAvailability();
-        roomAvailability.setStatus("Available");
-        roomAvailability.setRoom(room);
+        // Set Room Availability
+        if (roomAvailability == null) {
+            roomAvailability = new RoomAvailability();
+            roomAvailability.setStatus("Available");
+        }
+        roomAvailability.setRoom(room); // Establish bidirectional relationship
         room.setRoomAvailability(roomAvailability);
 
+        room.setAmenities(amenities);
 
-        Room savedRoom = roomRepository.save(room);
+        return roomRepository.save(room);
 
-        RoomDTO savedRoomDTO = new RoomDTO();
-        savedRoomDTO.setId(savedRoom.getId());
-        savedRoomDTO.setRoomNumber(savedRoom.getRoomNumber());
-        savedRoomDTO.setFloorNumber(savedRoom.getFloorNumber());
-        savedRoomDTO.setSize(savedRoom.getSize());
-        savedRoomDTO.setPricePerNight(savedRoom.getPricePerNight());
-        savedRoomDTO.setDescription(savedRoom.getDescription());
-        savedRoomDTO.setRoomTypeId(savedRoom.getRoomType().getId());
-
-        Set<Long> amenityIds = new HashSet<>();
-        for (Amenity amenity : savedRoom.getAmenities()) {
-            amenityIds.add(Long.valueOf(amenity.getId()));
-        }
-        savedRoomDTO.setAmenityIds(amenityIds);
-
-        RoomAvailability roomAvailabilitySaved = savedRoom.getRoomAvailability();
-        RoomAvailabilityDTO roomAvailabilityDTO = new RoomAvailabilityDTO();
-        roomAvailabilityDTO.setId(roomAvailabilitySaved.getId());
-        roomAvailabilityDTO.setStatus(roomAvailabilitySaved.getStatus());
-        roomAvailabilityDTO.setBookingStartDate(roomAvailabilitySaved.getBookingStartDate());
-        roomAvailabilityDTO.setBookingEndDate(roomAvailabilitySaved.getBookingEndDate());
-        savedRoomDTO.setRoomAvailability(roomAvailabilityDTO);
-
-        return savedRoomDTO;
     }
 
 

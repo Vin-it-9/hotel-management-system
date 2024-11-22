@@ -1,5 +1,6 @@
 package com.Fern.entity;
 import com.Fern.dto.RoomAvailabilityDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,6 +25,7 @@ public class RoomAvailability {
 
     @OneToOne
     @JoinColumn(name = "room_id", nullable = false)
+    @JsonBackReference
     private Room room;
 
 
