@@ -122,9 +122,9 @@ public class RoomController {
         Optional<Map<String, Object>> roomDetails = roomService.getRoomsById(roomId);
         if (roomDetails.isPresent()) {
             model.addAttribute("room", roomDetails.get());
-            return "list_rooms_id"; // Thymeleaf template to display room details
+            return "list_rooms_id";
         } else {
-            return "error/404"; // Render a 404 error page if the room is not found
+            return "error/404";
         }
     }
 
