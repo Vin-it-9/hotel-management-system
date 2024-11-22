@@ -1,9 +1,12 @@
 package com.Fern.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Lob;
 import lombok.Data;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Blob;
 import java.util.Set;
@@ -18,12 +21,23 @@ public class RoomDTO {
     private int floorNumber;
     private double size;
     private double pricePerNight;
-    @Lob
-    private Blob image;
+
     private Long roomTypeId;
     private Set<Long> amenityIds;
     private  String description;
     private RoomAvailabilityDTO roomAvailability;
+
+    @Lob
+    @Column(nullable = true)
+    private Blob image;
+
+    public Blob getImage() {
+        return image;
+    }
+
+    public void setImage(Blob image) {
+        this.image = image;
+    }
 
     public Long getId() {
         return id;
@@ -37,13 +51,7 @@ public class RoomDTO {
         return roomNumber;
     }
 
-    public Blob getImage() {
-        return image;
-    }
 
-    public void setImage(Blob image) {
-        this.image = image;
-    }
 
     public void setRoomNumber(String roomNumber) {
         this.roomNumber = roomNumber;

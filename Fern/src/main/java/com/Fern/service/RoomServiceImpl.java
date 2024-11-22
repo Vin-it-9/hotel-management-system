@@ -14,7 +14,12 @@ import com.Fern.repository.RoomTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.sql.rowset.serial.SerialBlob;
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -103,7 +108,6 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public RoomDTO addRoom(RoomDTO roomDTO) {
-
         if (roomDTO.getRoomNumber() == null || roomDTO.getRoomNumber().isEmpty()) {
             throw new IllegalArgumentException("Room number is required");
         }
@@ -135,9 +139,6 @@ public class RoomServiceImpl implements RoomService {
         roomAvailability.setRoom(room);
         room.setRoomAvailability(roomAvailability);
 
-        if (roomDTO.getImage() != null) {
-            room.setImage(roomDTO.getImage());
-        }
 
         Room savedRoom = roomRepository.save(room);
 
@@ -166,6 +167,7 @@ public class RoomServiceImpl implements RoomService {
 
         return savedRoomDTO;
     }
+
 
     @Override
     public RoomDTO updateRoom(Long roomId, RoomDTO roomDTO) {

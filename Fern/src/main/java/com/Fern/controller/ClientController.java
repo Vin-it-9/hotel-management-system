@@ -78,6 +78,7 @@ public class ClientController {
         String email = principal.getName();
 
         User user = userRepo.getUserByEmail(email);
+
         byte[] bytes = file.getBytes();
         Blob blob = new javax.sql.rowset.serial.SerialBlob(bytes);
 
@@ -95,6 +96,7 @@ public class ClientController {
 
         byte[] imageBytes = blob.getBytes(1, (int) blob.length());
         String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
         session.setAttribute("userImage", base64Image);
 
         return "redirect:/editProfile";
