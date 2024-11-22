@@ -13,8 +13,10 @@ import com.Fern.repository.RoomTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.sql.rowset.serial.SerialBlob;
+import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.*;
@@ -74,8 +76,22 @@ public class RoomServiceImpl implements RoomService {
 
         room.setAmenities(amenities);
 
+        notifyClients();
+
         return roomRepository.save(room);
 
+    }
+
+    private final List<SseEmitter> emitters = new ArrayList<>();
+
+    public void notifyClients() {
+        for (SseEmitter emitter : emitters) {
+            try {
+                emitter.send("New room available");
+            } catch (IOException e) {
+                emitter.completeWithError(e);
+            }
+        }
     }
 
 

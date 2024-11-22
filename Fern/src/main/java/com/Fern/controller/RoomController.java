@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -43,6 +44,9 @@ public class RoomController {
     private AmenityRepository amenityRepository;
     @Autowired
     private RoomServiceImpl roomServiceImpl;
+
+
+    private List<SseEmitter> emitters = new ArrayList<>();
 
     public RoomController(RoomService roomService, RoomTypeRepository roomTypeRepository,
                           AmenityRepository amenityRepository) {
@@ -82,6 +86,7 @@ public class RoomController {
                     .orElseThrow(() -> new IllegalArgumentException("Amenity not found"));
             amenities.add(amenity);
         }
+
         RoomAvailability roomAvailability = new RoomAvailability();
         roomAvailability.setStatus("Available");
 
@@ -93,6 +98,7 @@ public class RoomController {
         return "redirect:/rooms/all";
 
     }
+
 
     @GetMapping("/image/{id}")
     public ResponseEntity<byte[]> getRoomImage(@PathVariable Long id) {
@@ -115,12 +121,17 @@ public class RoomController {
 
     @GetMapping("/all")
     public String getAllRoomsDetailed(Model model) {
-
         List<Map<String, Object>> roomResponses = roomService.getAllRooms();
-
         model.addAttribute("rooms", roomResponses);
-        return "rooms";
+        return "list_rooms";
     }
+
+
+//    @GetMapping("/all")
+//    @ResponseBody
+//    public List<Map<String, Object>> getAllRooms() {
+//        return roomService.getAllRooms(); // Assuming roomService.getAllRooms() returns List<Map<String, Object>>
+//    }
 
 
 

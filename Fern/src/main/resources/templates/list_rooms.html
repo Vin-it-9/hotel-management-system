@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html class="dark" lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Users</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-400">
+<section class="mt-12 flex justify-center items-start p-4">
+
+    <main class="container mx-auto flex justify-center w-4/5 items-start min-h-screen">
+
+        <div id="room-list" class="grid grid-cols-1 px-6 bg-gray-100 md:px-12 gap-8 p-10">
+            <div th:each="room : ${rooms}"
+                 class="flex flex-col md:flex-row items-start bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 ">
+                <div class="w-full md:w-2/3 h-48 md:h-auto">
+                    <img th:src="${room.imageUrl != null ? room.imageUrl : 'https://via.placeholder.com/300x200'}"
+                         alt="Room Image"
+                         class="w-full h-full object-cover rounded-l-md">
+                </div>
+
+                <div class="w-full md:w-2/3 p-6">
+                    <div class="text-center md:text-left mb-10">
+                        <div class="flex justify-between items-start border-b pb-4 mb-4">
+                            <h2 class="text-xl font-semibold text-black mb-2">
+                                <span th:text="${room.roomType?.typeName != null ? room.roomType.typeName : 'No Room Type'}"></span> |
+                                <span th:text="${room.roomType?.purpose != null ? room.roomType.purpose : 'No Room Purpose'}"></span>
+                            </h2>
+                            <a th:href="@{/room-details/{id}(id=${room.id})}"
+                               class="text-gray-500 text-sm underline  transition-colors duration-200">
+                                Room Details
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 flex justify-between items-start ">
+                        <p class="text-black text-m font-semibold">Member Flexible Rate</p>
+
+                        <p class="text-xl text-black font-semibold">
+                            <span th:text="${room.pricePerNight}"></span>
+                            <span class="text-sm text-black">INR/NIGHT</span>
+                        </p>
+
+                        <button class="bg-black text-white px-3 py-2 rounded-xl shadow-md hover:bg-gray-900 hover:shadow-lg transition duration-300">
+                            Select
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</section>
+</body>
+</html>
