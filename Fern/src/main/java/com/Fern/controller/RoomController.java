@@ -59,7 +59,7 @@ public class RoomController {
     public String showAddRoomForm(Model model) {
         model.addAttribute("roomTypes", roomTypeRepository.findAll());
         model.addAttribute("amenities", amenityRepository.findAll());
-        return "addRoom"; // The name of the Thymeleaf template
+        return "add_room";
     }
 
 
