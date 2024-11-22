@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Add Room</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 ">
+
+<div class="max-w-lg  mx-auto mt-10 p-8 bg-white  shadow-lg rounded-lg mb-8">
+  <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Add New Room</h2>
+
+  <form th:action="@{/rooms/add}" th:method="post" enctype="multipart/form-data" class="space-y-6">
+
+    <!-- Room Number -->
+    <div>
+      <label for="roomNumber" class="block text-sm font-medium text-gray-700 mb-1">Room Number</label>
+      <input type="text" id="roomNumber" name="roomNumber" placeholder="Enter room number" required
+             class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+    </div>
+
+    <!-- Floor Number -->
+    <div>
+      <label for="floorNumber" class="block text-sm font-medium text-gray-700 mb-1">Floor Number</label>
+      <input type="number" id="floorNumber" name="floorNumber" placeholder="Enter floor number" required
+             class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+    </div>
+
+    <!-- Room Size -->
+    <div>
+      <label for="size" class="block text-sm font-medium text-gray-700 mb-1">Room Size (sq ft)</label>
+      <input type="number" step="0.1" id="size" name="size" placeholder="Enter room size" required
+             class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+    </div>
+
+    <!-- Description -->
+    <div>
+      <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+      <textarea id="description" name="description" rows="2" placeholder="Enter room description"
+                class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+    </div>
+
+    <!-- Room Image -->
+    <div>
+      <label for="image" class="block text-sm font-medium text-gray-700 mb-1">Room Image</label>
+      <input type="file" id="image" name="image"
+             class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+    </div>
+
+    <!-- Price Per Night -->
+    <div>
+      <label for="pricePerNight" class="block text-sm font-medium text-gray-700 mb-1">Price Per Night</label>
+      <input type="number" step="0.01" id="pricePerNight" name="pricePerNight" placeholder="Enter price per night" required
+             class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+    </div>
+
+    <!-- Room Type -->
+    <div>
+      <label for="roomTypeId" class="block text-sm font-medium text-gray-700 mb-1">Room Type</label>
+      <select id="roomTypeId" name="roomTypeId" required
+              class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+        <option value="" disabled selected>Select Room Type</option>
+        <option th:each="roomType : ${roomTypes}" th:value="${roomType.id}" th:text="${roomType.typeName}"></option>
+      </select>
+    </div>
+    <!-- Amenities -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-2">Amenities</label>
+      <div class="grid grid-cols-2 gap-2" th:each="amenity : ${amenities}">
+        <div class="flex items-center space-x-2">
+          <input type="checkbox" th:id="'amenity-' + ${amenity.id}" th:name="amenityIds" th:value="${amenity.id}"
+                 class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+          <label th:for="'amenity-' + ${amenity.id}" th:text="${amenity.name}" class="text-gray-600"></label>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Submit Button -->
+    <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-lg shadow-lg hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 transition duration-300">
+      Add Room
+    </button>
+  </form>
+
+</div>
+
+</body>
+</html>
