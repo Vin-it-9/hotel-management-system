@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 
 import com.Fern.dto.AmenityDTO;
 import com.Fern.dto.RoomTypeDTO;
@@ -51,8 +52,12 @@ public class AdminController {
 
 	@Autowired
 	private RoomTypeService roomTypeService;
+
     @Autowired
     private UserService userService;
+
+	@Autowired
+	private RoomService roomService;
 
 	@ModelAttribute
 	public void commonUser(Principal p, Model m) {
@@ -328,7 +333,12 @@ public class AdminController {
 		return new ResponseEntity<>("RoomType deleted successfully.", HttpStatus.OK);
 	}
 
-
+	@GetMapping("/rooms/list")
+	public String getAllRoomsDetailed(Model model) {
+		List<Map<String, Object>> roomResponses = roomService.getAllRooms();
+		model.addAttribute("rooms", roomResponses);
+		return "list_rooms";
+	}
 
 
 }

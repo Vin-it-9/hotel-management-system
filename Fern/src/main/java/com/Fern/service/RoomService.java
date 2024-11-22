@@ -19,7 +19,8 @@ public interface RoomService {
                  byte[] imageBytes, double pricePerNight, RoomType roomType,
                  RoomAvailability roomAvailability, Set<Amenity> amenities) throws SQLException;
 
-    RoomDTO updateRoom(Long roomId, RoomDTO roomDTO);
+
+    public Optional<Map<String, Object>> getRoomsById(Long roomId);
 
     // Get a room by its ID
     Optional<Room> getRoomById(Long roomId);

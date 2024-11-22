@@ -44,7 +44,6 @@ public class RoomServiceImpl implements RoomService {
                         byte[] imageBytes, double pricePerNight, RoomType roomType,
                         RoomAvailability roomAvailability, Set<Amenity> amenities) throws SQLException {
 
-        // Validate inputs
         if (roomNumber == null || roomNumber.isEmpty()) {
             throw new IllegalArgumentException("Room number is required");
         }
@@ -76,33 +75,63 @@ public class RoomServiceImpl implements RoomService {
 
         room.setAmenities(amenities);
 
-        notifyClients();
-
         return roomRepository.save(room);
 
-    }
-
-    private final List<SseEmitter> emitters = new ArrayList<>();
-
-    public void notifyClients() {
-        for (SseEmitter emitter : emitters) {
-            try {
-                emitter.send("New room available");
-            } catch (IOException e) {
-                emitter.completeWithError(e);
-            }
-        }
-    }
-
-
-    @Override
-    public RoomDTO updateRoom(Long roomId, RoomDTO roomDTO) {
-        return null;
     }
 
     @Override
     public Optional<Room> getRoomById(Long roomId) {
         return roomRepository.findById(roomId);
+    }
+
+    @Override
+    public Optional<Map<String, Object>> getRoomsById(Long roomId) {
+        return roomRepository.findById(roomId).map(room -> {
+            Map<String, Object> roomData = new HashMap<>();
+            roomData.put("id", room.getId());
+            roomData.put("roomNumber", room.getRoomNumber());
+            roomData.put("floorNumber", room.getFloorNumber());
+            roomData.put("size", room.getSize());
+            roomData.put("description", room.getDescription());
+            roomData.put("pricePerNight", room.getPricePerNight());
+
+            if (room.getRoomType() != null) {
+                Map<String, Object> roomTypeData = new HashMap<>();
+                roomTypeData.put("id", room.getRoomType().getId());
+                roomTypeData.put("typeName", room.getRoomType().getTypeName());
+                roomTypeData.put("purpose", room.getRoomType().getPurpose());
+                roomTypeData.put("description", room.getRoomType().getDescription());
+                roomData.put("roomType", roomTypeData);
+            } else {
+                roomData.put("roomType", null);
+            }
+
+            if (room.getRoomAvailability() != null) {
+                Map<String, Object> roomAvailabilityData = new HashMap<>();
+                roomAvailabilityData.put("id", room.getRoomAvailability().getId());
+                roomAvailabilityData.put("status", room.getRoomAvailability().getStatus());
+                roomAvailabilityData.put("bookingStartDate", room.getRoomAvailability().getBookingStartDate());
+                roomAvailabilityData.put("bookingEndDate", room.getRoomAvailability().getBookingEndDate());
+                roomData.put("roomAvailability", roomAvailabilityData);
+            } else {
+                roomData.put("roomAvailability", null);
+            }
+
+            List<Map<String, Object>> amenitiesData = room.getAmenities().stream()
+                    .map(amenity -> {
+                        Map<String, Object> amenityData = new HashMap<>();
+                        amenityData.put("id", amenity.getId());
+                        amenityData.put("name", amenity.getName());
+                        amenityData.put("description", amenity.getDescription());
+                        return amenityData;
+                    })
+                    .collect(Collectors.toList());
+            roomData.put("amenities", amenitiesData);
+
+            roomData.put("imageUrl", room.getImage() != null ? "/rooms/image/" + room.getId() : null);
+
+            return roomData;
+        });
     }
 
 

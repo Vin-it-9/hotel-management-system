@@ -6,9 +6,7 @@ import com.Fern.entity.Room;
 import com.Fern.entity.RoomAvailability;
 import com.Fern.entity.RoomType;
 import com.Fern.repository.AmenityRepository;
-import com.Fern.repository.RoomRepository;
 import com.Fern.repository.RoomTypeRepository;
-import com.Fern.service.AmenityService;
 import com.Fern.service.RoomService;
 import com.Fern.service.RoomServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,27 +24,20 @@ import java.sql.SQLException;
 import java.util.*;
 
 @Controller
-@RequestMapping("/rooms")
 public class RoomController {
 
     @Autowired
     private RoomService roomService;
 
     @Autowired
-    private AmenityService amenityService;
-
-    @Autowired
-    private RoomRepository roomRepository;
-
-    @Autowired
     private RoomTypeRepository roomTypeRepository;
+
     @Autowired
     private AmenityRepository amenityRepository;
+
     @Autowired
     private RoomServiceImpl roomServiceImpl;
 
-
-    private List<SseEmitter> emitters = new ArrayList<>();
 
     public RoomController(RoomService roomService, RoomTypeRepository roomTypeRepository,
                           AmenityRepository amenityRepository) {
@@ -55,7 +46,7 @@ public class RoomController {
         this.amenityRepository = amenityRepository;
     }
 
-    @GetMapping("/add")
+    @GetMapping("/admin/rooms/add")
     public String showAddRoomForm(Model model) {
         model.addAttribute("roomTypes", roomTypeRepository.findAll());
         model.addAttribute("amenities", amenityRepository.findAll());
@@ -63,7 +54,7 @@ public class RoomController {
     }
 
 
-    @PostMapping("/add")
+    @PostMapping("/admin/rooms/add")
     public  String addRoom(
             @RequestParam("roomNumber") String roomNumber,
             @RequestParam("floorNumber") int floorNumber,
@@ -100,7 +91,7 @@ public class RoomController {
     }
 
 
-    @GetMapping("/image/{id}")
+    @GetMapping("/rooms/image/{id}")
     public ResponseEntity<byte[]> getRoomImage(@PathVariable Long id) {
 
         Optional<Room> room = roomServiceImpl.getRoomById(id);
@@ -119,7 +110,8 @@ public class RoomController {
     }
 
 
-    @GetMapping("/all")
+
+    @GetMapping("/rooms/all")
     public String getAllRoomsDetailed(Model model) {
         List<Map<String, Object>> roomResponses = roomService.getAllRooms();
         model.addAttribute("rooms", roomResponses);
@@ -133,6 +125,16 @@ public class RoomController {
 //        return roomService.getAllRooms(); // Assuming roomService.getAllRooms() returns List<Map<String, Object>>
 //    }
 
+    @GetMapping("/rooms/{roomId}")
+    public String getRoomDetailsById(@PathVariable Long roomId, Model model) {
+        Optional<Map<String, Object>> roomDetails = roomService.getRoomsById(roomId);
+        if (roomDetails.isPresent()) {
+            model.addAttribute("room", roomDetails.get());
+            return "list_rooms_id"; // Thymeleaf template to display room details
+        } else {
+            return "error/404"; // Render a 404 error page if the room is not found
+        }
+    }
 
 
 }

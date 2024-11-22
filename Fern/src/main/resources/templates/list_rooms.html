@@ -15,9 +15,11 @@
             <div th:each="room : ${rooms}"
                  class="flex flex-col md:flex-row items-start bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 ">
                 <div class="w-full md:w-2/3 h-48 md:h-auto">
-                    <img th:src="${room.imageUrl != null ? room.imageUrl : 'https://via.placeholder.com/300x200'}"
-                         alt="Room Image"
-                         class="w-full h-full object-cover rounded-l-md">
+                    <a th:href="@{/rooms/{id}(id=${room.id})}" >
+                        <img th:src="${room.imageUrl != null ? room.imageUrl : 'https://via.placeholder.com/300x200'}"
+                              alt="Room Image"
+                              class="w-full h-full object-cover rounded-l-md transition-transform transform hover:scale-105 duration-300"></a>
+
                 </div>
 
                 <div class="w-full md:w-2/3 p-6">
@@ -27,7 +29,7 @@
                                 <span th:text="${room.roomType?.typeName != null ? room.roomType.typeName : 'No Room Type'}"></span> |
                                 <span th:text="${room.roomType?.purpose != null ? room.roomType.purpose : 'No Room Purpose'}"></span>
                             </h2>
-                            <a th:href="@{/room-details/{id}(id=${room.id})}"
+                            <a th:href="@{/rooms/{id}(id=${room.id})}"
                                class="text-gray-500 text-sm underline  transition-colors duration-200">
                                 Room Details
                             </a>
@@ -43,7 +45,9 @@
                         </p>
 
                         <button class="bg-black text-white px-3 py-2 rounded-xl shadow-md hover:bg-gray-900 hover:shadow-lg transition duration-300">
-                            Select
+                            <a th:href="@{/rooms/{id}(id=${room.id})}">
+                                Select
+                            </a>
                         </button>
 
                     </div>
