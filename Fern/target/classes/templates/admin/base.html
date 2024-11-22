@@ -32,8 +32,8 @@
         <div class="hidden md:flex md:items-center md:space-x-6">
 
             <th:block th:if="${user == null}">
-                <a class="text-white  nav-a   text-lg px-4 py-2 button-hover hover:text-gray-200 hover:bg-blue-700 transition duration-300 " href="register">Register</a>
-                <a class="text-white text-lg  nav-a  px-4 py-2 button-hover hover:text-gray-200 hover:bg-blue-700 transition duration-300 " href="signin">Login</a>
+                <a class="text-white  nav-a   text-lg px-4 py-2 button-hover hover:text-gray-200 hover:bg-blue-700 transition duration-300 " href="/register">Register</a>
+                <a class="text-white text-lg  nav-a  px-4 py-2 button-hover hover:text-gray-200 hover:bg-blue-700 transition duration-300 " href="/signin">Login</a>
             </th:block>
 
             <th:block th:if="${user != null}">
@@ -73,13 +73,13 @@
             <th:block th:if="${user == null}">
                 <li class="menu-slide">
                     <a class="nav-a text-white text-lg font-medium hover:text-blue-600 bg-blue-500 transition duration-300 block text-center py-2 button-hover"
-                       href="register">
+                       href="/register">
                         Register
                     </a>
                 </li>
                 <li class="menu-slide">
                     <a class="nav-a text-white text-lg font-medium hover:text-blue-600 bg-blue-500 transition duration-300 block text-center py-2 button-hover"
-                       href="signin">
+                       href="/signin">
                         Login
                     </a>
                 </li>

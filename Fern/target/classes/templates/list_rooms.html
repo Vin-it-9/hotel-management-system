@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html class="dark" lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}">
+<html class="dark" lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="ISO-8859-1">
     <title>Users</title>
@@ -43,6 +44,13 @@
                             <span th:text="${room.pricePerNight}"></span>
                             <span class="text-sm text-black">INR/NIGHT</span>
                         </p>
+
+                        <form th:action="@{'/rooms/delete/' + ${room.id}}" method="POST"
+                              sec:authorize="hasRole('ADMIN')">
+                            <button type="submit" class="text-red-500 hover:text-red-700">
+                                <img src="https://img.icons8.com/ios-glyphs/30/fa314a/trash.png" alt="Delete" class="w-5 h-5">
+                            </button>
+                        </form>
 
                         <button class="bg-black text-white px-3 py-2 rounded-xl shadow-md hover:bg-gray-900 hover:shadow-lg transition duration-300">
                             <a th:href="@{/rooms/{id}(id=${room.id})}">

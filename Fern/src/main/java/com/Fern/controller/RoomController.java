@@ -136,5 +136,15 @@ public class RoomController {
         }
     }
 
+    @PostMapping("/rooms/delete/{roomId}")
+    public ResponseEntity<String> deleteRoom(@PathVariable Long roomId) {
+        try {
+            roomService.deleteRoom(roomId);
+            return ResponseEntity.ok("Room with ID " + roomId + " has been successfully deleted.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Room with ID " + roomId + " not found.");
+        }
+    }
+
 
 }
