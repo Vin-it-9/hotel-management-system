@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Rooms</title>
+</head>
+<body>
+<h1>Rooms List</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Room Number</th>
+        <th>Floor Number</th>
+        <th>Size</th>
+        <th>Description</th>
+        <th>Price Per Night</th>
+        <th>Room Type</th>
+        <th>Availability</th>
+        <th>Amenities</th>
+        <th>Image</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="room : ${rooms}">
+        <td th:text="${room.roomNumber}"></td>
+        <td th:text="${room.floorNumber}"></td>
+        <td th:text="${room.size}"></td>
+        <td th:text="${room.description}"></td>
+        <td th:text="${room.pricePerNight}"></td>
+        <td>
+            <div th:if="${room.roomType != null}">
+                <span th:text="${room.roomType.typeName}"></span>
+            </div>
+            <div th:if="${room.roomType == null}">
+                No room type available
+            </div>
+        </td>
+        <td>
+            <div th:if="${room.roomAvailability != null}">
+                <span th:text="${room.roomAvailability.status}"></span>
+            </div>
+            <div th:if="${room.roomAvailability == null}">
+                Not available
+            </div>
+        </td>
+        <td>
+            <ul>
+                <li th:each="amenity : ${room.amenities}">
+                    <span th:text="${amenity.name}">Amenity Name</span>
+                </li>
+            </ul>
+        </td>
+        <td>
+            <img th:if="${room.imageUrl != null}" th:src="@{${room.imageUrl}}" alt="Room Image" width="100">
+            <span th:if="${room.imageUrl == null}">No image available</span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
