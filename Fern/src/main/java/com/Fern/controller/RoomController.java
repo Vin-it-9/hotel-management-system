@@ -54,6 +54,7 @@ public class RoomController {
         this.amenityRepository = amenityRepository;
     }
 
+
 //    @PostMapping("/add")
 //    public ResponseEntity<RoomDTO> addRoom(@RequestBody RoomDTO roomDTO) {
 //        try {
@@ -66,20 +67,63 @@ public class RoomController {
 //        }
 //    }
 
+//
+//    @PostMapping("/add")
+//    public ResponseEntity<?> addRoom(@RequestBody RoomRequest roomRequest) throws SQLException {
+//
+//        // Process uploaded image if provided
+//        byte[] imageBytes = roomRequest.getImage() != null ? roomRequest.getImage() : null;
+//
+//        // Fetch RoomType
+//        RoomType roomType = roomTypeRepository.findById(roomRequest.getRoomTypeId())
+//                .orElseThrow(() -> new IllegalArgumentException("Room type not found"));
+//
+//        // Fetch Amenities
+//        Set<Amenity> amenities = new HashSet<>();
+//        for (Long amenityId : roomRequest.getAmenityIds()) {
+//            Amenity amenity = amenityRepository.findById(amenityId)
+//                    .orElseThrow(() -> new IllegalArgumentException("Amenity not found"));
+//            amenities.add(amenity);
+//        }
+//
+//        // Create RoomAvailability object
+//        RoomAvailability roomAvailability = new RoomAvailability();
+//        roomAvailability.setStatus("Available");
+//
+//        // Add Room using Service
+//        Room addedRoom = roomService.addRoom(roomRequest.getRoomNumber(), roomRequest.getFloorNumber(),
+//                roomRequest.getSize(), roomRequest.getDescription(), imageBytes,
+//                roomRequest.getPricePerNight(), roomType, roomAvailability, amenities);
+//
+//        // Return ResponseEntity with the created Room's details
+//        return ResponseEntity.ok(Map.of(
+//                "message", "Room added successfully",
+//                "room", addedRoom
+//        ));
+//    }
 
     @PostMapping("/add")
-    public ResponseEntity<?> addRoom(@RequestBody RoomRequest roomRequest) throws SQLException {
+    public ResponseEntity<?> addRoom(
+            @RequestParam("roomNumber") String roomNumber,
+            @RequestParam("floorNumber") int floorNumber,
+            @RequestParam("size") double size,
+            @RequestParam("description") String description,
+            @RequestParam(value = "image", required = false) MultipartFile image,
+            @RequestParam("pricePerNight") double pricePerNight,
+            @RequestParam("roomTypeId") Long roomTypeId,
+            @RequestParam("amenityIds") Set<Long> amenityIds
+    ) throws IOException, SQLException {
 
-        // Process uploaded image if provided
-        byte[] imageBytes = roomRequest.getImage() != null ? roomRequest.getImage() : null;
+        // Process image bytes if provided
+        byte[] imageBytes = image != null ? image.getBytes() : null;
 
         // Fetch RoomType
-        RoomType roomType = roomTypeRepository.findById(roomRequest.getRoomTypeId())
+        RoomType roomType = roomTypeRepository.findById(roomTypeId)
                 .orElseThrow(() -> new IllegalArgumentException("Room type not found"));
 
         // Fetch Amenities
         Set<Amenity> amenities = new HashSet<>();
-        for (Long amenityId : roomRequest.getAmenityIds()) {
+        for (Long amenityId : amenityIds) {
             Amenity amenity = amenityRepository.findById(amenityId)
                     .orElseThrow(() -> new IllegalArgumentException("Amenity not found"));
             amenities.add(amenity);
@@ -90,19 +134,12 @@ public class RoomController {
         roomAvailability.setStatus("Available");
 
         // Add Room using Service
-        Room addedRoom = roomService.addRoom(roomRequest.getRoomNumber(), roomRequest.getFloorNumber(),
-                roomRequest.getSize(), roomRequest.getDescription(), imageBytes,
-                roomRequest.getPricePerNight(), roomType, roomAvailability, amenities);
+        Room addedRoom = roomService.addRoom(
+                roomNumber, floorNumber, size, description, imageBytes,
+                pricePerNight, roomType, roomAvailability, amenities
+        );
 
         // Return ResponseEntity with the created Room's details
-        return ResponseEntity.ok(Map.of(
-                "message", "Room added successfully",
-                "room", addedRoom
-        ));
-
-
+        return ResponseEntity.ok(addedRoom);
     }
-
-
-
 }
