@@ -144,4 +144,12 @@ public class RoomController {
         return roomService.getRoomsByRoomTypeId(roomTypeId);
     }
 
+    @GetMapping("/byPriceRange")
+    public ResponseEntity<List<Map<String, Object>>> getRoomsByPriceRange(
+            @RequestParam Double minPrice,
+            @RequestParam Double maxPrice) {
+        List<Map<String, Object>> rooms = roomService.getRoomsByPriceRange(minPrice, maxPrice);
+        return ResponseEntity.ok(rooms);
+    }
+
 }

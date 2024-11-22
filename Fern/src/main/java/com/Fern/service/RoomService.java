@@ -31,7 +31,7 @@ public interface RoomService {
     List<Room> getRoomsByAvailability(boolean isAvailable);
 
 
-    List<Room> getRoomsByPriceRange(Double minPrice, Double maxPrice);
+    List<Map<String, Object>> getRoomsByPriceRange(Double minPrice, Double maxPrice);
 
 
     void deleteRoom(Long roomId);

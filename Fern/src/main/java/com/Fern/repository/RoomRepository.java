@@ -2,6 +2,8 @@ package com.Fern.repository;
 
 import com.Fern.entity.Room;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
@@ -18,5 +20,9 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     List<Room> findByPricePerNightBetween(Double minPrice, Double maxPrice);
 
     boolean existsByRoomNumber(String roomNumber);
+
+    @Query("SELECT r FROM Room r WHERE r.pricePerNight BETWEEN :minPrice AND :maxPrice")
+    List<Room> findByPriceRange(@Param("minPrice") Double minPrice, @Param("maxPrice") Double maxPrice);
+
 
 }
