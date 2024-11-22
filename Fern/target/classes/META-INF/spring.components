@@ -12,6 +12,7 @@ com.Fern.controller.RoomTypeController=org.springframework.stereotype.Component
 com.Fern.controller.UserController=org.springframework.stereotype.Component
 com.Fern.dto.AmenityDTO=jakarta.persistence.EntityListeners
 com.Fern.dto.RoomDTO=jakarta.persistence.EntityListeners
+com.Fern.dto.RoomRequest=jakarta.persistence.EntityListeners
 com.Fern.dto.RoomTypeDTO=jakarta.persistence.EntityListeners
 com.Fern.entity.Amenity=jakarta.persistence.Entity,jakarta.persistence.EntityListeners
 com.Fern.entity.Image=jakarta.persistence.Entity,jakarta.persistence.Table

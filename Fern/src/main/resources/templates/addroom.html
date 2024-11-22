@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Add Room</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+  <h2>Add New Room</h2>
+  <form th:action="@{/rooms/add}" th:method="post" enctype="multipart/form-data" class="mt-4">
+    <!-- Room Number -->
+    <div class="mb-3">
+      <label for="roomNumber" class="form-label">Room Number</label>
+      <input type="text" class="form-control" id="roomNumber" name="roomNumber" placeholder="Enter room number" required>
+    </div>
+
+    <!-- Floor Number -->
+    <div class="mb-3">
+      <label for="floorNumber" class="form-label">Floor Number</label>
+      <input type="number" class="form-control" id="floorNumber" name="floorNumber" placeholder="Enter floor number" required>
+    </div>
+
+    <!-- Room Size -->
+    <div class="mb-3">
+      <label for="size" class="form-label">Room Size (sq ft)</label>
+      <input type="number" step="0.1" class="form-control" id="size" name="size" placeholder="Enter room size" required>
+    </div>
+
+    <!-- Description -->
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter room description"></textarea>
+    </div>
+
+    <!-- Room Image -->
+    <div class="mb-3">
+      <label for="image" class="form-label">Room Image</label>
+      <input type="file" class="form-control" id="image" name="image">
+    </div>
+
+    <!-- Price Per Night -->
+    <div class="mb-3">
+      <label for="pricePerNight" class="form-label">Price Per Night</label>
+      <input type="number" step="0.01" class="form-control" id="pricePerNight" name="pricePerNight" placeholder="Enter price per night" required>
+    </div>
+
+    <!-- Room Type -->
+    <div class="mb-3">
+      <label for="roomTypeId" class="form-label">Room Type</label>
+      <select class="form-select" id="roomTypeId" name="roomTypeId" required>
+        <option value="" disabled selected>Select Room Type</option>
+        <option th:each="roomType : ${roomTypes}" th:value="${roomType.id}" th:text="${roomType.typeName}"></option>
+      </select>
+    </div>
+
+    <!-- Amenities -->
+    <div class="mb-3">
+      <label class="form-label">Amenities</label>
+      <div th:each="amenity : ${amenities}">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" th:id="'amenity-' + ${amenity.id}" th:name="amenityIds" th:value="${amenity.id}">
+          <label class="form-check-label" th:for="'amenity-' + ${amenity.id}" th:text="${amenity.name}"></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary">Add Room</button>
+  </form>
+</div>
+</body>
+</html>

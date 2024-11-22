@@ -1,7 +1,15 @@
 package com.Fern.dto;
 
+import jakarta.persistence.EntityListeners;
+import lombok.Data;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import java.util.Set;
 
+
+
+@Data
+@EntityListeners(AuditingEntityListener.class)
 public class RoomRequest {
 
     private String roomNumber;

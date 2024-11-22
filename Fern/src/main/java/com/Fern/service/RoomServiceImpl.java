@@ -1,7 +1,6 @@
 package com.Fern.service;
 
 
-import com.Fern.dto.RoomAvailabilityDTO;
 import com.Fern.dto.RoomDTO;
 import com.Fern.entity.Amenity;
 import com.Fern.entity.Room;
@@ -14,16 +13,12 @@ import com.Fern.repository.RoomTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.sql.rowset.serial.SerialBlob;
-import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -41,132 +36,6 @@ public class RoomServiceImpl implements RoomService {
     @Autowired
     private RoomAvailabilityRepository roomAvailabilityRepository;
 
-
-//    @Override
-//    public RoomDTO addRoom(RoomDTO roomDTO) {
-//
-//        if (roomDTO.getRoomNumber() == null || roomDTO.getRoomNumber().isEmpty()) {
-//            throw new IllegalArgumentException("Room number is required");
-//        }
-//        if (roomDTO.getRoomTypeId() == null) {
-//            throw new IllegalArgumentException("Room type is required");
-//        }
-//
-//        Room room = new Room();
-//        room.setRoomNumber(roomDTO.getRoomNumber());
-//        room.setFloorNumber(roomDTO.getFloorNumber());
-//        room.setSize(roomDTO.getSize());
-//        room.setPricePerNight(roomDTO.getPricePerNight());
-//        room.setDescription(roomDTO.getDescription()); // Set description from DTO
-//
-//        RoomType roomType = roomTypeRepository.findById(roomDTO.getRoomTypeId())
-//                .orElseThrow(() -> new IllegalArgumentException("Room type not found"));
-//        room.setRoomType(roomType);
-//
-//        Set<Amenity> amenities = new HashSet<>();
-//        for (Long amenityId : roomDTO.getAmenityIds()) {
-//            Amenity amenity = amenityRepository.findById(amenityId)
-//                    .orElseThrow(() -> new IllegalArgumentException("Amenity not found"));
-//            amenities.add(amenity);
-//        }
-//        room.setAmenities(amenities);
-//
-//        RoomAvailability roomAvailability = new RoomAvailability();
-//        roomAvailability.setStatus("Available");
-//        roomAvailability.setRoom(room);
-//        room.setRoomAvailability(roomAvailability);
-//
-//        if (roomDTO.getImage() != null) {
-//            room.setImage(roomDTO.getImage());
-//        }
-//
-//        Room savedRoom = roomRepository.save(room);
-//
-//        RoomDTO savedRoomDTO = new RoomDTO();
-//        savedRoomDTO.setId(savedRoom.getId());
-//        savedRoomDTO.setRoomNumber(savedRoom.getRoomNumber());
-//        savedRoomDTO.setFloorNumber(savedRoom.getFloorNumber());
-//        savedRoomDTO.setSize(savedRoom.getSize());
-//        savedRoomDTO.setPricePerNight(savedRoom.getPricePerNight());
-//        savedRoomDTO.setDescription(savedRoom.getDescription());
-//        savedRoomDTO.setRoomTypeId(savedRoom.getRoomType().getId());
-//
-//        Set<Long> amenityIds = new HashSet<>();
-//        for (Amenity amenity : savedRoom.getAmenities()) {
-//            amenityIds.add(Long.valueOf(amenity.getId()));
-//        }
-//        savedRoomDTO.setAmenityIds(amenityIds);
-//
-//        RoomAvailabilityDTO roomAvailabilityDTO = new RoomAvailabilityDTO();
-//        roomAvailabilityDTO.setStatus(savedRoom.getRoomAvailability().getStatus());
-//        roomAvailabilityDTO.setBookingStartDate(savedRoom.getRoomAvailability().getBookingStartDate());
-//        roomAvailabilityDTO.setBookingEndDate(savedRoom.getRoomAvailability().getBookingEndDate());
-//        savedRoomDTO.setRoomAvailability(roomAvailabilityDTO);  // Set the full RoomAvailabilityDTO
-//
-//        return savedRoomDTO;
-//    }
-//
-//    @Override
-//    public RoomDTO addRoom(RoomDTO roomDTO) {
-//        if (roomDTO.getRoomNumber() == null || roomDTO.getRoomNumber().isEmpty()) {
-//            throw new IllegalArgumentException("Room number is required");
-//        }
-//        if (roomDTO.getRoomTypeId() == null) {
-//            throw new IllegalArgumentException("Room type is required");
-//        }
-//
-//        Room room = new Room();
-//        room.setRoomNumber(roomDTO.getRoomNumber());
-//        room.setFloorNumber(roomDTO.getFloorNumber());
-//        room.setSize(roomDTO.getSize());
-//        room.setPricePerNight(roomDTO.getPricePerNight());
-//        room.setDescription(roomDTO.getDescription());
-//
-//        RoomType roomType = roomTypeRepository.findById(roomDTO.getRoomTypeId())
-//                .orElseThrow(() -> new IllegalArgumentException("Room type not found"));
-//        room.setRoomType(roomType);
-//
-//        Set<Amenity> amenities = new HashSet<>();
-//        for (Long amenityId : roomDTO.getAmenityIds()) {
-//            Amenity amenity = amenityRepository.findById(amenityId)
-//                    .orElseThrow(() -> new IllegalArgumentException("Amenity not found"));
-//            amenities.add(amenity);
-//        }
-//        room.setAmenities(amenities);
-//
-//        RoomAvailability roomAvailability = new RoomAvailability();
-//        roomAvailability.setStatus("Available");
-//        roomAvailability.setRoom(room);
-//        room.setRoomAvailability(roomAvailability);
-//
-//
-//        Room savedRoom = roomRepository.save(room);
-//
-//        RoomDTO savedRoomDTO = new RoomDTO();
-//        savedRoomDTO.setId(savedRoom.getId());
-//        savedRoomDTO.setRoomNumber(savedRoom.getRoomNumber());
-//        savedRoomDTO.setFloorNumber(savedRoom.getFloorNumber());
-//        savedRoomDTO.setSize(savedRoom.getSize());
-//        savedRoomDTO.setPricePerNight(savedRoom.getPricePerNight());
-//        savedRoomDTO.setDescription(savedRoom.getDescription());
-//        savedRoomDTO.setRoomTypeId(savedRoom.getRoomType().getId());
-//
-//        Set<Long> amenityIds = new HashSet<>();
-//        for (Amenity amenity : savedRoom.getAmenities()) {
-//            amenityIds.add(Long.valueOf(amenity.getId()));
-//        }
-//        savedRoomDTO.setAmenityIds(amenityIds);
-//
-//        RoomAvailability roomAvailabilitySaved = savedRoom.getRoomAvailability();
-//        RoomAvailabilityDTO roomAvailabilityDTO = new RoomAvailabilityDTO();
-//        roomAvailabilityDTO.setId(roomAvailabilitySaved.getId());
-//        roomAvailabilityDTO.setStatus(roomAvailabilitySaved.getStatus());
-//        roomAvailabilityDTO.setBookingStartDate(roomAvailabilitySaved.getBookingStartDate());
-//        roomAvailabilityDTO.setBookingEndDate(roomAvailabilitySaved.getBookingEndDate());
-//        savedRoomDTO.setRoomAvailability(roomAvailabilityDTO);
-//
-//        return savedRoomDTO;
-//    }
 
     @Override
     public Room addRoom(String roomNumber, int floorNumber, double size, String description,
@@ -189,20 +58,18 @@ public class RoomServiceImpl implements RoomService {
         room.setPricePerNight(pricePerNight);
         room.setRoomType(roomType);
 
-        // Handle image if provided
         if (imageBytes != null) {
             Blob roomImage = new SerialBlob(imageBytes);
             room.setImage(roomImage);
         } else {
-            room.setImage(null); // Handle null images gracefully
+            room.setImage(null);
         }
 
-        // Set Room Availability
         if (roomAvailability == null) {
             roomAvailability = new RoomAvailability();
             roomAvailability.setStatus("Available");
         }
-        roomAvailability.setRoom(room); // Establish bidirectional relationship
+        roomAvailability.setRoom(room);
         room.setRoomAvailability(roomAvailability);
 
         room.setAmenities(amenities);
@@ -218,47 +85,94 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public Optional<RoomDTO> getRoomById(Long roomId) {
-        return Optional.empty();
+    public Optional<Room> getRoomById(Long roomId) {
+        return roomRepository.findById(roomId);
+    }
+
+
+    @Override
+    public List<Map<String, Object>> getAllRooms() {
+
+        List<Room> rooms = roomRepository.findAll();
+
+        return rooms.stream()
+                .map(room -> {
+                    Map<String, Object> roomData = new HashMap<>();
+                    roomData.put("id", room.getId());
+                    roomData.put("roomNumber", room.getRoomNumber());
+                    roomData.put("floorNumber", room.getFloorNumber());
+                    roomData.put("size", room.getSize());
+                    roomData.put("description", room.getDescription());
+                    roomData.put("pricePerNight", room.getPricePerNight());
+                    if (room.getRoomType() != null) {
+                        Map<String, Object> roomTypeData = new HashMap<>();
+                        roomTypeData.put("id", room.getRoomType().getId());
+                        roomTypeData.put("typeName", room.getRoomType().getTypeName());
+                        roomTypeData.put("purpose", room.getRoomType().getPurpose());
+                        roomData.put("roomType", roomTypeData);
+                    } else {
+                        roomData.put("roomType", null);
+                    }
+                    if (room.getRoomAvailability() != null) {
+                        Map<String, Object> roomAvailabilityData = new HashMap<>();
+                        roomAvailabilityData.put("id", room.getRoomAvailability().getId());
+                        roomAvailabilityData.put("status", room.getRoomAvailability().getStatus());
+                        roomAvailabilityData.put("bookingStartDate", room.getRoomAvailability().getBookingStartDate());
+                        roomAvailabilityData.put("bookingEndDate", room.getRoomAvailability().getBookingEndDate());
+                        roomData.put("roomAvailability", roomAvailabilityData);
+                    } else {
+                        roomData.put("roomAvailability", null);
+                    }
+                    List<Map<String, Object>> amenitiesData = room.getAmenities().stream()
+                            .map(amenity -> {
+                                Map<String, Object> amenityData = new HashMap<>();
+                                amenityData.put("id", amenity.getId());
+                                amenityData.put("name", amenity.getName());
+                                amenityData.put("description", amenity.getDescription());
+                                return amenityData;
+                            })
+                            .collect(Collectors.toList());
+                    roomData.put("amenities", amenitiesData);
+                    roomData.put("imageUrl", room.getImage() != null ? "/rooms/image/" + room.getId() : null);
+                    return roomData;
+
+                })
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<RoomDTO> getAllRooms() {
-        return List.of();
+    public Optional<Room> getRoomByRoomNumber(String roomNumber) {
+        return roomRepository.findByRoomNumber(roomNumber);
     }
 
     @Override
-    public Optional<RoomDTO> getRoomByRoomNumber(String roomNumber) {
-        return Optional.empty();
+    public List<Room> getRoomsByFloorNumber(int floorNumber) {
+        return roomRepository.findByFloorNumber(floorNumber);
     }
 
     @Override
-    public List<RoomDTO> getRoomsByFloorNumber(int floorNumber) {
-        return List.of();
+    public List<Room> getRoomsByRoomTypeId(Long roomTypeId) {
+        return roomRepository.findByRoomTypeId(roomTypeId);
     }
 
     @Override
-    public List<RoomDTO> getRoomsByRoomTypeId(Long roomTypeId) {
-        return List.of();
+    public List<Room> getRoomsByAvailability(boolean isAvailable) {
+        return null;
     }
 
     @Override
-    public List<RoomDTO> getRoomsByAvailability(boolean isAvailable) {
-        return List.of();
-    }
-
-    @Override
-    public List<RoomDTO> getRoomsByPriceRange(Double minPrice, Double maxPrice) {
-        return List.of();
+    public List<Room> getRoomsByPriceRange(Double minPrice, Double maxPrice) {
+        return null;
     }
 
     @Override
     public boolean roomExistsByRoomNumber(String roomNumber) {
-        return false;
+        return roomRepository.existsByRoomNumber(roomNumber);
     }
 
     @Override
     public void deleteRoom(Long roomId) {
+        roomRepository.deleteById(roomId);
     }
 
 

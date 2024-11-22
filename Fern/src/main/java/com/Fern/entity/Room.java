@@ -1,5 +1,6 @@
 package com.Fern.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -27,6 +28,7 @@ public class Room {
 
     @Lob
     @Column(nullable = true)
+    @JsonIgnore
     private Blob image;
 
     private double pricePerNight;
@@ -127,4 +129,5 @@ public class Room {
     public void setAmenities(Set<Amenity> amenities) {
         this.amenities = amenities;
     }
+    
 }
