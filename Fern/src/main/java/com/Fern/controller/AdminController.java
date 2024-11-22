@@ -12,6 +12,9 @@ import java.util.Map;
 import com.Fern.dto.AmenityDTO;
 import com.Fern.dto.RoomTypeDTO;
 import com.Fern.entity.Image;
+import com.Fern.repository.AmenityRepository;
+import com.Fern.repository.RoomRepository;
+import com.Fern.repository.RoomTypeRepository;
 import com.Fern.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +58,15 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+
+	@Autowired
+	private RoomTypeRepository roomTypeRepository;
+
+	@Autowired
+	private RoomRepository roomRepository;
+
+	@Autowired
+	private AmenityRepository amenityRepository;
 
 	@Autowired
 	private RoomService roomService;
@@ -340,5 +352,11 @@ public class AdminController {
 		return "list_rooms";
 	}
 
+	@GetMapping("/rooms/add")
+	public String showAddRoomForm(Model model) {
+		model.addAttribute("roomTypes", roomTypeRepository.findAll());
+		model.addAttribute("amenities", amenityRepository.findAll());
+		return "admin/add_room";
+	}
 
 }

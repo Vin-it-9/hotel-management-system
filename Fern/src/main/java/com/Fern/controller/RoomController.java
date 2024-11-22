@@ -17,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -44,13 +43,6 @@ public class RoomController {
         this.roomService = roomService;
         this.roomTypeRepository = roomTypeRepository;
         this.amenityRepository = amenityRepository;
-    }
-
-    @GetMapping("/admin/rooms/add")
-    public String showAddRoomForm(Model model) {
-        model.addAttribute("roomTypes", roomTypeRepository.findAll());
-        model.addAttribute("amenities", amenityRepository.findAll());
-        return "add_room";
     }
 
 
@@ -146,5 +138,10 @@ public class RoomController {
         }
     }
 
+    @GetMapping("/byRoomType/{roomTypeId}")
+    @ResponseBody
+    public List<Map<String, Object>> getRoomsByRoomTypeId(@PathVariable Long roomTypeId) {
+        return roomService.getRoomsByRoomTypeId(roomTypeId);
+    }
 
 }

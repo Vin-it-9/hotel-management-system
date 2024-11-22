@@ -1,7 +1,6 @@
 package com.Fern.service;
 
 
-import com.Fern.dto.RoomDTO;
 import com.Fern.entity.Amenity;
 import com.Fern.entity.Room;
 import com.Fern.entity.RoomAvailability;
@@ -13,10 +12,8 @@ import com.Fern.repository.RoomTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.sql.rowset.serial.SerialBlob;
-import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.*;
@@ -86,6 +83,7 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public Optional<Map<String, Object>> getRoomsById(Long roomId) {
+
         return roomRepository.findById(roomId).map(room -> {
             Map<String, Object> roomData = new HashMap<>();
             roomData.put("id", room.getId());
@@ -185,20 +183,61 @@ public class RoomServiceImpl implements RoomService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public Optional<Room> getRoomByRoomNumber(String roomNumber) {
-        return roomRepository.findByRoomNumber(roomNumber);
-    }
 
     @Override
-    public List<Room> getRoomsByFloorNumber(int floorNumber) {
-        return roomRepository.findByFloorNumber(floorNumber);
+    public List<Map<String, Object>> getRoomsByRoomTypeId(Long roomTypeId) {
+
+        List<Room> rooms = roomRepository.findByRoomTypeId(roomTypeId);
+
+        return rooms.stream()
+                .map(room -> {
+                    Map<String, Object> roomData = new HashMap<>();
+                    roomData.put("id", room.getId());
+                    roomData.put("roomNumber", room.getRoomNumber());
+                    roomData.put("floorNumber", room.getFloorNumber());
+                    roomData.put("size", room.getSize());
+                    roomData.put("description", room.getDescription());
+                    roomData.put("pricePerNight", room.getPricePerNight());
+
+                    if (room.getRoomType() != null) {
+                        Map<String, Object> roomTypeData = new HashMap<>();
+                        roomTypeData.put("id", room.getRoomType().getId());
+                        roomTypeData.put("typeName", room.getRoomType().getTypeName());
+                        roomTypeData.put("purpose", room.getRoomType().getPurpose());
+                        roomData.put("roomType", roomTypeData);
+                    } else {
+                        roomData.put("roomType", null);
+                    }
+
+                    if (room.getRoomAvailability() != null) {
+                        Map<String, Object> roomAvailabilityData = new HashMap<>();
+                        roomAvailabilityData.put("id", room.getRoomAvailability().getId());
+                        roomAvailabilityData.put("status", room.getRoomAvailability().getStatus());
+                        roomAvailabilityData.put("bookingStartDate", room.getRoomAvailability().getBookingStartDate());
+                        roomAvailabilityData.put("bookingEndDate", room.getRoomAvailability().getBookingEndDate());
+                        roomData.put("roomAvailability", roomAvailabilityData);
+                    } else {
+                        roomData.put("roomAvailability", null);
+                    }
+
+                    List<Map<String, Object>> amenitiesData = room.getAmenities().stream()
+                            .map(amenity -> {
+                                Map<String, Object> amenityData = new HashMap<>();
+                                amenityData.put("id", amenity.getId());
+                                amenityData.put("name", amenity.getName());
+                                amenityData.put("description", amenity.getDescription());
+                                return amenityData;
+                            })
+                            .collect(Collectors.toList());
+                    roomData.put("amenities", amenitiesData);
+
+                    roomData.put("imageUrl", room.getImage() != null ? "/rooms/image/" + room.getId() : null);
+
+                    return roomData;
+                })
+                .collect(Collectors.toList());
     }
 
-    @Override
-    public List<Room> getRoomsByRoomTypeId(Long roomTypeId) {
-        return roomRepository.findByRoomTypeId(roomTypeId);
-    }
 
     @Override
     public List<Room> getRoomsByAvailability(boolean isAvailable) {
@@ -208,11 +247,6 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public List<Room> getRoomsByPriceRange(Double minPrice, Double maxPrice) {
         return null;
-    }
-
-    @Override
-    public boolean roomExistsByRoomNumber(String roomNumber) {
-        return roomRepository.existsByRoomNumber(roomNumber);
     }
 
     @Override
