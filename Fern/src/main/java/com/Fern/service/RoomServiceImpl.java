@@ -98,7 +98,12 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public List<Room> getRoomsByAvailability(boolean isAvailable) {
+    public List<Map<String, Object>> getRoomsByAmenity(Set<Amenity> amenities) {
+        return List.of();
+    }
+
+    @Override
+    public List<Map<String, Object>> getRoomsByAvailability(boolean isAvailable) {
         return List.of();
     }
 
@@ -115,5 +120,15 @@ public class RoomServiceImpl implements RoomService {
         roomRepository.deleteById(roomId);
     }
 
+
+    @Override
+    public List<Map<String, Object>> getFilteredRooms(Double minPrice, Double maxPrice, Long roomType) {
+        return roomRepository.findAll().stream()
+                .filter(room -> (minPrice == null || room.getPricePerNight() >= minPrice))
+                .filter(room -> (maxPrice == null || room.getPricePerNight() <= maxPrice))
+                .filter(room -> (roomType == null || room.getRoomType().getId().equals(roomType)))
+                .map(RoomMapper::mapRoomToDTO)
+                .collect(Collectors.toList());
+    }
 
 }

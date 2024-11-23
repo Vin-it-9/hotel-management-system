@@ -25,4 +25,10 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     List<Room> findByPriceRange(@Param("minPrice") Double minPrice, @Param("maxPrice") Double maxPrice);
 
 
+    @Query("SELECT r FROM Room r JOIN r.amenities a WHERE " +
+            "(COALESCE(:roomTypeId, NULL) IS NULL OR r.roomType.id = :roomTypeId) AND " +
+            "(COALESCE(:amenityIds, NULL) IS NULL OR a.id IN :amenityIds)")
+    List<Map<String, Object>> findRoomsByCriteria(@Param("roomTypeId") Long roomTypeId, @Param("amenityIds") List<Long> amenityIds);
+
+
 }

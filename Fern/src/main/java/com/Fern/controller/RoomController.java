@@ -1,14 +1,13 @@
 package com.Fern.controller;
 
 
-import com.Fern.entity.Amenity;
 import com.Fern.entity.Room;
-import com.Fern.entity.RoomAvailability;
-import com.Fern.entity.RoomType;
 import com.Fern.repository.AmenityRepository;
 import com.Fern.repository.RoomTypeRepository;
+import com.Fern.service.AmenityService;
 import com.Fern.service.RoomService;
 import com.Fern.service.RoomServiceImpl;
+import com.Fern.service.RoomTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,13 +15,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.*;
 
 @Controller
+@RequestMapping("/rooms")
 public class RoomController {
 
     @Autowired
@@ -38,6 +34,13 @@ public class RoomController {
     private RoomServiceImpl roomServiceImpl;
 
 
+    @Autowired
+    private AmenityService amenityService;
+
+    @Autowired
+    private RoomTypeService roomTypeService;
+
+
     public RoomController(RoomService roomService, RoomTypeRepository roomTypeRepository,
                           AmenityRepository amenityRepository) {
         this.roomService = roomService;
@@ -46,44 +49,7 @@ public class RoomController {
     }
 
 
-    @PostMapping("/admin/rooms/add")
-    public  String addRoom(
-            @RequestParam("roomNumber") String roomNumber,
-            @RequestParam("floorNumber") int floorNumber,
-            @RequestParam("size") double size,
-            @RequestParam("description") String description,
-            @RequestParam(value = "image", required = false) MultipartFile image,
-            @RequestParam("pricePerNight") double pricePerNight,
-            @RequestParam("roomTypeId") Long roomTypeId,
-            @RequestParam("amenityIds") Set<Long> amenityIds
-    ) throws IOException, SQLException {
-
-        byte[] imageBytes = image != null ? image.getBytes() : null;
-
-        RoomType roomType = roomTypeRepository.findById(roomTypeId)
-                .orElseThrow(() -> new IllegalArgumentException("Room type not found"));
-
-        Set<Amenity> amenities = new HashSet<>();
-        for (Long amenityId : amenityIds) {
-            Amenity amenity = amenityRepository.findById(amenityId)
-                    .orElseThrow(() -> new IllegalArgumentException("Amenity not found"));
-            amenities.add(amenity);
-        }
-
-        RoomAvailability roomAvailability = new RoomAvailability();
-        roomAvailability.setStatus("Available");
-
-        Room addedRoom = roomService.addRoom(
-                roomNumber, floorNumber, size, description, imageBytes,
-                pricePerNight, roomType, roomAvailability, amenities
-        );
-
-        return "redirect:/rooms/all";
-
-    }
-
-
-    @GetMapping("/rooms/image/{id}")
+    @GetMapping("/image/{id}")
     public ResponseEntity<byte[]> getRoomImage(@PathVariable Long id) {
 
         Optional<Room> room = roomServiceImpl.getRoomById(id);
@@ -102,13 +68,13 @@ public class RoomController {
     }
 
 
-
-    @GetMapping("/rooms/all")
-    public String getAllRoomsDetailed(Model model) {
-        List<Map<String, Object>> roomResponses = roomService.getAllRooms();
-        model.addAttribute("rooms", roomResponses);
-        return "list_rooms";
-    }
+//
+//    @GetMapping("/rooms/all")
+//    public String getAllRoomsDetailed(Model model) {
+//        List<Map<String, Object>> roomResponses = roomService.getAllRooms();
+//        model.addAttribute("rooms", roomResponses);
+//        return "list_rooms";
+//    }
 
 
 //    @GetMapping("/all")
@@ -117,7 +83,7 @@ public class RoomController {
 //        return roomService.getAllRooms(); // Assuming roomService.getAllRooms() returns List<Map<String, Object>>
 //    }
 
-    @GetMapping("/rooms/{roomId}")
+    @GetMapping("/{roomId}")
     public String getRoomDetailsById(@PathVariable Long roomId, Model model) {
         Optional<Map<String, Object>> roomDetails = roomService.getRoomsById(roomId);
         if (roomDetails.isPresent()) {
@@ -128,7 +94,7 @@ public class RoomController {
         }
     }
 
-    @PostMapping("/rooms/delete/{roomId}")
+    @PostMapping("/delete/{roomId}")
     public ResponseEntity<String> deleteRoom(@PathVariable Long roomId) {
         try {
             roomService.deleteRoom(roomId);
@@ -144,12 +110,61 @@ public class RoomController {
         return roomService.getRoomsByRoomTypeId(roomTypeId);
     }
 
+//
+//    @GetMapping("/byRoomType/{roomTypeId}")
+//    public String getRoomsByRoomTypeId(@PathVariable Long roomTypeId, Model model) {
+//        List<Map<String, Object>> room = roomService.getRoomsByRoomTypeId(roomTypeId);
+//        model.addAttribute("rooms", room);
+//        return "list_rooms";
+//    }
+
+
     @GetMapping("/byPriceRange")
     public ResponseEntity<List<Map<String, Object>>> getRoomsByPriceRange(
             @RequestParam Double minPrice,
             @RequestParam Double maxPrice) {
         List<Map<String, Object>> rooms = roomService.getRoomsByPriceRange(minPrice, maxPrice);
         return ResponseEntity.ok(rooms);
+    }
+
+
+    @GetMapping("/filter-options")
+    @ResponseBody
+    public Map<String, Object> getFilterOptions() {
+        Map<String, Object> options = new HashMap<>();
+        options.put("roomTypes", roomTypeService.getAllRoomTypes());
+        options.put("amenities", amenityService.getAllAmenities());
+        return options;
+    }
+
+    @GetMapping("/filter")
+    public String getAllRoomsFiltered(
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice,
+            @RequestParam(required = false) Long roomType,
+            Model model) {
+
+        model.addAttribute("roomTypes", roomTypeService.getAllRoomTypes());
+        model.addAttribute("amenities", amenityService.getAllAmenities());
+
+        List<Map<String, Object>> rooms = roomService.getFilteredRooms(minPrice, maxPrice, roomType);
+        model.addAttribute("rooms", rooms);
+
+        model.addAttribute("minPrice", minPrice);
+        model.addAttribute("maxPrice", maxPrice);
+        model.addAttribute("selectedRoomType", roomType);
+
+        return "list_rooms";
+
+    }
+
+    @GetMapping("/all")
+    public String getAllRoomsDetailed(Model model) {
+        List<Map<String, Object>> roomResponses = roomService.getAllRooms();
+        model.addAttribute("rooms", roomResponses);
+        model.addAttribute("roomTypes", roomTypeService.getAllRoomTypes());
+        model.addAttribute("amenities", amenityService.getAllAmenities());
+        return "list_rooms";
     }
 
 }

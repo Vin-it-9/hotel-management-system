@@ -24,8 +24,8 @@ public class RoomTypeController {
 
     @GetMapping("/list")
     public String getAllRoomTypes(Model model) {
-        List<RoomTypeDTO> amenities = roomTypeService.getAllRoomTypes();
-        model.addAttribute("roomtype", amenities);
+        List<RoomTypeDTO> roomTypes = roomTypeService.getAllRoomTypes();
+        model.addAttribute("roomtype", roomTypes);
         return "list_amenity";
     }
 

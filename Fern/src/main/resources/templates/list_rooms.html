@@ -2,27 +2,61 @@
 <html class="dark" lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}"
       xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="ISO-8859-1">
-    <title>Users</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Rooms</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-
 <body class="bg-gray-400">
-<section class="mt-12 flex justify-center items-start p-4">
-
+<section class="flex justify-center items-start p-4">
     <main class="container mx-auto flex justify-center w-4/5 items-start min-h-screen">
-
         <div id="room-list" class="grid grid-cols-1 px-6 bg-gray-100 md:px-12 gap-8 p-10">
-            <div th:each="room : ${rooms}"
-                 class="flex flex-col md:flex-row items-start bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 ">
+
+            <!-- Filter Form -->
+            <div class="bg-white shadow-lg rounded-lg p-6 mb-8 w-full">
+                <form th:action="@{/rooms/filter}" method="GET" class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                    <div class="flex flex-col">
+                        <label for="minPrice" class="text-sm font-medium text-gray-600">Min Price (INR)</label>
+                        <input type="number" id="minPrice" name="minPrice" placeholder="100"
+                               th:value="${minPrice != null ? minPrice : ''}"
+                               class="border rounded-lg p-2 mt-1 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="maxPrice" class="text-sm font-medium text-gray-600">Max Price (INR)</label>
+                        <input type="number" id="maxPrice" name="maxPrice" placeholder="1000"
+                               th:value="${maxPrice != null ? maxPrice : ''}"
+                               class="border rounded-lg p-2 mt-1 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="roomType" class="text-sm font-medium text-gray-600">Room Type</label>
+                        <select id="roomType" name="roomType"
+                                class="border rounded-lg p-2 mt-1 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                            <option value="" th:selected="${selectedRoomType == null}">All</option>
+                            <option th:each="type : ${roomTypes}"
+                                    th:value="${type.id}"
+                                    th:text="${type.typeName}"
+                                    th:selected="${selectedRoomType == type.id}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="flex items-end">
+                        <button type="submit"
+                                class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition duration-300">
+                            Apply Filters
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Room List -->
+            <div th:each="room : ${rooms}" class="flex flex-col md:flex-row items-start bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300">
                 <div class="w-full md:w-2/3 h-48 md:h-auto">
-                    <a th:href="@{/rooms/{id}(id=${room.id})}" >
+                    <a th:href="@{/rooms/{id}(id=${room.id})}">
                         <img th:src="${room.imageUrl != null ? room.imageUrl : 'https://via.placeholder.com/300x200'}"
-                              alt="Room Image"
-                              class="w-full h-full object-cover rounded-l-md transition-transform transform hover:scale-105 duration-300"></a>
-
+                             alt="Room Image"
+                             class="w-full h-full object-cover rounded-l-md transition-transform transform hover:scale-105 duration-300">
+                    </a>
                 </div>
-
                 <div class="w-full md:w-2/3 p-6">
                     <div class="text-center md:text-left mb-10">
                         <div class="flex justify-between items-start border-b pb-4 mb-4">
@@ -31,39 +65,30 @@
                                 <span th:text="${room.roomType?.purpose != null ? room.roomType.purpose : 'No Room Purpose'}"></span>
                             </h2>
                             <a th:href="@{/rooms/{id}(id=${room.id})}"
-                               class="text-gray-500 text-sm underline  transition-colors duration-200">
+                               class="text-gray-500 text-sm underline transition-colors duration-200">
                                 Room Details
                             </a>
                         </div>
                     </div>
-
-                    <div class="mt-6 flex justify-between items-start ">
+                    <div class="mt-6 flex justify-between items-start">
                         <p class="text-black text-m font-semibold">Member Flexible Rate</p>
-
                         <p class="text-xl text-black font-semibold">
                             <span th:text="${room.pricePerNight}"></span>
                             <span class="text-sm text-black">INR/NIGHT</span>
                         </p>
-
-                        <form th:action="@{'/rooms/delete/' + ${room.id}}" method="POST"
-                              sec:authorize="hasRole('ADMIN')">
+                        <form th:action="@{'/rooms/delete/' + ${room.id}}" method="POST" sec:authorize="hasRole('ADMIN')">
                             <button type="submit" class="text-red-500 hover:text-red-700">
                                 <img src="https://img.icons8.com/ios-glyphs/30/fa314a/trash.png" alt="Delete" class="w-5 h-5">
                             </button>
                         </form>
-
                         <button class="bg-black text-white px-3 py-2 rounded-xl shadow-md hover:bg-gray-900 hover:shadow-lg transition duration-300">
-                            <a th:href="@{/rooms/{id}(id=${room.id})}">
-                                Select
-                            </a>
+                            <a th:href="@{/rooms/{id}(id=${room.id})}">Select</a>
                         </button>
-
                     </div>
                 </div>
             </div>
         </div>
     </main>
-
 </section>
 </body>
 </html>
