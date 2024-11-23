@@ -5,6 +5,7 @@ com.Fern.config.CustomUserDetailsService=org.springframework.stereotype.Componen
 com.Fern.config.SecurityConfig=org.springframework.stereotype.Component
 com.Fern.controller.AdminController=org.springframework.stereotype.Component
 com.Fern.controller.AmenityController=org.springframework.stereotype.Component
+com.Fern.controller.BookingController=org.springframework.stereotype.Component
 com.Fern.controller.ClientController=org.springframework.stereotype.Component
 com.Fern.controller.HomeController=org.springframework.stereotype.Component
 com.Fern.controller.RoomController=org.springframework.stereotype.Component

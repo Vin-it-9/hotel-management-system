@@ -1,43 +1,27 @@
-package com.Fern.entity;
+package com.Fern.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-@Entity
-public class Booking {
+public class BookingDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Temporal(TemporalType.DATE)
-    @Column(nullable = false)
     private Date checkInDate;
 
-    @Temporal(TemporalType.DATE)
-    @Column(nullable = false)
     private Date checkOutDate;
 
-    @Column(nullable = false)
     private String customerName;
 
-    @Column(nullable = false, unique = true)
     private String bookingReference;
 
-    @Column(nullable = false)
     private double totalPrice;
 
-    @Column(nullable = false)
-    private String bookingStatus; // E.g., Confirmed, Pending, Cancelled
+    private String bookingStatus;
 
-    @ManyToOne
-    @JoinColumn(name = "room_id", nullable = false)
-    @JsonBackReference
-    private Room room;
+    private Long roomId;
 
     public Long getId() {
         return id;
@@ -95,11 +79,11 @@ public class Booking {
         this.bookingStatus = bookingStatus;
     }
 
-    public Room getRoom() {
-        return room;
+    public Long getRoomId() {
+        return roomId;
     }
 
-    public void setRoom(Room room) {
-        this.room = room;
+    public void setRoomId(Long roomId) {
+        this.roomId = roomId;
     }
 }

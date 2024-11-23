@@ -50,6 +50,7 @@ public class Room {
     private Set<Amenity> amenities = new HashSet<>();
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Booking> bookings = new ArrayList<>();
 
     public List<Booking> getBookings() {
