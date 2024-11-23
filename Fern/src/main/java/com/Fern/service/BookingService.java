@@ -5,6 +5,7 @@ import com.Fern.entity.Booking;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface BookingService {
 
@@ -21,6 +22,7 @@ public interface BookingService {
 
     Booking cancelBooking(Long bookingId);
 
+    List<Map<String, Object>> getAvailableRooms(Date checkInDate, Date checkOutDate);
 
 
 }

@@ -4,6 +4,8 @@ package com.Fern.service;
 import com.Fern.dto.BookingDTO;
 import com.Fern.entity.Booking;
 import com.Fern.entity.Room;
+import com.Fern.entity.RoomAvailability;
+import com.Fern.entity.RoomMapper;
 import com.Fern.repository.BookingRepository;
 import com.Fern.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -41,7 +45,6 @@ public class BookingServiceImpl implements BookingService {
             throw new IllegalArgumentException("Room ID is required.");
         }
 
-        // Fetch the Room entity
         Room room = roomRepository.findById(bookingDTO.getRoomId())
                 .orElseThrow(() -> new IllegalArgumentException("Room not found."));
 
@@ -74,6 +77,7 @@ public class BookingServiceImpl implements BookingService {
 
         // Save the booking
         return bookingRepository.save(booking);
+
     }
 
 
@@ -101,4 +105,38 @@ public class BookingServiceImpl implements BookingService {
     public Booking cancelBooking(Long bookingId) {
         return null;
     }
+
+    @Override
+    public List<Map<String, Object>> getAvailableRooms(Date checkInDate, Date checkOutDate) {
+
+        if (checkOutDate.before(checkInDate)) {
+            throw new IllegalArgumentException("Check-out date cannot be before check-in date.");
+        }
+
+        List<Room> allRooms = roomRepository.findAll();
+
+        List<Map<String, Object>> availableRooms = allRooms.stream()
+                .filter(room -> isRoomAvailable(room, checkInDate, checkOutDate))
+                .map(RoomMapper::mapRoomToDTO)
+                .collect(Collectors.toList());
+
+        return availableRooms;
+    }
+
+
+
+    private boolean isRoomAvailable(Room room, Date checkInDate, Date checkOutDate) {
+
+        List<Booking> bookings = bookingRepository.findByRoomId(room.getId());
+
+        for (Booking booking : bookings) {
+            if ((checkInDate.before(booking.getCheckOutDate()) && checkOutDate.after(booking.getCheckInDate()))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+
 }
