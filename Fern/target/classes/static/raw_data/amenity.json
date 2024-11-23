@@ -22,14 +22,6 @@
     "description": "A large flat-screen TV with access to premium cable channels."
   },
   {
-    "name": "Mini Bar",
-    "description": "A stocked mini bar with snacks, drinks, and alcoholic beverages."
-  },
-  {
-    "name": "Work Desk",
-    "description": "A spacious desk with a comfortable chair for business needs."
-  },
-  {
     "name": "Room Service",
     "description": "24/7 room service for meals, drinks, and other services."
   },
@@ -40,22 +32,6 @@
   {
     "name": "Swimming Pool",
     "description": "An outdoor swimming pool with sunbeds for relaxation."
-  },
-  {
-    "name": "Hot Tub",
-    "description": "A private hot tub available in the room or on the balcony."
-  },
-  {
-    "name": "Concierge Service",
-    "description": "Personalized concierge services to assist with bookings, activities, and reservations."
-  },
-  {
-    "name": "Shuttle Service",
-    "description": "Free shuttle service to local attractions or airport."
-  },
-  {
-    "name": "Spa",
-    "description": "Access to a full-service spa offering massages and beauty treatments."
   },
   {
     "name": "Parking",

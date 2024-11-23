@@ -35,48 +35,13 @@
     "purpose": "Comfort"
   },
   {
-    "typeName": "Studio Room",
-    "description": "A studio-style room with a kitchenette and open layout.",
-    "purpose": "Extended stay"
-  },
-  {
     "typeName": "King Room",
     "description": "A spacious room with a king-size bed for extra comfort.",
     "purpose": "Spacious"
   },
   {
-    "typeName": "Accessible Room",
-    "description": "A room with accessibility features for guests with disabilities.",
-    "purpose": "Accessibility"
-  },
-  {
     "typeName": "Economy Room",
     "description": "A budget-friendly room with basic amenities.",
     "purpose": "Budget"
-  },
-  {
-    "typeName": "Penthouse Suite",
-    "description": "An extravagant suite on the top floor with premium amenities.",
-    "purpose": "Luxury"
-  },
-  {
-    "typeName": "Presidential Suite",
-    "description": "The most luxurious room offering exclusive features and services.",
-    "purpose": "Prestige"
-  },
-  {
-    "typeName": "Bungalow",
-    "description": "A private bungalow with garden views and unique décor.",
-    "purpose": "Privacy"
-  },
-  {
-    "typeName": "Cabana",
-    "description": "A poolside room with direct pool access and open-air features.",
-    "purpose": "Recreation"
-  },
-  {
-    "typeName": "Conference Suite",
-    "description": "A suite equipped for small business meetings.",
-    "purpose": "Business"
   }
 ]

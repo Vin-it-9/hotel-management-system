@@ -7,7 +7,7 @@ import lombok.Data;
 
 import java.sql.Blob;
 import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @Entity
@@ -49,6 +49,16 @@ public class Room {
     )
     private Set<Amenity> amenities = new HashSet<>();
 
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Booking> bookings = new ArrayList<>();
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
+    }
 
     public Long getId() {
         return id;
