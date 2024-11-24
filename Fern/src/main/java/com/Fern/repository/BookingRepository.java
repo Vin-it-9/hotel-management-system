@@ -13,6 +13,8 @@ import java.util.*;
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
+
+
     @Query("SELECT b FROM Booking b WHERE b.room = :room AND " +
             "(b.checkInDate < :endDate AND b.checkOutDate > :startDate)")
     List<Booking> findByRoomAndDateRange(
@@ -20,6 +22,11 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             @Param("startDate") Date startDate,
             @Param("endDate") Date endDate);
 
+
+
+
     List<Booking> findByRoomId(Long roomId);
+
+
 
 }

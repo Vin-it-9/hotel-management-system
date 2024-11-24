@@ -33,6 +33,7 @@ com.Fern.service.AmenityServiceImpl=org.springframework.stereotype.Component
 com.Fern.service.BookingServiceImpl=org.springframework.stereotype.Component
 com.Fern.service.ImageServiceImpl=org.springframework.stereotype.Component
 com.Fern.service.RoomAvailabilityServiceImpl=org.springframework.stereotype.Component
+com.Fern.service.RoomService=org.springframework.stereotype.Component
 com.Fern.service.RoomServiceImpl=org.springframework.stereotype.Component
 com.Fern.service.RoomTypeServiceImpl=org.springframework.stereotype.Component
 com.Fern.service.UserServiceImpl=org.springframework.stereotype.Component

@@ -209,8 +209,8 @@
 				format: 'DD/MM/YYYY'
 			}
 		}, function (start, end, label) {
-			var selectedDateRange = start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY');
-			$('#selectedDateRange').html('<p>Selected Date Range: ' + selectedDateRange + '</p>');
+			var selectedDateRange = start.format('MMMM D, YYYY') + ' To ' + end.format('MMMM D, YYYY');
+			$('#selectedDateRange').html('<p>' + selectedDateRange + '</p>');
 			$('#checkInDate').val(start.format('YYYY-MM-DD'));
 			$('#checkOutDate').val(end.format('YYYY-MM-DD'));
 		});
@@ -222,7 +222,16 @@
 			}
 		});
 	});
+	function updateHiddenInputs() {
+		const dateRangeInput = document.getElementById("kt_daterangepicker_1").value;
 
+		// Assuming the date range is in the format "yyyy-MM-dd to yyyy-MM-dd"
+		const [checkIn, checkOut] = dateRangeInput.split(" to ");
+
+		// Update the hidden input fields
+		document.getElementById("checkInDate").value = checkIn || "";
+		document.getElementById("checkOutDate").value = checkOut || "";
+	}
 
 
 

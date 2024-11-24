@@ -1,31 +1,137 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="dark" lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Date Range Picker</title>
+    <title>List Rooms</title>
+    <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.css" rel="stylesheet">
-</head>
-<body>
-<div class="mb-0">
-    <label class="form-label">Basic example</label>
-    <input class="form-control form-control-solid" placeholder="Pick date range" id="kt_daterangepicker_1"/>
-</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#kt_daterangepicker_1').daterangepicker({
-            opens: 'left',
-            minDate: moment(),
-            locale: {
-                format: 'MM/DD/YYYY'
-            }
-        });
-    });
-</script>
+</head>
+<body class="bg-gray-400">
+<section class="flex justify-center items-start p-4">
+    <main class="container mx-auto flex justify-center w-2/3 items-start min-h-screen">
+        <div id="room-list" class="grid grid-cols-1 px-6 bg-gray-100 md:px-12 gap-8 p-10">
+
+            <div class="mb-2 w-1/3 bg-white p-4 rounded-lg shadow-md">
+                <label for="kt_daterangepicker_1" class="block text-sm font-medium text-black mb-2">Select Date Range</label>
+                <div class="relative">
+                    <input
+                            id="kt_daterangepicker_1"
+                            type="text"
+                            placeholder="Pick a date range"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-3 shadow-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-300"
+                    />
+                    <span class="absolute inset-y-0 right-3 flex items-center text-gray-400">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+        </span>
+                </div>
+            </div>
+
+            <div id="selectedDateRange" class=" text-lg font-medium text-gray-800">
+                <p th:if="${checkInDate != null && checkOutDate != null}">
+                    <span th:text="${#dates.format(checkInDate, 'MMMM d, yyyy')}"></span> To
+                    <span th:text="${#dates.format(checkOutDate, 'MMMM d, yyyy')}"></span>
+                </p>
+                <p th:if="${checkInDate == null || checkOutDate == null}">
+                    No date selected yet.
+                </p>
+            </div>
+
+            <form id="bookingForm" th:action="@{/bookings/rooms/available}" method="POST" class="">
+                <input type="hidden" id="checkInDate" name="checkInDate" />
+                <input type="hidden" id="checkOutDate" name="checkOutDate" />
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300">
+                    Submit Dates
+                </button>
+            </form>
+
+            <div class="bg-white shadow-lg rounded-lg p-6 mb-8 w-full">
+                <form th:action="@{/rooms/filter}" method="GET" class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                    <div class="flex flex-col">
+                        <label for="minPrice" class="text-sm font-medium text-gray-600">Min Price (INR)</label>
+                        <input type="number" id="minPrice" name="minPrice" placeholder="100"
+                               th:value="${minPrice != null ? minPrice : ''}"
+                               class="border rounded-lg p-2 mt-1 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="maxPrice" class="text-sm font-medium text-gray-600">Max Price (INR)</label>
+                        <input type="number" id="maxPrice" name="maxPrice" placeholder="1000"
+                               th:value="${maxPrice != null ? maxPrice : ''}"
+                               class="border rounded-lg p-2 mt-1 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="roomType" class="text-sm font-medium text-gray-600">Room Type</label>
+                        <select id="roomType" name="roomType"
+                                class="border rounded-lg p-2 mt-1 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                            <option value="" th:selected="${selectedRoomType == null}">All</option>
+                            <option th:each="type : ${roomTypes}"
+                                    th:value="${type.id}"
+                                    th:text="${type.typeName}"
+                                    th:selected="${selectedRoomType == type.id}">
+                            </option>
+                        </select>
+                    </div>
+
+
+                    <div class="flex items-end">
+                        <button type="submit"
+                                class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition duration-300">
+                            Apply Filters
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Room List -->
+            <div th:each="room : ${rooms}" class="flex flex-col md:flex-row items-start bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300">
+                <div class="w-full md:w-2/3 h-48 md:h-auto">
+                    <a th:href="@{/rooms/{id}(id=${room.id})}">
+                        <img th:src="${room.imageUrl != null ? room.imageUrl : 'https://via.placeholder.com/300x200'}"
+                             alt="Room Image"
+                             class="w-full h-full object-cover rounded-l-md transition-transform transform hover:scale-105 duration-300">
+                    </a>
+                </div>
+                <div class="w-full md:w-2/3 p-6">
+                    <div class="text-center md:text-left mb-10">
+                        <div class="flex justify-between items-start border-b pb-4 mb-4">
+                            <h2 class="text-xl font-semibold text-black mb-2">
+                                <span th:text="${room.roomType?.typeName != null ? room.roomType.typeName : 'No Room Type'}"></span> |
+                                <span th:text="${room.roomType?.purpose != null ? room.roomType.purpose : 'No Room Purpose'}"></span>
+                            </h2>
+                            <a th:href="@{/rooms/{id}(id=${room.id})}"
+                               class="text-gray-500 text-sm underline transition-colors duration-200">
+                                Room Details
+                            </a>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex justify-between items-start">
+                        <p class="text-black text-m font-semibold">Member Flexible Rate</p>
+                        <p class="text-xl text-black font-semibold">
+                            <span th:text="${room.pricePerNight}"></span>
+                            <span class="text-sm text-black">INR/NIGHT</span>
+                        </p>
+                        <form th:action="@{'/rooms/delete/' + ${room.id}}" method="POST" sec:authorize="hasRole('ADMIN')">
+                            <button type="submit" class="text-red-500 hover:text-red-700">
+                                <img src="https://img.icons8.com/ios-glyphs/30/fa314a/trash.png" alt="Delete" class="w-5 h-5">
+                            </button>
+                        </form>
+                        <button class="bg-black text-white px-3 py-2 rounded-xl shadow-md hover:bg-gray-900 hover:shadow-lg transition duration-300">
+                            <a th:href="@{/rooms/{id}(id=${room.id})}">Select</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</section>
+
+
 </body>
 </html>

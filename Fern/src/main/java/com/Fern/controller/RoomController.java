@@ -1,8 +1,14 @@
 package com.Fern.controller;
 
 
+import com.Fern.dto.RoomDTO;
+import com.Fern.dto.RoomRequest;
+import com.Fern.entity.Amenity;
 import com.Fern.entity.Room;
+import com.Fern.entity.RoomAvailability;
+import com.Fern.entity.RoomType;
 import com.Fern.repository.AmenityRepository;
+import com.Fern.repository.RoomAvailabilityRepository;
 import com.Fern.repository.RoomTypeRepository;
 import com.Fern.service.AmenityService;
 import com.Fern.service.RoomService;
@@ -15,6 +21,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -32,7 +43,6 @@ public class RoomController {
 
     @Autowired
     private RoomServiceImpl roomServiceImpl;
-
 
     @Autowired
     private AmenityService amenityService;
@@ -145,8 +155,6 @@ public class RoomController {
             Model model) {
 
         model.addAttribute("roomTypes", roomTypeService.getAllRoomTypes());
-        model.addAttribute("amenities", amenityService.getAllAmenities());
-
         List<Map<String, Object>> rooms = roomService.getFilteredRooms(minPrice, maxPrice, roomType);
         model.addAttribute("rooms", rooms);
 
@@ -165,6 +173,39 @@ public class RoomController {
         model.addAttribute("roomTypes", roomTypeService.getAllRoomTypes());
         model.addAttribute("amenities", amenityService.getAllAmenities());
         return "list_rooms";
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<String> addRoom(@RequestBody RoomRequest roomRequest) throws IOException, SQLException {
+
+        byte[] imageBytes = null;
+
+        RoomType roomType = roomTypeRepository.findById(roomRequest.getRoomTypeId())
+                .orElseThrow(() -> new IllegalArgumentException("Room type not found"));
+
+        Set<Amenity> amenities = new HashSet<>();
+        for (Long amenityId : roomRequest.getAmenityIds()) {
+            Amenity amenity = amenityRepository.findById(amenityId)
+                    .orElseThrow(() -> new IllegalArgumentException("Amenity not found"));
+            amenities.add(amenity);
+        }
+
+        RoomAvailability roomAvailability = new RoomAvailability();
+        roomAvailability.setStatus("Available");
+
+        Room addedRoom = roomService.addRoom(
+                roomRequest.getRoomNumber(),
+                roomRequest.getFloorNumber(),
+                roomRequest.getSize(),
+                roomRequest.getDescription(),
+                imageBytes,
+                roomRequest.getPricePerNight(),
+                roomType,
+                roomAvailability,
+                amenities
+        );
+
+        return ResponseEntity.ok("Room added successfully");
     }
 
 }

@@ -32,7 +32,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public Booking createBooking(BookingDTO bookingDTO) {
-        // Validate inputs
+
         if (bookingDTO.getCheckInDate() == null || bookingDTO.getCheckOutDate() == null) {
             throw new IllegalArgumentException("Check-in and check-out dates are required.");
         }
@@ -55,27 +55,22 @@ public class BookingServiceImpl implements BookingService {
             throw new IllegalArgumentException("Room is not available for the selected dates.");
         }
 
-        // Create a new Booking entity
         Booking booking = new Booking();
         booking.setCheckInDate(bookingDTO.getCheckInDate());
         booking.setCheckOutDate(bookingDTO.getCheckOutDate());
         booking.setCustomerName(bookingDTO.getCustomerName());
         booking.setRoom(room);
 
-        // Generate a unique booking reference
         String uniqueReference = UUID.randomUUID().toString().substring(0, 8).toUpperCase();
         booking.setBookingReference(uniqueReference);
 
-        // Calculate total price
         long daysBetween = ChronoUnit.DAYS.between(
                 bookingDTO.getCheckInDate().toInstant(), bookingDTO.getCheckOutDate().toInstant());
         double totalPrice = daysBetween * room.getPricePerNight();
         booking.setTotalPrice(totalPrice);
 
-        // Set initial booking status
         booking.setBookingStatus("Confirmed");
 
-        // Save the booking
         return bookingRepository.save(booking);
 
     }
@@ -123,8 +118,6 @@ public class BookingServiceImpl implements BookingService {
         return availableRooms;
 
     }
-
-
 
     private boolean isRoomAvailable(Room room, Date checkInDate, Date checkOutDate) {
 

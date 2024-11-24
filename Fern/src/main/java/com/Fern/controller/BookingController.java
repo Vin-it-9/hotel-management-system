@@ -2,10 +2,11 @@ package com.Fern.controller;
 
 import com.Fern.dto.BookingDTO;
 import com.Fern.entity.Booking;
-import com.Fern.service.BookingService;
-import com.Fern.service.BookingServiceImpl;
-import com.Fern.service.RoomService;
+import com.Fern.repository.AmenityRepository;
+import com.Fern.repository.RoomTypeRepository;
+import com.Fern.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,9 +26,29 @@ public class BookingController {
 
     @Autowired
     private RoomService roomService;
+
     @Autowired
     private BookingServiceImpl bookingServiceImpl;
 
+
+    @Autowired
+    private RoomTypeServiceImpl roomTypeServiceImpl;
+
+    @Autowired
+    private RoomServiceImpl roomServiceImpl;
+
+    @Autowired
+    private AmenityService amenityService;
+
+    @Autowired
+    private RoomTypeService roomTypeService;
+
+    public BookingController(BookingService bookingService, RoomService roomService, RoomTypeServiceImpl roomTypeServiceImpl, RoomTypeService roomTypeService) {
+        this.bookingService = bookingService;
+        this.roomService = roomService;
+        this.roomTypeServiceImpl = roomTypeServiceImpl;
+        this.roomTypeService = roomTypeService;
+    }
 
     @PostMapping("/create")
     public ResponseEntity<Booking> createBooking(@RequestBody BookingDTO bookingDTO) {
@@ -60,7 +81,7 @@ public class BookingController {
 //
 //    }
 
-    @PostMapping("/rooms/available")
+    @GetMapping("/rooms/available")
     public String getAvailableRooms(@RequestParam("checkInDate") String checkInDateStr,
                                     @RequestParam("checkOutDate") String checkOutDateStr, Model model) {
         Date checkInDate;
@@ -87,5 +108,6 @@ public class BookingController {
         // Return the Thymeleaf view for available rooms
         return "list_rooms"; // Make sure there's a corresponding availableRooms.html
     }
+
 
 }

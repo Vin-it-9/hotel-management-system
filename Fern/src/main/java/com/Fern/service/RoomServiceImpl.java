@@ -2,10 +2,7 @@ package com.Fern.service;
 
 
 import com.Fern.entity.*;
-import com.Fern.repository.AmenityRepository;
-import com.Fern.repository.RoomAvailabilityRepository;
-import com.Fern.repository.RoomRepository;
-import com.Fern.repository.RoomTypeRepository;
+import com.Fern.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,15 +20,10 @@ public class RoomServiceImpl implements RoomService {
     @Autowired
     private RoomRepository roomRepository;
 
-    @Autowired
-    private RoomTypeRepository roomTypeRepository;
 
-    @Autowired
-    private AmenityRepository amenityRepository;
-
-    @Autowired
-    private RoomAvailabilityRepository roomAvailabilityRepository;
-
+    public void addRoom(Room room) {
+        roomRepository.save(room);
+    }
 
     @Override
     public Room addRoom(String roomNumber, int floorNumber, double size, String description,
@@ -97,15 +89,6 @@ public class RoomServiceImpl implements RoomService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public List<Map<String, Object>> getRoomsByAmenity(Set<Amenity> amenities) {
-        return List.of();
-    }
-
-    @Override
-    public List<Map<String, Object>> getRoomsByAvailability(boolean isAvailable) {
-        return List.of();
-    }
 
     @Override
     public List<Map<String, Object>> getRoomsByPriceRange(Double minPrice, Double maxPrice) {

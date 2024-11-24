@@ -14,7 +14,7 @@
     <main class="container mx-auto flex justify-center w-2/3 items-start min-h-screen">
         <div id="room-list" class="grid grid-cols-1 px-6 bg-gray-100 md:px-12 gap-8 p-10">
 
-            <div class="mb-6 w-1/3 bg-white p-4 rounded-lg shadow-md">
+            <div class="mb-2 w-1/3 bg-white p-4 rounded-lg shadow-md">
                 <label for="kt_daterangepicker_1" class="block text-sm font-medium text-black mb-2">Select Date Range</label>
                 <div class="relative">
                     <input
@@ -31,14 +31,20 @@
                 <line x1="3" y1="10" x2="21" y2="10"></line>
             </svg>
         </span>
- </div>
- </div>
+        </div>
+        </div>
 
-            <div id="selectedDateRange" class="mt-4 text-lg font-medium text-gray-800">
-                <p>No date selected yet.</p>
+            <div id="selectedDateRange" class=" text-lg font-medium text-gray-800">
+                <p th:if="${checkInDate != null && checkOutDate != null}">
+                    <span th:text="${#dates.format(checkInDate, 'MMMM d, yyyy')}"></span> To
+                    <span th:text="${#dates.format(checkOutDate, 'MMMM d, yyyy')}"></span>
+                </p>
+                <p th:if="${checkInDate == null || checkOutDate == null}">
+                    No date selected yet.
+                </p>
             </div>
 
-            <form id="bookingForm" th:action="@{/bookings/rooms/available}" method="POST" class="mt-6">
+            <form id="bookingForm" th:action="@{/bookings/rooms/available}" method="GET" class="">
                 <input type="hidden" id="checkInDate" name="checkInDate" />
                 <input type="hidden" id="checkOutDate" name="checkOutDate" />
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300">
