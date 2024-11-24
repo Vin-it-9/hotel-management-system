@@ -142,17 +142,15 @@
 	const sunImagePath = /*[[@{/images/sun.png}]]*/ '/images/sun.png';
 	const moonImagePath = /*[[@{/images/moon.png}]]*/ '/images/moon.png';
 
-	// Select both theme toggle buttons for mobile and desktop
+
 	const themeToggleButtonMobile = document.getElementById('theme-toggle');
 	const themeToggleButtonDesktop = document.getElementById('theme-toggle-lg');
 
-	// Select both theme icons
 	const themeIconMobile = document.getElementById('theme-icon');
 	const themeIconDesktop = document.getElementById('theme-icon-lg');
 
 	const body = document.body;
 
-	// Apply saved theme state
 	if (localStorage.getItem('theme') === 'dark') {
 		body.classList.add('dark-mode');
 		themeIconMobile.src = moonImagePath;
@@ -162,7 +160,6 @@
 		themeIconDesktop.src = sunImagePath;
 	}
 
-	// Function to toggle theme
 	function toggleTheme() {
 		body.classList.toggle('dark-mode');
 		themeIconMobile.classList.add('fade-out');
@@ -183,7 +180,6 @@
 		}, 500);
 	}
 
-	// Add event listeners to both buttons
 	themeToggleButtonMobile.addEventListener('click', toggleTheme);
 	themeToggleButtonDesktop.addEventListener('click', toggleTheme);
 
@@ -206,7 +202,6 @@
 	});
 
 	$(document).ready(function () {
-		// Initialize the daterangepicker
 		$('#kt_daterangepicker_1').daterangepicker({
 			opens: 'left',
 			minDate: moment(),
