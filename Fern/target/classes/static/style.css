@@ -207,3 +207,82 @@ h1, h2, h3, h4, h5, h6, p {
     box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
 }
 
+.daterangepicker {
+    border-radius: 1px !important;
+    border: 1px solid #d1d5db;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+    background-color: #f9fafb;
+}
+
+.daterangepicker .drp-calendar .calendar-table th {
+    font-size: 14px;
+    color: #374151;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.daterangepicker .drp-calendar .calendar-table td.available {
+    color: #6b7280;
+    font-weight: 500;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.daterangepicker .drp-calendar .calendar-table td.available:hover {
+    background-color: #d1d5db;
+    color: #111827;
+    border-radius: 0;
+}
+
+.daterangepicker .drp-calendar .calendar-table td.in-range {
+    background-color: #9ca3af;
+    color: #ffffff;
+}
+.daterangepicker .ranges .drp-buttons button {
+    background-color: #4b5563;
+    color: #ffffff;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.daterangepicker .ranges .drp-buttons button:hover {
+    background-color: #1f2937;
+    color: #e5e7eb;
+}
+
+.daterangepicker .drp-calendar .calendar-table td.active {
+    background-color: #4b5563;
+    color: white;
+    border-radius: 0;
+    font-weight: bold;
+}
+
+.daterangepicker .drp-calendar {
+    border-right: 1px solid #e5e7eb;
+}
+
+.daterangepicker .drp-calendar .calendar-table .week {
+    color: #9ca3af;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.daterangepicker .ranges ul li {
+    color: #6b7280;
+    padding: 6px 12px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.daterangepicker .ranges ul li:hover {
+    background-color: #e5e7eb;
+    color: #1f2937;
+}
+
+.daterangepicker .drp-calendar .calendar-table td {
+    border-radius: 0;
+    padding: 6px;
+}
+
+
+

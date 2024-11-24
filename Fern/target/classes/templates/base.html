@@ -8,6 +8,14 @@
 	<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 	<link th:href="@{/style.css}" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<!-- Date Range Picker CSS -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.css" rel="stylesheet">
+	<!-- jQuery (required for Date Range Picker) -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" defer></script>
+	<!-- Moment.js (required for Date Range Picker) -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" defer></script>
+	<!-- Date Range Picker JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js" defer></script>
 	
 </head>
 <body class="bg-gray-50">
@@ -178,7 +186,53 @@
 	// Add event listeners to both buttons
 	themeToggleButtonMobile.addEventListener('click', toggleTheme);
 	themeToggleButtonDesktop.addEventListener('click', toggleTheme);
+
+
+	$(document).ready(function () {
+		$('#kt_daterangepicker_1').daterangepicker({
+			opens: 'left',
+			minDate: moment(),
+			locale: {
+				format: 'DD/MM/YYYY',
+				applyLabel: "Apply",
+				cancelLabel: "Cancel",
+				customRangeLabel: "Custom Range",
+				weekLabel: "W",
+				daysOfWeek: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+				monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+				firstDay: 1
+			}
+		});
+	});
+
+	$(document).ready(function () {
+		// Initialize the daterangepicker
+		$('#kt_daterangepicker_1').daterangepicker({
+			opens: 'left',
+			minDate: moment(),
+			locale: {
+				format: 'DD/MM/YYYY'
+			}
+		}, function (start, end, label) {
+			var selectedDateRange = start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY');
+			$('#selectedDateRange').html('<p>Selected Date Range: ' + selectedDateRange + '</p>');
+			$('#checkInDate').val(start.format('YYYY-MM-DD'));
+			$('#checkOutDate').val(end.format('YYYY-MM-DD'));
+		});
+
+		$('#bookingForm').submit(function (event) {
+			if (!$('#checkInDate').val() || !$('#checkOutDate').val()) {
+				alert('Please select a date range first.');
+				event.preventDefault();
+			}
+		});
+	});
+
+
+
+
 </script>
+
 
 </body>
 </html>
