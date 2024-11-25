@@ -1,6 +1,7 @@
 package com.Fern.dto;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -9,8 +10,12 @@ public class BookingDTO {
 
     private Long id;
 
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date checkInDate;
 
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date checkOutDate;
 
     private String customerName;
@@ -22,6 +27,8 @@ public class BookingDTO {
     private String bookingStatus;
 
     private Long roomId;
+
+
 
     public Long getId() {
         return id;

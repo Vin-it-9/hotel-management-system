@@ -268,4 +268,10 @@ public boolean updateUserProfile(User updatedUser, String currentEmail) {
 		userRepo.save(user);
 	}
 
+	@Override
+	public User findByEmail(String email) {
+		return userRepo.findByEmail(email);
+	}
+
+
 }

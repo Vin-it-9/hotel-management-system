@@ -44,6 +44,8 @@ public class HomeController {
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private RoomServiceImpl roomServiceImpl;
 
 
 	@ModelAttribute
@@ -63,11 +65,13 @@ public class HomeController {
 			String email = principal.getName();
 
 			Image userImage = imageServiceImpl.findByUserEmail(email);
+
 			if (userImage != null && userImage.getImage() != null) {
 				byte[] imageBytes = userImage.getImage().getBytes(1, (int) userImage.getImage().length());
 				String base64Image = Base64.getEncoder().encodeToString(imageBytes);
 				session.setAttribute("userImage", base64Image);
 			}
+
 		}
 		return "index";
 	}
@@ -157,7 +161,6 @@ public class HomeController {
 
 		String email = principal.getName();
 		User user = userRepo.getUserByEmail(email);
-
 		model.addAttribute("user", user);
 
 		return "editProfile";
@@ -173,6 +176,7 @@ public class HomeController {
 		}
 
 		boolean isUpdated = userServiceImpl.updateUserProfile(user, email);
+		session.setAttribute("username", user.getName());
 
 		if (isUpdated) {
 			session.setAttribute("msg", "Profile updated successfully.");

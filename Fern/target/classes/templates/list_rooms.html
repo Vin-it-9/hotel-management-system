@@ -44,7 +44,7 @@
                 </p>
             </div>
 
-            <form id="bookingForm" th:action="@{/bookings/rooms/available}" method="GET" class="">
+            <form id="bookingForm" th:action="@{/bookings/rooms/available}" method="POST" class="">
                 <input type="hidden" id="checkInDate" name="checkInDate" />
                 <input type="hidden" id="checkOutDate" name="checkOutDate" />
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300">
@@ -99,6 +99,7 @@
                     </a>
                 </div>
                 <div class="w-full md:w-2/3 p-6">
+
                     <div class="text-center md:text-left mb-10">
                         <div class="flex justify-between items-start border-b pb-4 mb-4">
                             <h2 class="text-xl font-semibold text-black mb-2">
@@ -111,6 +112,8 @@
                             </a>
                         </div>
                     </div>
+
+
                     <div class="mt-6 flex justify-between items-start">
                         <p class="text-black text-m font-semibold">Member Flexible Rate</p>
                         <p class="text-xl text-black font-semibold">
@@ -122,10 +125,12 @@
                                 <img src="https://img.icons8.com/ios-glyphs/30/fa314a/trash.png" alt="Delete" class="w-5 h-5">
                             </button>
                         </form>
+
                         <button class="bg-black text-white px-3 py-2 rounded-xl shadow-md hover:bg-gray-900 hover:shadow-lg transition duration-300">
                             <a th:href="@{/rooms/{id}(id=${room.id})}">Select</a>
                         </button>
                     </div>
+
                 </div>
             </div>
         </div>

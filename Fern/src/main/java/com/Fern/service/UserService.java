@@ -35,5 +35,6 @@ public interface UserService {
 
 	void updateUser(int userId, String name, String mobileNo, String gender, String address, LocalDate dateOfBirth);
 
+	User findByEmail(String email);
 
 }

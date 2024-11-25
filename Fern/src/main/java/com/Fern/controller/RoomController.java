@@ -1,19 +1,12 @@
 package com.Fern.controller;
 
-
-import com.Fern.dto.RoomDTO;
 import com.Fern.dto.RoomRequest;
-import com.Fern.entity.Amenity;
-import com.Fern.entity.Room;
-import com.Fern.entity.RoomAvailability;
-import com.Fern.entity.RoomType;
+import com.Fern.entity.*;
 import com.Fern.repository.AmenityRepository;
-import com.Fern.repository.RoomAvailabilityRepository;
 import com.Fern.repository.RoomTypeRepository;
-import com.Fern.service.AmenityService;
-import com.Fern.service.RoomService;
-import com.Fern.service.RoomServiceImpl;
-import com.Fern.service.RoomTypeService;
+import com.Fern.repository.UserRepo;
+import com.Fern.service.*;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,9 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -49,6 +42,14 @@ public class RoomController {
 
     @Autowired
     private RoomTypeService roomTypeService;
+
+    @Autowired
+    private HttpSession httpSession;
+
+    @Autowired
+    private UserRepo userRepo;
+    @Autowired
+    private UserService userService;
 
 
     public RoomController(RoomService roomService, RoomTypeRepository roomTypeRepository,
@@ -94,15 +95,21 @@ public class RoomController {
 //    }
 
     @GetMapping("/{roomId}")
-    public String getRoomDetailsById(@PathVariable Long roomId, Model model) {
+    public String getRoomDetailsById(@PathVariable Long roomId, Model model, Principal principal) {
         Optional<Map<String, Object>> roomDetails = roomService.getRoomsById(roomId);
+
+        String email = principal.getName();
+        User user = userRepo.getUserByEmail(email);
+
         if (roomDetails.isPresent()) {
             model.addAttribute("room", roomDetails.get());
+            model.addAttribute("username", user.getName());
             return "list_rooms_id";
         } else {
             return "error/404";
         }
     }
+
 
     @PostMapping("/delete/{roomId}")
     public ResponseEntity<String> deleteRoom(@PathVariable Long roomId) {
