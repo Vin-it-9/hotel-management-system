@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Base64;
+import java.util.List;
+import java.util.Map;
 
 import com.Fern.repository.UserRepo;
 
@@ -38,6 +40,15 @@ public class HomeController {
 
 	@Autowired
 	private ImageServiceImpl imageServiceImpl;
+
+	@Autowired
+	private RoomService roomService;
+
+	@Autowired
+	private RoomTypeService roomTypeService;
+
+	@Autowired
+	private AmenityService amenityService;
 
 	@Autowired
 	PasswordEncoder encoder;
@@ -215,6 +226,7 @@ public class HomeController {
 			return "change-password";
 		}
 	}
+
 
 
 }

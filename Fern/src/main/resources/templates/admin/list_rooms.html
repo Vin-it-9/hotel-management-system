@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="dark" lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}"
+<html class="dark" lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/base::layout(~{::section})}"
       xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
@@ -13,44 +13,6 @@
 <section class="flex justify-center items-start p-4">
     <main class="container mx-auto flex justify-center w-2/3 items-start min-h-screen">
         <div id="room-list" class="grid grid-cols-1 px-6 bg-gray-100 md:px-12 gap-8 p-10">
-
-            <div class="mb-2 w-1/3 bg-white p-4 rounded-lg shadow-md">
-                <label for="kt_daterangepicker_1" class="block text-sm font-medium text-black mb-2">Select Date Range</label>
-                <div class="relative">
-                    <input
-                            id="kt_daterangepicker_1"
-                            type="text"
-                            placeholder="Pick a date range"
-                            class="w-full border border-gray-300 rounded-lg px-4 py-3 shadow-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-300"
-                    />
-                    <span class="absolute inset-y-0 right-3 flex items-center text-gray-400">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                <line x1="16" y1="2" x2="16" y2="6"></line>
-                <line x1="8" y1="2" x2="8" y2="6"></line>
-                <line x1="3" y1="10" x2="21" y2="10"></line>
-            </svg>
-        </span>
-        </div>
-        </div>
-
-            <div id="selectedDateRange" class=" text-lg font-medium text-gray-800">
-                <p th:if="${checkInDate != null && checkOutDate != null}">
-                    <span th:text="${#dates.format(checkInDate, 'MMMM d, yyyy')}"></span> To
-                    <span th:text="${#dates.format(checkOutDate, 'MMMM d, yyyy')}"></span>
-                </p>
-                <p th:if="${checkInDate == null || checkOutDate == null}">
-                    No date selected yet.
-                </p>
-            </div>
-
-            <form id="bookingForm" th:action="@{/rooms/available}" method="POST" class="">
-                <input type="hidden" id="checkInDate" name="checkInDate" />
-                <input type="hidden" id="checkOutDate" name="checkOutDate" />
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300">
-                    Submit Dates
-                </button>
-            </form>
 
             <div class="bg-white shadow-lg rounded-lg p-6 mb-8 w-full">
                 <form th:action="@{/rooms/filter}" method="GET" class="grid grid-cols-1 md:grid-cols-5 gap-4">

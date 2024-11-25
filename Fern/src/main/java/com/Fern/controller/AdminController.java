@@ -53,14 +53,8 @@ public class AdminController {
 	@Autowired
 	private RoomTypeService roomTypeService;
 
-    @Autowired
-    private UserService userService;
-
 	@Autowired
 	private RoomTypeRepository roomTypeRepository;
-
-	@Autowired
-	private RoomRepository roomRepository;
 
 	@Autowired
 	private AmenityRepository amenityRepository;
@@ -349,7 +343,8 @@ public class AdminController {
 		model.addAttribute("amenities", amenityService.getAllAmenities());
 		model.addAttribute("rooms", roomResponses);
 
-		return "list_rooms";
+		return "admin/list_rooms";
+
 	}
 
 	@GetMapping("/rooms/add")

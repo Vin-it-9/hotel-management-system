@@ -10,10 +10,8 @@ public class BookingDTO {
 
     private Long id;
 
-
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date checkInDate;
-
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date checkOutDate;

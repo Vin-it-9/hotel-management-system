@@ -47,16 +47,37 @@ public class RoomController {
     private HttpSession httpSession;
 
     @Autowired
+    private BookingService bookingService;
+
+    @Autowired
     private UserRepo userRepo;
+
     @Autowired
     private UserService userService;
 
+    @ModelAttribute
+    public void commonUser(Principal p, Model m) {
+        if (p != null) {
+            String email = p.getName();
+            User user = userRepo.findByEmail(email);
+            m.addAttribute("user", user);
+        }
+    }
 
-    public RoomController(RoomService roomService, RoomTypeRepository roomTypeRepository,
-                          AmenityRepository amenityRepository) {
-        this.roomService = roomService;
-        this.roomTypeRepository = roomTypeRepository;
-        this.amenityRepository = amenityRepository;
+
+    @GetMapping("/all")
+    public String getAllRoomsDetailed(Model model,HttpSession session) {
+
+        session.removeAttribute("checkInDate");
+        session.removeAttribute("checkOutDate");
+
+        List<Map<String, Object>> roomResponses = roomService.getAllRooms();
+
+        model.addAttribute("rooms", roomResponses);
+        model.addAttribute("roomTypes", roomTypeService.getAllRoomTypes());
+        model.addAttribute("amenities", amenityService.getAllAmenities());
+
+        return "list_rooms";
     }
 
 
@@ -78,38 +99,28 @@ public class RoomController {
         return ResponseEntity.notFound().build();
     }
 
-
-//
-//    @GetMapping("/rooms/all")
-//    public String getAllRoomsDetailed(Model model) {
-//        List<Map<String, Object>> roomResponses = roomService.getAllRooms();
-//        model.addAttribute("rooms", roomResponses);
-//        return "list_rooms";
-//    }
-
-
-//    @GetMapping("/all")
-//    @ResponseBody
-//    public List<Map<String, Object>> getAllRooms() {
-//        return roomService.getAllRooms(); // Assuming roomService.getAllRooms() returns List<Map<String, Object>>
-//    }
-
     @GetMapping("/{roomId}")
     public String getRoomDetailsById(@PathVariable Long roomId, Model model, Principal principal) {
+
         Optional<Map<String, Object>> roomDetails = roomService.getRoomsById(roomId);
 
-        String email = principal.getName();
-        User user = userRepo.getUserByEmail(email);
+        boolean isLoggedIn = principal != null;
+        model.addAttribute("isLoggedIn", isLoggedIn);
+
+        if (isLoggedIn) {
+            String email = principal.getName();
+            User user = userRepo.getUserByEmail(email);
+            model.addAttribute("username", user.getName());
+        }
 
         if (roomDetails.isPresent()) {
             model.addAttribute("room", roomDetails.get());
-            model.addAttribute("username", user.getName());
             return "list_rooms_id";
         } else {
             return "error/404";
         }
-    }
 
+    }
 
     @PostMapping("/delete/{roomId}")
     public ResponseEntity<String> deleteRoom(@PathVariable Long roomId) {
@@ -127,31 +138,12 @@ public class RoomController {
         return roomService.getRoomsByRoomTypeId(roomTypeId);
     }
 
-//
-//    @GetMapping("/byRoomType/{roomTypeId}")
-//    public String getRoomsByRoomTypeId(@PathVariable Long roomTypeId, Model model) {
-//        List<Map<String, Object>> room = roomService.getRoomsByRoomTypeId(roomTypeId);
-//        model.addAttribute("rooms", room);
-//        return "list_rooms";
-//    }
-
-
     @GetMapping("/byPriceRange")
     public ResponseEntity<List<Map<String, Object>>> getRoomsByPriceRange(
             @RequestParam Double minPrice,
             @RequestParam Double maxPrice) {
         List<Map<String, Object>> rooms = roomService.getRoomsByPriceRange(minPrice, maxPrice);
         return ResponseEntity.ok(rooms);
-    }
-
-
-    @GetMapping("/filter-options")
-    @ResponseBody
-    public Map<String, Object> getFilterOptions() {
-        Map<String, Object> options = new HashMap<>();
-        options.put("roomTypes", roomTypeService.getAllRoomTypes());
-        options.put("amenities", amenityService.getAllAmenities());
-        return options;
     }
 
     @GetMapping("/filter")
@@ -171,15 +163,6 @@ public class RoomController {
 
         return "list_rooms";
 
-    }
-
-    @GetMapping("/all")
-    public String getAllRoomsDetailed(Model model) {
-        List<Map<String, Object>> roomResponses = roomService.getAllRooms();
-        model.addAttribute("rooms", roomResponses);
-        model.addAttribute("roomTypes", roomTypeService.getAllRoomTypes());
-        model.addAttribute("amenities", amenityService.getAllAmenities());
-        return "list_rooms";
     }
 
     @PostMapping("/add")
@@ -215,4 +198,31 @@ public class RoomController {
         return ResponseEntity.ok("Room added successfully");
     }
 
+    @PostMapping("/available")
+    public String getAvailableRooms(@RequestParam("checkInDate") String checkInDateStr,
+                                    @RequestParam("checkOutDate") String checkOutDateStr,
+                                    HttpSession session, Model model) {
+        Date checkInDate;
+        Date checkOutDate;
+
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            checkInDate = dateFormat.parse(checkInDateStr);
+            checkOutDate = dateFormat.parse(checkOutDateStr);
+        } catch (Exception e) {
+            model.addAttribute("error", "Invalid date format. Please try again.");
+            return "error";
+        }
+
+        session.setAttribute("checkInDate", checkInDate);
+        session.setAttribute("checkOutDate", checkOutDate);
+
+        List<Map<String, Object>> availableRooms = bookingService.getAvailableRooms(checkInDate, checkOutDate);
+
+        model.addAttribute("checkInDate", checkInDate);
+        model.addAttribute("checkOutDate", checkOutDate);
+        model.addAttribute("rooms", availableRooms);
+
+        return "list_rooms";
+    }
 }
