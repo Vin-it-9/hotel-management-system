@@ -86,10 +86,11 @@
                             Apply Filters
                         </button>
                     </div>
+
                 </form>
             </div>
 
-            <!-- Room List -->
+
             <div th:each="room : ${rooms}" class="flex flex-col md:flex-row items-start bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300">
                 <div class="w-full md:w-2/3 h-48 md:h-auto">
                     <a th:href="@{/rooms/{id}(id=${room.id})}">
@@ -126,9 +127,11 @@
                             </button>
                         </form>
 
-                        <button class="bg-black text-white px-3 py-2 rounded-xl shadow-md hover:bg-gray-900 hover:shadow-lg transition duration-300">
-                            <a th:href="@{/rooms/{id}(id=${room.id})}">Select</a>
-                        </button>
+                        <a th:href="@{/rooms/{id}(id=${room.id})}"
+                           class="bg-black text-white px-4 py-2 rounded-xl shadow-md hover:bg-gray-900 hover:shadow-lg transition duration-300 inline-block text-center">
+                            Select
+                        </a>
+
                     </div>
 
                 </div>
@@ -136,7 +139,5 @@
         </div>
     </main>
 </section>
-
-
 </body>
 </html>

@@ -70,11 +70,15 @@
                 </ul>
             </div>
 
-
-            <form th:action="@{/rooms/bookings/create}" method="POST">
+            <form th:action="@{/rooms/bookings/create}" method="POST" class="flex flex-col items-end ">
                 <input type="hidden" name="roomId" th:value="${room.id}" />
-                <button type="submit">Submit</button>
+                <button type="submit"
+                        class="bg-black text-white px-3 py-2 rounded-xl shadow-md hover:bg-gray-900 hover:shadow-lg transition duration-300">
+                    Book Now
+                </button>
             </form>
+
+
 
         </div>
     </div>
