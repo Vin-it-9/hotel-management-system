@@ -96,19 +96,21 @@ public class BookingController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<Booking> createBooking(@ModelAttribute BookingDTO bookingDTO) {
+    public ResponseEntity<Booking> createBooking(@ModelAttribute BookingDTO bookingDTO, Principal principal) {
         try {
 
-            Booking createdBooking = bookingService.createBooking(bookingDTO);
+            Booking createdBooking = bookingService.createBooking(bookingDTO,principal);
 
             return ResponseEntity
                     .created(URI.create("/bookings/" + createdBooking.getId()))
                     .body(createdBooking);
+
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.badRequest().body(null);
         } catch (Exception ex) {
             return ResponseEntity.status(500).body(null);
         }
+
     }
 
 

@@ -2,16 +2,21 @@ package com.Fern.service;
 
 
 import com.Fern.dto.BookingDTO;
-import com.Fern.entity.Booking;
-import com.Fern.entity.Room;
-import com.Fern.entity.RoomAvailability;
-import com.Fern.entity.RoomMapper;
+import com.Fern.entity.*;
 import com.Fern.repository.BookingRepository;
 import com.Fern.repository.RoomRepository;
+import com.Fern.repository.UserRepo;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
@@ -29,9 +34,16 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     private RoomRepository roomRepository;
 
+    @Autowired
+    private JavaMailSenderImpl mailSender;
+
+    @Autowired
+    private UserRepo userRepo;
+
 
     @Override
-    public Booking createBooking(BookingDTO bookingDTO) {
+    public Booking createBooking(BookingDTO bookingDTO,
+                                 Principal Principal) {
 
         if (bookingDTO.getCheckInDate() == null || bookingDTO.getCheckOutDate() == null) {
             throw new IllegalArgumentException("Check-in and check-out dates are required.");
@@ -61,6 +73,8 @@ public class BookingServiceImpl implements BookingService {
         booking.setCustomerName(bookingDTO.getCustomerName());
         booking.setRoom(room);
 
+
+
         String uniqueReference = UUID.randomUUID().toString().substring(0, 8).toUpperCase();
         booking.setBookingReference(uniqueReference);
 
@@ -69,10 +83,84 @@ public class BookingServiceImpl implements BookingService {
         double totalPrice = daysBetween * room.getPricePerNight();
         booking.setTotalPrice(totalPrice);
 
+        sendBookingConfirmationEmail(booking ,Principal);
+
         booking.setBookingStatus("Confirmed");
 
         return bookingRepository.save(booking);
 
+    }
+
+    public void sendBookingConfirmationEmail(Booking booking , Principal principal) {
+
+
+        String email = principal.getName();
+        User user = userRepo.getUserByEmail(email);
+
+        String from = "springboot2559@gmail.com";
+        String to = user.getEmail();
+        String subject = "Booking Confirmation - " + booking.getBookingReference();
+
+        String content =
+                "<div style=\"font-family: Arial, sans-serif; color: #333; line-height: 1.6; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;\">" +
+                        "<h2 style=\"text-align: center; color: #4CAF50; font-size: 24px; margin-bottom: 30px;\">Booking Confirmation</h2>" +
+
+                        "<p style=\"font-size: 16px;\">Dear " + user.getName() + ",</p>" +
+                        "<p style=\"font-size: 16px;\">Thank you for booking with us! Please find your booking details below:</p>" +
+
+                        "<div style=\"margin: 30px 0;\">" +
+                        "<table style=\"width: 100%; border-collapse: collapse;\">" +
+                        "   <tr style=\"background-color: #f9f9f9;\">" +
+                        "       <td style=\"padding: 8px; border: 1px solid #ddd; font-weight: bold;\">Booking Reference:</td>" +
+                        "       <td style=\"padding: 8px; border: 1px solid #ddd;\">" + booking.getBookingReference() + "</td>" +
+                        "   </tr>" +
+                        "   <tr>" +
+                        "       <td style=\"padding: 8px; border: 1px solid #ddd; font-weight: bold;\">Room:</td>" +
+                        "       <td style=\"padding: 8px; border: 1px solid #ddd;\">" + booking.getRoom().getRoomType().getTypeName() + " (" + booking.getRoom().getRoomType().getPurpose() + ")</td>" +
+                        "   </tr>" +
+                        "   <tr style=\"background-color: #f9f9f9;\">" +
+                        "       <td style=\"padding: 8px; border: 1px solid #ddd; font-weight: bold;\">Check-in Date:</td>" +
+                        "       <td style=\"padding: 8px; border: 1px solid #ddd;\">" +
+                        booking.getCheckInDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+                                .format(DateTimeFormatter.ofPattern("EEE, MMM dd, yyyy")) +
+                        "</td>" +
+                        "   </tr>" +
+                        "   <tr>" +
+                        "       <td style=\"padding: 8px; border: 1px solid #ddd; font-weight: bold;\">Check-out Date:</td>" +
+                        "       <td style=\"padding: 8px; border: 1px solid #ddd;\">" +
+                        booking.getCheckOutDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+                                .format(DateTimeFormatter.ofPattern("EEE, MMM dd, yyyy")) +
+                        "</td>" +
+                        "   </tr>" +
+                        "   <tr style=\"background-color: #f9f9f9;\">" +
+                        "       <td style=\"padding: 8px; border: 1px solid #ddd; font-weight: bold;\">Total Price:</td>" +
+                        "       <td style=\"padding: 8px; border: 1px solid #ddd;\">" + booking.getTotalPrice() + " INR</td>" +
+                        "   </tr>" +
+                        "</table>" +
+                        "</div>" +
+
+                        "<p style=\"font-size: 16px;\">We look forward to hosting you.</p>" +
+                        "<p style=\"font-size: 16px;\">Best regards,<br>Nexus Team</p>" +
+
+                        "<hr style=\"border: 0; border-top: 1px solid #ddd; margin: 30px 0;\">" +
+                        "<p style=\"font-size: 12px; color: #999; text-align: center;\">If you have any questions, please contact us at springboot2559@gmail.com.</p>" +
+                        "</div>";
+
+
+
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+            helper.setFrom(from, "Nexus");
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(content, true);
+
+            mailSender.send(message);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to send email", e);
+        }
     }
 
 

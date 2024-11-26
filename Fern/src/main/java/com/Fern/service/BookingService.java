@@ -3,6 +3,7 @@ package com.Fern.service;
 import com.Fern.dto.BookingDTO;
 import com.Fern.entity.Booking;
 
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +11,7 @@ import java.util.Map;
 public interface BookingService {
 
 
-    Booking createBooking(BookingDTO bookingDTO);
+    Booking createBooking(BookingDTO bookingDTO, Principal Principal);
 
     List<Booking> getAllBookings();
 

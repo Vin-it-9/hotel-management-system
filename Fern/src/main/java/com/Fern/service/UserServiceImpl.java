@@ -118,6 +118,7 @@ public boolean updateUserProfile(User updatedUser, String currentEmail) {
 		}
 
 		userRepo.save(existingUser);
+
 		return true;
 	}
 	return false;
