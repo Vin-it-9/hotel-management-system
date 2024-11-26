@@ -116,7 +116,7 @@ public class BookingController {
 
             Booking createdBooking = bookingService.createBooking(bookingDTO, principal);
 
-            return "redirect:/rooms/all";
+            return "redirect:/history";
 
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
