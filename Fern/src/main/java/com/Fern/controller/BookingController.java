@@ -96,24 +96,19 @@ public class BookingController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<Booking> createBooking(@ModelAttribute BookingDTO bookingDTO, Principal principal) {
+    public String createBooking(@ModelAttribute BookingDTO bookingDTO, Principal principal) {
+
         try {
 
-            Booking createdBooking = bookingService.createBooking(bookingDTO,principal);
+            Booking createdBooking = bookingService.createBooking(bookingDTO, principal);
 
-            return ResponseEntity
-                    .created(URI.create("/bookings/" + createdBooking.getId()))
-                    .body(createdBooking);
+            return "redirect:/rooms/all";
 
-        } catch (IllegalArgumentException ex) {
-            return ResponseEntity.badRequest().body(null);
         } catch (Exception ex) {
-            return ResponseEntity.status(500).body(null);
+            System.out.println(ex.getMessage());
+            return "error/500";
         }
 
     }
-
-
-
 
 }
