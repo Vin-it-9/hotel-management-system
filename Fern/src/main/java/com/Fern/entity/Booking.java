@@ -3,11 +3,14 @@ package com.Fern.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
 
 @Data
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Booking {
 
     @Id
@@ -32,12 +35,24 @@ public class Booking {
     private double totalPrice;
 
     @Column(nullable = false)
-    private String bookingStatus; // E.g., Confirmed, Pending, Cancelled
+    private String bookingStatus;
 
     @ManyToOne
     @JoinColumn(name = "room_id", nullable = false)
     @JsonBackReference
     private Room room;
+
+    @CreatedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date BookCreationDate;
+
+    public Date getBookCreationDate() {
+        return BookCreationDate;
+    }
+
+    public void setBookCreationDate(Date bookCreationDate) {
+        BookCreationDate = bookCreationDate;
+    }
 
     public Long getId() {
         return id;

@@ -22,8 +22,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             @Param("startDate") Date startDate,
             @Param("endDate") Date endDate);
 
-
-
+    List<Booking> findBookingByCustomerName(String customerName);
 
     List<Booking> findByRoomId(Long roomId);
 

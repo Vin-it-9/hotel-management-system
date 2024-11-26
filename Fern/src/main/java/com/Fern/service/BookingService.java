@@ -2,6 +2,7 @@ package com.Fern.service;
 
 import com.Fern.dto.BookingDTO;
 import com.Fern.entity.Booking;
+import org.springframework.ui.Model;
 
 import java.security.Principal;
 import java.util.Date;
@@ -14,6 +15,8 @@ public interface BookingService {
     Booking createBooking(BookingDTO bookingDTO, Principal Principal);
 
     List<Booking> getAllBookings();
+
+    List<Booking> getAllBookingsByUser(Principal Principal);
 
     Booking getBookingById(Long id);
 

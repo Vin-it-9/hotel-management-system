@@ -12,6 +12,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -168,6 +169,26 @@ public class BookingServiceImpl implements BookingService {
     public List<Booking> getAllBookings() {
         return List.of();
     }
+
+    @Override
+    public List<Booking> getAllBookingsByUser(Principal principal) {
+
+        if (principal == null) {
+            throw new IllegalArgumentException("User is not logged in.");
+        }
+
+        String email = principal.getName();
+        User user = userRepo.getUserByEmail(email);
+
+        if (user == null) {
+            throw new IllegalArgumentException("User not found.");
+        }
+
+        String username = user.getName();
+        return bookingRepository.findBookingByCustomerName(username);
+
+    }
+
 
     @Override
     public Booking getBookingById(Long id) {

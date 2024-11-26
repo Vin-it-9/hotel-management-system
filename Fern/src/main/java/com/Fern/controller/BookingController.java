@@ -39,6 +39,19 @@ public class BookingController {
         }
     }
 
+    @GetMapping("/history")
+    public String getAllBookingsByUser(Principal principal, Model model) {
+        try {
+            List<Booking> bookings = bookingService.getAllBookingsByUser(principal);
+            Collections.reverse(bookings);
+            model.addAttribute("bookings", bookings);
+            return "booking_history";
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return "redirect:/error";
+        }
+    }
+
     @PostMapping("/rooms/bookings/create")
     public String create(@ModelAttribute BookingDTO bookingDTO, @RequestParam Long roomId, Principal principal, Model model, HttpSession session) {
 
@@ -84,6 +97,7 @@ public class BookingController {
     }
 
     private double calculatePrice(Date checkInDate, Date checkOutDate, Double pricePerNight) {
+
         long daysBetween = ChronoUnit.DAYS.between(
                 checkInDate.toInstant(),
                 checkOutDate.toInstant()
@@ -110,5 +124,8 @@ public class BookingController {
         }
 
     }
+
+
+
 
 }
