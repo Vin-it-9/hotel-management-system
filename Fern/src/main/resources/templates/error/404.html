@@ -1,19 +1,27 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Error 404 - Page Not Found</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>404 - Page Not Found</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
 </head>
-<body class="bg-gray-200 flex items-center justify-center h-screen">
-<div class="bg-white shadow-lg rounded-lg p-10 max-w-lg text-center">
-    <h1 class="text-3xl font-bold text-blue-600">404</h1>
-    <p class="text-xl text-gray-800 mt-4">Page Not Found - The page you are looking for doesn't exist.</p>
-    <div class="mt-6">
-        <a href="/" class="px-3 py-2 bg-blue-600 text-white rounded-lg text-lg hover:bg-blue-700 transition duration-300">
-            Go Back to Home
-        </a>
+<body>
+<div class="h-screen w-screen bg-gray-50 flex items-center">
+    <div class="container flex flex-col md:flex-row items-center justify-between px-5 text-gray-700">
+        <div class="w-full lg:w-1/2 mx-8">
+            <div class="text-7xl text-green-500 font-dark font-extrabold mb-8">404</div>
+            <p class="text-2xl md:text-3xl font-light leading-normal mb-8">
+                Sorry we couldn't find the page you're looking for
+            </p>
+            <a th:href="@{/}"
+               class="px-5 inline py-3 text-sm font-medium leading-5 shadow-2xl text-white transition-all duration-400 border border-transparent rounded-lg focus:outline-none bg-green-600 active:bg-red-600 hover:bg-red-700">
+                Back to Homepage
+            </a>
+        </div>
+        <div class="w-full lg:flex lg:justify-end lg:w-1/2 mx-5 my-12">
+            <img src="https://user-images.githubusercontent.com/43953425/166269493-acd08ccb-4df3-4474-95c7-ad1034d3c070.svg" class="" alt="Page not found">
+        </div>
     </div>
 </div>
 </body>

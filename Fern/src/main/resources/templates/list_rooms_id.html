@@ -32,10 +32,8 @@
                         th:text="${room.roomAvailability.status}"></span>
             </div>
 
-            <!-- Description -->
             <p class="text-gray-600 dark:text-gray-300 text-base" th:text="${room.description}"></p>
 
-            <!-- Room Specifications -->
             <div class="grid grid-cols-2 gap-4 text-sm text-gray-700 dark:text-gray-400">
                 <div>
                     <strong>Floor:</strong> <span th:text="${room.floorNumber}"></span>
@@ -48,7 +46,6 @@
                 </div>
             </div>
 
-            <!-- Room Type -->
             <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
                 <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Room Type</h2>
                 <p
@@ -59,7 +56,6 @@
                         class="text-sm text-gray-500 dark:text-gray-400"></p>
             </div>
 
-            <!-- Amenities -->
             <div>
                 <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Amenities</h2>
                 <ul class="list-disc pl-6 space-y-2">
