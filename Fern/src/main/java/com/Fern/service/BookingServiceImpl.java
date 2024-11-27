@@ -143,7 +143,7 @@ public class BookingServiceImpl implements BookingService {
                         "</div>" +
 
                         "<p style=\"font-size: 16px;\">We look forward to hosting you.</p>" +
-                        "<p style=\"font-size: 16px;\">Best regards,<br>Nexus Team</p>" +
+                        "<p style=\"font-size: 16px;\">Best regards,<br>Hotel The Fern</p>" +
 
                         "<hr style=\"border: 0; border-top: 1px solid #ddd; margin: 30px 0;\">" +
                         "<p style=\"font-size: 12px; color: #999; text-align: center;\">If you have any questions, please contact us at springboot2559@gmail.com.</p>" +
@@ -155,7 +155,7 @@ public class BookingServiceImpl implements BookingService {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
-            helper.setFrom(from, "Nexus");
+            helper.setFrom(from, "Hotel The Fern");
             helper.setTo(to);
             helper.setSubject(subject);
             helper.setText(content, true);
