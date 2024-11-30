@@ -8,27 +8,20 @@ Developed a comprehensive **Hotel Management System** for *Amanora The Fern Hote
 ### Key Features:
 
 - **Admin Panel**:
-  - **Room Management:** Manage rooms, availability, and details.  
+   - **Room Management:** Manage rooms, availability, and details.  
    - **Room Type Management:** Configure and organize room categories.  
    - **Amenity Management:** Add and update hotel amenities.  
-
    - **User Management:** Handle user accounts, roles, and access.  
-
    - **Booking Management:** Oversee room bookings and reservations.  
-
    - **Order Management:** Track and manage food and service orders.  
-
    - **Function & Events Management:** Coordinate and schedule events and functions.  
-   
    - **Reports and Analytics::** Generate reports on bookings, occupancy rates, user engagement, and more. 
   
-
 - **User Panel**:
-  - **Secure Registration & Login**: Users can register and login with email verification, ensuring account security using JWT tokens.
-  - **Email Verification**: Upon registration, users receive an email to verify their account, powered by Spring Mail.
-
-  - **Password Management**: Users can reset or change their password securely through email verification.
-  - **User Dashboard**: A personalized dashboard for users to manage their account settings.
+   - **Secure Registration & Login**: Users can register and login with email verification, ensuring account security using JWT tokens.
+   - **Email Verification**: Upon registration, users receive an email to verify their account, powered by Spring Mail.
+   - **Password Management**: Users can reset or change their password securely through email verification.
+   - **User Dashboard**: A personalized dashboard for users to manage their account settings.
    - **Room Booking:** Browse available rooms, check details, and make reservations.  
    - **Amenity Access:** View and select amenities while booking.  
    - **Event Booking:** Book function halls or event spaces for personal or corporate events.  
@@ -41,7 +34,7 @@ Developed a comprehensive **Hotel Management System** for *Amanora The Fern Hote
    - **Secure Logout**: Integrated with Spring Security for secure session management and logout functionality.
   
 ### Technologies Used:
-- **Backend**: Java, Spring Boot, Spring Data JPA, Spring Security, Spring Mail
+- **Backend**: Spring Boot, Spring Data JPA, Hibernate, Spring Security, Spring Mail
 - **Frontend**: Thymeleaf, Tailwind CSS , JavaScript
 - **Database**: MySQL
 - **Authentication**: JWT Tokens
