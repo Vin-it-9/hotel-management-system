@@ -34,15 +34,11 @@ public class RoomAvailabilityServiceImpl implements RoomAvailabilityService {
 
         roomAvailability.setRoom(room);
         roomAvailability.setStatus(roomAvailabilityDTO.getStatus());
-        roomAvailability.setBookingStartDate(roomAvailabilityDTO.getBookingStartDate());
-        roomAvailability.setBookingEndDate(roomAvailabilityDTO.getBookingEndDate());
 
         RoomAvailability savedRoomAvailability = roomAvailabilityRepository.save(roomAvailability);
         RoomAvailabilityDTO savedDTO = new RoomAvailabilityDTO();
         savedDTO.setId(savedRoomAvailability.getId());
         savedDTO.setStatus(savedRoomAvailability.getStatus());
-        savedDTO.setBookingStartDate(savedRoomAvailability.getBookingStartDate());
-        savedDTO.setBookingEndDate(savedRoomAvailability.getBookingEndDate());
 
         return savedDTO;
     }
@@ -71,8 +67,6 @@ public class RoomAvailabilityServiceImpl implements RoomAvailabilityService {
         RoomAvailabilityDTO dto = new RoomAvailabilityDTO();
         dto.setId(roomAvailability.getId());
         dto.setStatus(roomAvailability.getStatus());
-        dto.setBookingStartDate(roomAvailability.getBookingStartDate());
-        dto.setBookingEndDate(roomAvailability.getBookingEndDate());
         return dto;
     }
 

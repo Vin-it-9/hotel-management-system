@@ -27,8 +27,6 @@ public class RoomMapper {
             Map<String, Object> availabilityData = new HashMap<>();
             availabilityData.put("id", room.getRoomAvailability().getId());
             availabilityData.put("status", room.getRoomAvailability().getStatus());
-            availabilityData.put("bookingStartDate", room.getRoomAvailability().getBookingStartDate());
-            availabilityData.put("bookingEndDate", room.getRoomAvailability().getBookingEndDate());
             roomData.put("roomAvailability", availabilityData);
         }
 

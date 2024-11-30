@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
@@ -28,6 +30,8 @@ public class BookingController {
 
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private BookingServiceImpl bookingServiceImpl;
 
 
     @ModelAttribute
@@ -50,6 +54,34 @@ public class BookingController {
             ex.printStackTrace();
             return "redirect:/error";
         }
+    }
+
+    @GetMapping("/admin/bookings/list")
+    public String getAllBookings(Model model) {
+
+        try {
+            List<Booking> bookings = bookingService.getAllBookingsBy();
+            Collections.reverse(bookings);
+            model.addAttribute("bookings", bookings);
+            return "booking_history";
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return "redirect:/error";
+        }
+
+    }
+
+    @GetMapping("/admin/delete-booking")
+    public String deleteBooking(@RequestParam Long bookingId, Model model) {
+
+        boolean deleted = bookingServiceImpl.deleteBooking(bookingId);
+        if (deleted) {
+            model.addAttribute("message", "Booking deleted successfully.");
+        } else {
+            model.addAttribute("message", "Booking not found.");
+        }
+
+        return "redirect:/admin/bookings/list";
     }
 
     @PostMapping("/rooms/bookings/create")

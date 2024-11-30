@@ -14,11 +14,10 @@ public interface BookingService {
 
     Booking createBooking(BookingDTO bookingDTO, Principal Principal);
 
-    List<Booking> getAllBookings();
 
     List<Booking> getAllBookingsByUser(Principal Principal);
 
-    Booking getBookingById(Long id);
+    List<Booking> getAllBookingsBy();
 
     boolean isRoomAvailable(Long roomId, Date checkInDate, Date checkOutDate);
 

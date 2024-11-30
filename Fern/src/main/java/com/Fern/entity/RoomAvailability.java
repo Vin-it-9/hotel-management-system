@@ -17,12 +17,6 @@ public class RoomAvailability {
     @Column(nullable = false)
     private String status; // E.g., Available, Booked, Under Maintenance
 
-    @Temporal(TemporalType.DATE)
-    private Date bookingStartDate;
-
-    @Temporal(TemporalType.DATE)
-    private Date bookingEndDate;
-
     @OneToOne
     @JoinColumn(name = "room_id", nullable = false)
     @JsonBackReference
@@ -45,21 +39,6 @@ public class RoomAvailability {
         this.status = status;
     }
 
-    public Date getBookingStartDate() {
-        return bookingStartDate;
-    }
-
-    public void setBookingStartDate(Date bookingStartDate) {
-        this.bookingStartDate = bookingStartDate;
-    }
-
-    public Date getBookingEndDate() {
-        return bookingEndDate;
-    }
-
-    public void setBookingEndDate(Date bookingEndDate) {
-        this.bookingEndDate = bookingEndDate;
-    }
 
     public Room getRoom() {
         return room;

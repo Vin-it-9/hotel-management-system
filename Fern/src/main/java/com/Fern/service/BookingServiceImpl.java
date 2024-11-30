@@ -13,17 +13,12 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 
 import java.security.Principal;
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -166,12 +161,6 @@ public class BookingServiceImpl implements BookingService {
         }
     }
 
-
-    @Override
-    public List<Booking> getAllBookings() {
-        return List.of();
-    }
-
     @Override
     public List<Booking> getAllBookingsByUser(Principal principal) {
 
@@ -191,10 +180,9 @@ public class BookingServiceImpl implements BookingService {
 
     }
 
-
     @Override
-    public Booking getBookingById(Long id) {
-        return null;
+    public List<Booking> getAllBookingsBy() {
+        return bookingRepository.findAll();
     }
 
     @Override
@@ -240,6 +228,18 @@ public class BookingServiceImpl implements BookingService {
             }
         }
         return true;
+    }
+
+    @Transactional
+    public boolean deleteBooking(Long bookingId) {
+        Optional<Booking> bookingOptional = bookingRepository.findById(bookingId);
+
+        if (bookingOptional.isPresent()) {
+            bookingRepository.deleteById(bookingId);
+            return true;  // Successfully deleted
+        } else {
+            return false;  // Booking not found
+        }
     }
 
 
