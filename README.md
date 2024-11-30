@@ -1,7 +1,8 @@
 # Amanora The Fern Hotels and Club
 
 
-**Project Description:**  
+### Project Description:
+
 Developed a comprehensive **Hotel Management System** for *Amanora The Fern Hotels and Club*, Pune. The system streamlines core operations such as room booking, user registration, and admin management using **Spring Boot**, **Spring Security**, **Spring Data JPA**, and **MySQL** for backend development. Integrated dynamic user interfaces with **Thymeleaf** and modern styling using **Tailwind CSS**. Ensured secure user authentication and authorization while maintaining scalability and responsiveness to provide a seamless user experience for staff and guests alike.
 
 ### Key Features:
