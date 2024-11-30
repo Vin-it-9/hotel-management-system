@@ -33,8 +33,7 @@ This project is a comprehensive full-stack blogging platform, combining a robust
    - **Event Booking:** Book function halls or event spaces for personal or corporate events.  
    - **Order Food & Services:** Place orders for room service, dining, or additional amenities.  
    - **Profile Management:** Update personal information, view booking history, and manage preferences.  
-   - **Feedback Submission:** Leave reviews or feedback for rooms, amenities, or services.  
-   - **Payment Processing:** Make payments securely via online gateways for bookings and services.  
+   - **Feedback Submission:** Leave reviews or feedback for rooms, amenities, or services. 
    - **Booking Modifications:** Modify or cancel reservations based on policies.  
    - **Notifications:** Receive updates on bookings, offers, and hotel announcements.  
    - **Dark Mode Support:** Switch between light and dark modes for a better user experience.  
