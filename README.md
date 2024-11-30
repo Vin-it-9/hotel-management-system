@@ -1,8 +1,8 @@
 # Amanora The Fern Hotels and Club
 
-## Overview
 
-This project is a comprehensive full-stack blogging platform, combining a robust Java backend with a modern, responsive frontend. Developed using Spring Boot, Spring Security, and MySQL, it ensures secure user authentication and seamless content management. The frontend, built with Thymeleaf and Tailwind CSS, features an intuitive, visually appealing interface with dark mode support. The platform supports CRUD operations, enabling both administrators and users to create, manage, and interact with content efficiently
+**Project Description:**  
+Developed a comprehensive **Hotel Management System** for *Amanora The Fern Hotels and Club*, Pune. The system streamlines core operations such as room booking, user registration, and admin management using **Spring Boot**, **Spring Security**, **Spring Data JPA**, and **MySQL** for backend development. Integrated dynamic user interfaces with **Thymeleaf** and modern styling using **Tailwind CSS**. Ensured secure user authentication and authorization while maintaining scalability and responsiveness to provide a seamless user experience for staff and guests alike.
 
 ### Key Features:
 
