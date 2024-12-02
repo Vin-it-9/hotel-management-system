@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import com.Fern.entity.*;
 import com.Fern.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -136,11 +137,31 @@ public class HomeController {
 		return "login";
 	}
 
-	@PostMapping("/saveUser")
-	public String saveUser(@ModelAttribute User user, HttpSession session, HttpServletRequest request) {
+//	@PostMapping("/saveUser")
+//	public String saveUser(@ModelAttribute User user, HttpSession session, HttpServletRequest request) {
+//
+//		String url = request.getRequestURL().toString();
+//		url = url.replace(request.getServletPath(), "");
+//
+//		user.setRole("ROLE_USER");
+//		User savedUser = userService.saveUser(user, url);
+//
+//		if (savedUser == null) {
+//			session.setAttribute("msg", "Email already exists. Please use a different email or login.");
+//			return "redirect:/register";
+//		}
+//		session.setAttribute("msg", "Registered successfully! Please check your email to verify your account.");
+//		return "redirect:/signin";
+//	}
 
-		String url = request.getRequestURL().toString();
-		url = url.replace(request.getServletPath(), "");
+	@Value("${site.url}")
+	private String siteUrl;
+
+	@PostMapping("/saveUser")
+	public String saveUser(@ModelAttribute User user, HttpSession session) {
+
+		// Use the configured site URL
+		String url = siteUrl;
 
 		user.setRole("ROLE_USER");
 		User savedUser = userService.saveUser(user, url);
@@ -149,9 +170,11 @@ public class HomeController {
 			session.setAttribute("msg", "Email already exists. Please use a different email or login.");
 			return "redirect:/register";
 		}
+
 		session.setAttribute("msg", "Registered successfully! Please check your email to verify your account.");
 		return "redirect:/signin";
 	}
+
 
 	@GetMapping("/verify")
 	public String verifyAccount(@Param("code") String code, Model m) {

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -129,8 +130,11 @@ public boolean updateUserProfile(User updatedUser, String currentEmail) {
 		return userRepo.findByEmail(email);
 	}
 
+
+
 	@Override
 	public void sendEmail(User user, String url) {
+
 
 		String from = "springboot2559@gmail.com";
 		String to = user.getEmail();
