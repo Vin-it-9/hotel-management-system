@@ -1,0 +1,53 @@
+package com.Fern.controller;
+
+
+import com.Fern.dto.EventsRequest;
+import com.Fern.entity.*;
+import com.Fern.service.EvenetsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
+import java.util.List;
+
+@Controller
+@RequestMapping("/event")
+public class EventController {
+
+
+    @Autowired
+    EvenetsService evenetsService;
+
+
+    @GetMapping("/add")
+    public String addEventsForm() {
+        return "admin/add_Events";
+    }
+
+
+
+    @PostMapping("/save")
+    public ResponseEntity<String> addEvents(
+            @RequestParam("name") String name,
+            @RequestParam("capacity") int capacity,
+            @RequestParam("description") String description,
+            @RequestParam(value = "image", required = false) MultipartFile image) throws IOException, SQLException {
+
+        byte[] imageBytes = null;
+        if (image != null && !image.isEmpty()) {
+            imageBytes = image.getBytes();
+        }
+
+        evenetsService.addEvent(name, capacity, description, imageBytes);
+
+        return ResponseEntity.ok("Event added successfully");
+    }
+
+}
+
+

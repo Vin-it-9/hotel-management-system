@@ -205,7 +205,9 @@ public class HomeController {
 
 	@GetMapping("/change-password")
 	public String showChangePasswordForm() {
+
 		return "change-password";
+
 	}
 
 	@PostMapping("/change-password")

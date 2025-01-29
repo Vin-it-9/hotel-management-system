@@ -56,7 +56,9 @@ public class RoomServiceImpl implements RoomService {
             roomAvailability = new RoomAvailability();
             roomAvailability.setStatus("Available");
         }
+
         roomAvailability.setRoom(room);
+
         room.setRoomAvailability(roomAvailability);
 
         room.setAmenities(amenities);

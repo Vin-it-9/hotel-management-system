@@ -174,6 +174,7 @@ public class RoomController {
                 .orElseThrow(() -> new IllegalArgumentException("Room type not found"));
 
         Set<Amenity> amenities = new HashSet<>();
+
         for (Long amenityId : roomRequest.getAmenityIds()) {
             Amenity amenity = amenityRepository.findById(amenityId)
                     .orElseThrow(() -> new IllegalArgumentException("Amenity not found"));
