@@ -78,6 +78,7 @@ public class EventController {
         }
 
         model.addAttribute("eventDataList", eventDataList);
+
         return "list_events";
 
     }

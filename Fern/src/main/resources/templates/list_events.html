@@ -1,25 +1,57 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymymeleaf.org">
 <head>
     <title>Events List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<h1>All Events</h1>
+<body class="bg-gray-50 min-h-screen">
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-gray-800 mb-8 text-center">Upcoming Events</h1>
 
-<div th:each="eventData : ${eventDataList}">
-    <div>
-        <h2 th:text="${eventData.event.name}"></h2>
-        <p th:text="${eventData.event.description}"></p>
-        <p>Capacity: <span th:text="${eventData.event.capacity}"></span></p>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div th:each="eventData : ${eventDataList}"
+             class="bg-white rounded-xl shadow-md overflow-hidden transition-transform duration-300 hover:scale-105">
 
-        <!-- Display image if available -->
-        <div th:if="${eventData.base64Image != null}">
-            <img th:src="@{'data:image/jpeg;base64,' + ${eventData.base64Image}}"
-                 alt="Event Image" width="300" />
-        </div>
+            <!-- Image Section -->
+            <div class="relative h-48 bg-gray-100">
+                <div th:if="${eventData.base64Image != null}">
+                    <img th:src="@{'data:image/jpeg;base64,' + ${eventData.base64Image}}"
+                         alt="Event Image"
+                         class="w-full h-full object-cover"/>
+                </div>
+                <div th:if="${eventData.base64Image == null}"
+                     class="flex items-center justify-center h-full text-gray-500">
+                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                </div>
+            </div>
 
-        <div th:if="${eventData.base64Image == null}">
-            <p>No image available</p>
+            <!-- Content Section -->
+            <div class="p-6">
+                <div class="flex items-baseline mb-2">
+                        <span class="inline-block bg-indigo-200 text-indigo-800 text-xs px-2 rounded-full
+                                  uppercase font-semibold tracking-wide">
+                            Event
+                        </span>
+                    <span class="ml-2 text-gray-500 text-sm">
+                            Capacity: <span th:text="${eventData.event.capacity}" class="font-medium"></span>
+                        </span>
+                </div>
+
+                <h2 class="text-xl font-semibold text-gray-800 mb-2"
+                    th:text="${eventData.event.name}"></h2>
+                <p class="text-gray-600 text-sm leading-relaxed mb-4"
+                   th:text="${eventData.event.description}"></p>
+
+                <div class="mt-4 flex items-center">
+                    <button class="px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700
+                                    transition-colors duration-300">
+                        Learn More
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
