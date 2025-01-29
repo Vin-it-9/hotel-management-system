@@ -6,20 +6,17 @@ import java.sql.SQLException;
 import com.Fern.entity.*;
 import com.Fern.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Base64;
-import java.util.List;
-import java.util.Map;
+
 
 import com.Fern.repository.UserRepo;
 
@@ -43,21 +40,7 @@ public class HomeController {
 	private ImageServiceImpl imageServiceImpl;
 
 	@Autowired
-	private RoomService roomService;
-
-	@Autowired
-	private RoomTypeService roomTypeService;
-
-	@Autowired
-	private AmenityService amenityService;
-
-	@Autowired
-	PasswordEncoder encoder;
-
-	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
-    @Autowired
-    private RoomServiceImpl roomServiceImpl;
 
 
 	@ModelAttribute
@@ -137,31 +120,11 @@ public class HomeController {
 		return "login";
 	}
 
-//	@PostMapping("/saveUser")
-//	public String saveUser(@ModelAttribute User user, HttpSession session, HttpServletRequest request) {
-//
-//		String url = request.getRequestURL().toString();
-//		url = url.replace(request.getServletPath(), "");
-//
-//		user.setRole("ROLE_USER");
-//		User savedUser = userService.saveUser(user, url);
-//
-//		if (savedUser == null) {
-//			session.setAttribute("msg", "Email already exists. Please use a different email or login.");
-//			return "redirect:/register";
-//		}
-//		session.setAttribute("msg", "Registered successfully! Please check your email to verify your account.");
-//		return "redirect:/signin";
-//	}
-
-	@Value("${site.url}")
-	private String siteUrl;
-
 	@PostMapping("/saveUser")
-	public String saveUser(@ModelAttribute User user, HttpSession session) {
+	public String saveUser(@ModelAttribute User user, HttpSession session, HttpServletRequest request) {
 
-		// Use the configured site URL
-		String url = siteUrl;
+		String url = request.getRequestURL().toString();
+		url = url.replace(request.getServletPath(), "");
 
 		user.setRole("ROLE_USER");
 		User savedUser = userService.saveUser(user, url);
@@ -170,10 +133,29 @@ public class HomeController {
 			session.setAttribute("msg", "Email already exists. Please use a different email or login.");
 			return "redirect:/register";
 		}
-
 		session.setAttribute("msg", "Registered successfully! Please check your email to verify your account.");
 		return "redirect:/signin";
 	}
+
+
+
+//	@PostMapping("/saveUser")
+//	public String saveUser(@ModelAttribute User user, HttpSession session) {
+//
+//		// Use the configured site URL
+//		String url = siteUrl;
+//
+//		user.setRole("ROLE_USER");
+//		User savedUser = userService.saveUser(user, url);
+//
+//		if (savedUser == null) {
+//			session.setAttribute("msg", "Email already exists. Please use a different email or login.");
+//			return "redirect:/register";
+//		}
+//
+//		session.setAttribute("msg", "Registered successfully! Please check your email to verify your account.");
+//		return "redirect:/signin";
+//	}
 
 
 	@GetMapping("/verify")

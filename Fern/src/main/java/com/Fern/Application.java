@@ -1,13 +1,11 @@
 package com.Fern;
 
 
-import com.Fern.entity.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import java.util.UUID;
 
 @SpringBootApplication
 @EnableJpaAuditing
@@ -19,7 +17,7 @@ public class Application {
 
 		System.out.println("started");
 		System.out.println("Application is running on: http://localhost:8080");
-
+		
 
 	}
 
