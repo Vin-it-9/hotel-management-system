@@ -14,7 +14,9 @@ public interface EvenetsService {
 
     void deleteEvent(int id) throws SQLException;
 
-    List<Events> getEvents() ;
+    List<Events> getAllEvents() ;
+
+
 
 
 }

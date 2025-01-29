@@ -1,10 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Events List</title>
 </head>
 <body>
+<h1>All Events</h1>
 
+<div th:each="eventData : ${eventDataList}">
+    <div>
+        <h2 th:text="${eventData.event.name}"></h2>
+        <p th:text="${eventData.event.description}"></p>
+        <p>Capacity: <span th:text="${eventData.event.capacity}"></span></p>
+
+        <!-- Display image if available -->
+        <div th:if="${eventData.base64Image != null}">
+            <img th:src="@{'data:image/jpeg;base64,' + ${eventData.base64Image}}"
+                 alt="Event Image" width="300" />
+        </div>
+
+        <div th:if="${eventData.base64Image == null}">
+            <p>No image available</p>
+        </div>
+    </div>
+</div>
 </body>
 </html>

@@ -51,7 +51,7 @@ public class EvenetsServiceImpl implements EvenetsService {
     }
 
     @Override
-    public List<Events> getEvents() {
+    public List<Events> getAllEvents() {
         return event_repository.findAll();
     }
 
