@@ -10,7 +10,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .dark-mode {
-    /*background-color: #000010;*/
+    background-color: #000010;
     transition: background-color 0.5s ease, color 0.5s ease;
     background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("images/test3.jpg");
     background-repeat: no-repeat;
@@ -54,8 +54,7 @@ h1, h2, h3, h4, h5, h6, p {
 }
 .dark-mode .username{
     color: #ffffff;
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 35px;
 }
 .dark-mode .comment  {
     color: white;

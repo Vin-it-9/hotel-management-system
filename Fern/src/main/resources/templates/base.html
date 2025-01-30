@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content)">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content)"  >
 <head>
 
 	<meta charset="UTF-8">
@@ -18,7 +18,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js" defer></script>
 	
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50 min-h-screen">
 
 <nav class="bg-blue-700 p-4 shadow-lg sticky top-0 z-10">
 	<div class="container mx-auto flex justify-between items-center">
@@ -121,7 +121,6 @@
 </nav>
 
 <div th:replace="${content}"></div>
-
 
 <script th:inline="javascript">
 

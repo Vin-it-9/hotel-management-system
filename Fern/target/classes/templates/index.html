@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html class="dark" lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}">
+<html class="dark" lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}"  >
 <head>
 	<meta charset="ISO-8859-1">
 	<title>Index Page</title>
+	<link th:href="@{/footer.css}" rel="stylesheet">
 	<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 <body>
 
@@ -61,7 +63,7 @@
 		</div>
 	</div>
 
-	<div class="content lg:ml-32 lg:mr-32 m-2 text-white">
+	<div class="lg:ml-32 lg:mr-32 m-2 text-white">
 
 		<div class="mt-6">
 			<th:block th:if="${message != null}">
@@ -70,16 +72,18 @@
 			<th:block th:if="${error != null}">
 				<p class="text-center session-msg text-red-500 text-lg mt-4">[[${error}]]</p>
 			</th:block>
-			<h4 class="text-lg username mb-2" th:if="${user != null}">
+			<h3 class="text-xl username mb-2" th:if="${user != null}">
 				Welcome, [[${user.name}]]!
-			</h4>
-			<h4 class="text-lg username mb-2" th:if="${user == null}">
+			</h3>
+			<h3 class="text-xl username mb-2" th:if="${user == null}">
 				Welcome, Guest!
-			</h4>
+			</h3>
 		</div>
+
 	</div>
 
-</section>
+	<div class="w-full bottom-0 " th:replace="~{footer :: footer}"></div>
 
+</section>
 </body>
 </html>
