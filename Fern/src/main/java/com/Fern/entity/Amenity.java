@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@Table(name = "\"amenity\"")
 public class Amenity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -11,6 +11,7 @@ import java.util.*;
 
 @Data
 @Entity
+@Table(name = "\"room\"")
 public class Room {
 
     @Id

@@ -11,6 +11,7 @@ import java.util.Date;
 @Data
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@Table(name = "\"booking\"")
 public class Booking {
 
     @Id

@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 @Entity
+@Table(name = "\"room_type\"")
 public class RoomType {
 
 

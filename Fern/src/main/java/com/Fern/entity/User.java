@@ -11,6 +11,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Data
+@Table(name = "\"user\"")
 public class User {
 
 	@Id
@@ -186,9 +187,5 @@ public class User {
 		this.lockTime = lockTime;
 	}
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", mobileNo=" + mobileNo + ", password=" + password + "]";
-	}
 
 }

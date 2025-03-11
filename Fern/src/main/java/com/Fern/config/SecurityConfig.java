@@ -23,6 +23,7 @@ public class SecurityConfig {
 	
 	@Autowired
 	public CustomFailureHandler failureHandler;
+
     @Autowired
     private UserRepo userRepo;
 
